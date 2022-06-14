@@ -1,9 +1,12 @@
 package binar.lima.satu.secondhand.di
 
+import android.content.Context
+import binar.lima.satu.secondhand.data.local.datastore.DataStoreManager
 import binar.lima.satu.secondhand.data.remote.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -36,4 +39,8 @@ object AppModule {
             .build()
         return retrofit.create(ApiService::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun providesPref(@ApplicationContext appContext: Context) : DataStoreManager =  DataStoreManager(appContext)
 }
