@@ -1,8 +1,11 @@
-package binar.lima.satu.secondhand
+package binar.lima.satu.secondhand.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import binar.lima.satu.secondhand.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
