@@ -9,4 +9,6 @@ class MainRepository @Inject constructor(private val apiHelper : ApiHelper) {
     //=================Auth=================
     suspend fun loginUser(loginBody: LoginBody) = apiHelper.loginUser(loginBody)
     suspend fun getLoginUser(header: String) = apiHelper.getLoginUser(header)
+    suspend fun registerUser(registerBody: RegisterBody) = apiHelper.registerUser(registerBody)
+    suspend fun getRegisterUser(header: String) = apiHelper.getRegisterUser(header)
 }

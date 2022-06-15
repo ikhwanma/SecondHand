@@ -22,4 +22,14 @@ interface ApiService {
         @Header("access_token") header : String
     ) : GetLoginResponse
 
+    //--Register--
+    @POST("/auth/register")
+    suspend fun regiterUser(
+        @Body user : LoginBody
+    ) : PostRegisterResponse
+
+    @GET("/auth/user/{id}")
+    suspend fun getRegisterUser(
+        @Header("access_token") header : String
+    ) : GetRegiterResponse
 }
