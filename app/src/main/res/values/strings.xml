@@ -5,10 +5,15 @@
     <string name="masukkan_email">Masukkan Email</string>
     <string name="masukkan_password">Masukkan Password</string>
     <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="username">Username</string>
     <string name="contoh_johndee_gmail_com">Contoh : johndee@gmail.com</string>
+    <string name="contoh_johndee">Contoh : Johndee</string>
     <string name="masuk">Masuk</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="belum_punya_akun">Belum punya akun ?</string>
+    <string name="sudah_punya_akun">Sudah punya akun ?</string>
     <string name="daftar_di_sini">Daftar di sini</string>
+    <string name="masuk_di_sini">Masuk di sini</string>
 </resources>
