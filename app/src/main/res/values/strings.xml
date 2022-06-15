@@ -11,6 +11,15 @@
     <string name="password">Password</string>
     <string name="belum_punya_akun">Belum punya akun ?</string>
     <string name="daftar_di_sini">Daftar di sini</string>
+    <string name="nama_produk">Nama Produk</string>
+    <string name="harga_produk">Harga Produk</string>
+    <string name="rp_0_00">Rp 0,00</string>
+    <string name="kategori">Kategori</string>
+    <string name="pilih_kategori">Pilih Kategori</string>
+    <string name="deskripsi">Deskripsi</string>
+    <string name="foto_produk">Foto Produk</string>
+    <string name="terbitkan">Terbitkan</string>
+    <string name="preview">Preview</string>
     <string name="akun_saya">Akun Saya</string>
     <string name="ubah_akun">Ubah Akun</string>
     <string name="pengaturan">Pengaturan</string>
