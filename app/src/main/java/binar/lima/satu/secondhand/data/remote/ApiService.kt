@@ -5,6 +5,7 @@ import binar.lima.satu.secondhand.model.auth.login.LoginBody
 import binar.lima.satu.secondhand.model.auth.login.PostLoginResponse
 import binar.lima.satu.secondhand.model.auth.register.PostRegisterResponse
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
+import binar.lima.satu.secondhand.model.seller.product.ProductBody
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -29,5 +30,13 @@ interface ApiService {
     suspend fun registerUser(
         @Body user : RegisterBody
     ) : PostRegisterResponse
+
+    //=======================Seller==============================
+    //--Product--
+    @POST("/seller/product")
+    suspend fun addSellerProduct(
+        @Header("access_token") token : String,
+        @Body product : ProductBody
+    )
 
 }
