@@ -3,6 +3,8 @@ package binar.lima.satu.secondhand.data.remote
 import binar.lima.satu.secondhand.model.auth.login.GetLoginResponse
 import binar.lima.satu.secondhand.model.auth.login.LoginBody
 import binar.lima.satu.secondhand.model.auth.login.PostLoginResponse
+import binar.lima.satu.secondhand.model.auth.register.PostRegisterResponse
+import binar.lima.satu.secondhand.model.auth.register.RegisterBody
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -21,5 +23,11 @@ interface ApiService {
     suspend fun getLoginUser(
         @Header("access_token") header : String
     ) : GetLoginResponse
+
+    //--Register--
+    @POST("/auth/register")
+    suspend fun registerUser(
+        @Body user : RegisterBody
+    ) : PostRegisterResponse
 
 }
