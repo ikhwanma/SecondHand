@@ -36,22 +36,8 @@ class LoginFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         userViewModel.getToken().observe(viewLifecycleOwner){
-            Toast.makeText(requireContext(), "token : $it", Toast.LENGTH_SHORT).show()
-
             if (it != null){
-                apiViewModel.getLoginUser(it).observe(viewLifecycleOwner){ user ->
-                    when(user.status){
-                        SUCCESS -> {
-                            Toast.makeText(requireContext(), user.data.toString(), Toast.LENGTH_SHORT).show()
-                        }
-                        ERROR -> {
-                            Toast.makeText(requireContext(), "Get User Gagal", Toast.LENGTH_SHORT).show()
-                        }
-                        LOADING -> {
-                            Toast.makeText(requireContext(), "Loading Get User", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
+                Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_addProductFragment)
             }
         }
 
@@ -83,6 +69,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
             when(it.status){
                 SUCCESS -> {
                     userViewModel.setToken(it.data!!.accessToken)
+                    Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_addProductFragment)
                     Toast.makeText(requireContext(), "Login Berhasil", Toast.LENGTH_SHORT).show()
                 }
                 ERROR -> {

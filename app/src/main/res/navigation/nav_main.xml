@@ -30,5 +30,18 @@
         android:id="@+id/addProductFragment"
         android:name="binar.lima.satu.secondhand.view.fragment.AddProductFragment"
         android:label="fragment_add_product"
-        tools:layout="@layout/fragment_add_product" />
+        tools:layout="@layout/fragment_add_product" >
+        <action
+            android:id="@+id/action_addProductFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="binar.lima.satu.secondhand.view.fragment.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_addProductFragment"
+            app:destination="@id/addProductFragment" />
+    </fragment>
 </navigation>

@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingHorizontal="16dp"
+    android:paddingVertical="10dp"
     tools:context=".view.fragment.AddProductFragment">
 
     <TextView
@@ -12,6 +13,7 @@
         android:text="@string/nama_produk"/>
 
     <EditText
+        android:id="@+id/et_product"
         style="@style/EditTextStyle"
         android:hint="@string/nama_produk"
         android:inputType="text"
@@ -24,6 +26,7 @@
         android:layout_marginTop="16dp"/>
 
     <EditText
+        android:id="@+id/et_price"
         style="@style/EditTextStyle"
         android:hint="@string/rp_0_00"
         android:inputType="text"
@@ -36,6 +39,7 @@
         android:layout_marginTop="16dp"/>
 
     <EditText
+        android:id="@+id/et_category"
         style="@style/EditTextStyle"
         android:hint="@string/pilih_kategori"
         android:inputType="text"
@@ -48,6 +52,7 @@
         android:layout_marginTop="16dp"/>
 
     <EditText
+        android:id="@+id/et_description"
         style="@style/EditTextStyle"
         android:hint= "@string/deskripsi"
         android:inputType="textMultiLine"
@@ -60,6 +65,14 @@
         style="@style/TextViewStyle"
         android:text="@string/foto_produk"
         android:layout_marginTop="16dp"/>
+
+    <ImageView
+        android:id="@+id/img_product"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_add_img"
+        android:layout_marginTop="4dp"
+        android:contentDescription="@string/add_image" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -84,7 +97,5 @@
             android:layout_alignParentBottom="true"/>
 
     </RelativeLayout>
-
-
 
 </LinearLayout>
