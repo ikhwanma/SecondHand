@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.navigation.Navigation
 import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentLoginBinding
@@ -55,6 +56,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
         }
 
         binding.btnLogin.setOnClickListener(this)
+        binding.tvRegister.setOnClickListener(this)
     }
 
     override fun onClick(p0: View?) {
@@ -69,6 +71,9 @@ class LoginFragment : Fragment(), View.OnClickListener {
                         login(loginBody)
                     }
                 }
+            }
+            R.id.tv_register -> {
+                Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_registerFragment)
             }
         }
     }

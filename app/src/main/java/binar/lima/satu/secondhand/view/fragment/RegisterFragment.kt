@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.navigation.Navigation
 import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.Status
 import binar.lima.satu.secondhand.databinding.FragmentLoginBinding
@@ -37,39 +38,20 @@ class RegisterFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        userViewModel.getToken().observe(viewLifecycleOwner){
-            Toast.makeText(requireContext(), "token : $it", Toast.LENGTH_SHORT).show()
 
-          /*  if (it != null){
-                apiViewModel.getRegiterUser(it).observe(viewLifecycleOwner){ user ->
-                    when(user.status){
-                        Status.SUCCESS -> {
-                            Toast.makeText(requireContext(), user.data.toString(), Toast.LENGTH_SHORT).show()
-                        }
-                        Status.ERROR -> {
-                            Toast.makeText(requireContext(), "Get User Gagal", Toast.LENGTH_SHORT).show()
-                        }
-                        Status.LOADING -> {
-                            Toast.makeText(requireContext(), "Loading Get User", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
-            }*/
-        }
-
-        binding.btnLogin.setOnClickListener(this)
+        binding.btnRegister.setOnClickListener(this)
     }
 
     override fun onClick(p0: View?) {
         when(p0?.id){
             R.id.btn_register -> {
                 binding.apply {
-                    val username = etUsername.text.toString()
+                    val name = etName.text.toString()
                     val email = etEmail.text.toString()
                     val password = etPassword.text.toString()
 
-                    if (email != "" && password != ""){
-                        val registerBody = RegisterBody(email, password, username)
+                    if (email != "" && password != "" && name != ""){
+                        val registerBody = RegisterBody("Jakarta", email, name, "ss", password, 81112333)
                         register(registerBody)
                     }
                 }
@@ -81,12 +63,12 @@ class RegisterFragment : Fragment(), View.OnClickListener {
         apiViewModel.registerUser(registerBody).observe(viewLifecycleOwner){
             when(it.status){
                 Status.SUCCESS -> {
-                    userViewModel.setToken(it.data!!.accessToken)
-                    Toast.makeText(requireContext(), "Register Berhasil", Toast.LENGTH_SHORT).show()
+                    Navigation.findNavController(requireView()).navigate(R.id.action_registerFragment_to_loginFragment)
+                    Toast.makeText(requireContext(), "Register berhasil", Toast.LENGTH_SHORT).show()
                 }
                 Status.ERROR -> {
-                    if(it.message!!.contains("401")){
-                        Toast.makeText(requireContext(), "Lengkapi data anda", Toast.LENGTH_SHORT).show()
+                    if(it.message!!.contains("400")){
+                        Toast.makeText(requireContext(), "Email sudah digunakan", Toast.LENGTH_SHORT).show()
                     }else{
                         Toast.makeText(requireContext(), "Lengkapi lagi", Toast.LENGTH_SHORT).show()
                     }
