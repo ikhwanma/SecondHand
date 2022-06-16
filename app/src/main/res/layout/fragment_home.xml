@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.fragment.HomeFragment">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview_atas"
+        android:layout_width="match_parent"
+        android:layout_height="398dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Telusuri Kategori"
+            android:layout_marginTop="286dp"
+            android:layout_marginStart="16dp"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="38dp"
+            android:layout_marginBottom="328dp"
+            android:elevation="4dp"
+            app:cardCornerRadius="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="14dp"
+                android:layout_marginStart="24dp"
+                android:text="Cari di Second Chance"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="380dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="17dp"
+                android:src="@drawable/ic_baseline_search_24"
+                app:tint="@color/light_gray" />
+        </androidx.cardview.widget.CardView>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="322dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btn_semua_home"
+                    style="@style/ButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@drawable/ic_baseline_search_24"
+                    android:text="Semua" />
+
+                <Button
+                    android:id="@+id/btn_hobi_home"
+                    style="@style/ButtonGrayStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:backgroundTint="@color/light_gray"
+                    android:drawableLeft="@drawable/ic_baseline_search_24"
+                    android:drawableTint="@color/black"
+                    android:text="Hobi"
+                    android:textColor="@color/black" />
+
+                <Button
+                    android:id="@+id/btn_kendaraan_home"
+                    style="@style/ButtonGrayStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:drawableLeft="@drawable/ic_baseline_search_24"
+                    android:drawableTint="@color/black"
+                    android:text="Kendaraan"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+        </HorizontalScrollView>
+    </androidx.cardview.widget.CardView>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/cardview_atas">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card"
+            android:layout_width="156dp"
+            android:layout_height="206dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="4dp"
+            android:elevation="4dp"
+            app:cardCornerRadius="16dp" >
+            <ImageView
+                android:layout_width="140dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_launcher_background"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"/>
+            <TextView
+                android:layout_width="140dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="116dp"
+                android:layout_marginHorizontal="8dp"
+                android:text="Jam Tangan Casio"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="140dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="140dp"
+                android:layout_marginHorizontal="8dp"
+                android:text="Aksesoris"
+                android:textSize="10sp"/>
+            <TextView
+                android:layout_width="140dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="162dp"
+                android:layout_marginHorizontal="8dp"
+                android:text="Rp 250.000"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/rectangle_2"
+            android:layout_width="156dp"
+            android:layout_height="206dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="188dp"
+            android:layout_marginTop="4dp"
+            android:elevation="4dp"
+            app:cardCornerRadius="16dp">
+            <ImageView
+                android:layout_width="140dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_launcher_background"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"/>
+            <TextView
+                android:layout_width="140dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="116dp"
+                android:layout_marginHorizontal="8dp"
+                android:text="Jam Tangan Casio"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="140dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="140dp"
+                android:layout_marginHorizontal="8dp"
+                android:text="Aksesoris"
+                android:textSize="10sp"/>
+            <TextView
+                android:layout_width="140dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="162dp"
+                android:layout_marginHorizontal="8dp"
+                android:text="Rp 250.000"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+</RelativeLayout>
