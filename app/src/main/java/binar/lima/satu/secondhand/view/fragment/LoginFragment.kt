@@ -36,8 +36,8 @@ class LoginFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         userViewModel.getToken().observe(viewLifecycleOwner){
-            if (it != null){
-                Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_addProductFragment)
+            if (it != ""){
+                Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_homeFragment)
             }
         }
 
@@ -69,7 +69,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
             when(it.status){
                 SUCCESS -> {
                     userViewModel.setToken(it.data!!.accessToken)
-                    Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_addProductFragment)
+                    Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_homeFragment)
                     Toast.makeText(requireContext(), "Login Berhasil", Toast.LENGTH_SHORT).show()
                 }
                 ERROR -> {
