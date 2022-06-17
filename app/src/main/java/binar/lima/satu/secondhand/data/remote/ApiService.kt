@@ -6,10 +6,7 @@ import binar.lima.satu.secondhand.model.auth.login.PostLoginResponse
 import binar.lima.satu.secondhand.model.auth.register.PostRegisterResponse
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
 import binar.lima.satu.secondhand.model.seller.product.ProductBody
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface ApiService {
 
@@ -29,6 +26,12 @@ interface ApiService {
     @POST("/auth/register")
     suspend fun registerUser(
         @Body user : RegisterBody
+    ) : PostRegisterResponse
+
+    //--Profile--
+    @PUT("/auth/user/{id}")
+    suspend fun updateUser(
+        @Header("access_token") header : String
     ) : PostRegisterResponse
 
     //=======================Seller==============================

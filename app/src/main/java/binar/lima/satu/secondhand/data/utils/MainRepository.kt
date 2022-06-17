@@ -12,6 +12,7 @@ class MainRepository @Inject constructor(private val apiHelper : ApiHelper) {
     suspend fun loginUser(loginBody: LoginBody) = apiHelper.loginUser(loginBody)
     suspend fun getLoginUser(header: String) = apiHelper.getLoginUser(header)
     suspend fun registerUser(registerBody: RegisterBody) = apiHelper.registerUser(registerBody)
+    suspend fun updateUser(header: String) = apiHelper.updateUser(header)
 
     //================Seller================
     suspend fun addSellerProduct(token: String, product: ProductBody) = apiHelper.addSellerProduct(token, product)
