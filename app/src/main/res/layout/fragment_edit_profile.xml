@@ -14,6 +14,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/btn_panah"
             android:src="@drawable/ic_arrow_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -28,11 +29,12 @@
     </LinearLayout>
 
     <ImageView
-        android:layout_marginTop="40dp"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/ic_photo_profile"
+        android:id="@+id/btn_gambar_edit_profile"
         android:layout_width="125dp"
-        android:layout_height="125dp"/>
+        android:layout_height="125dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/ic_photo_profile" />
 
     <TextView
         style="@style/TextViewStyle"
@@ -99,7 +101,7 @@
         android:inputType="textEmailAddress" />
 
     <Button
-        android:id="@+id/btn_login"
+        android:id="@+id/btn_simpan"
         style="@style/ButtonStyle"
         android:layout_marginTop="20dp"
         android:text="@string/simpan" />
