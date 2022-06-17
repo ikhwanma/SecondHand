@@ -43,4 +43,6 @@
     <string name="notifikasi">Notifikasi</string>
     <string name="jual">Jual</string>
     <string name="profile">Profile</string>
+    <string name="daftar_jual_saya">Daftar Jual Saya</string>
+    <string name="nama_penjual">Nama Penjual</string>
 </resources>
