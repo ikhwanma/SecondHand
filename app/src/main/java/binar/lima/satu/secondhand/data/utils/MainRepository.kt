@@ -4,6 +4,8 @@ import binar.lima.satu.secondhand.data.helper.ApiHelper
 import binar.lima.satu.secondhand.model.auth.login.LoginBody
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
 import binar.lima.satu.secondhand.model.seller.product.ProductBody
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import javax.inject.Inject
 
 class MainRepository @Inject constructor(private val apiHelper : ApiHelper) {
@@ -15,4 +17,18 @@ class MainRepository @Inject constructor(private val apiHelper : ApiHelper) {
 
     //================Seller================
     suspend fun addSellerProduct(token: String, product: ProductBody) = apiHelper.addSellerProduct(token, product)
+    suspend fun getAllCategory() = apiHelper.getAllCategory()
+
+    suspend fun testAddSellerProduct(
+        token : String,
+        name : RequestBody,
+        description : RequestBody,
+        base_price : RequestBody,
+        category_ids : RequestBody,
+        location : RequestBody,
+        image :  MultipartBody.Part,
+    ) = apiHelper.testAddSellerProduct(token, name, description, base_price, category_ids, location, image)
+
+    //================Buyer================
+    suspend fun getAllProduct(status : String? = "", category_id : Int? = null) = apiHelper.getAllProduct(status = status, category_id = category_id)
 }

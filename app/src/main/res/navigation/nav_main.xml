@@ -22,7 +22,6 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
-    /fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="binar.lima.satu.secondhand.view.fragment.RegisterFragment"

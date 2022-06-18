@@ -18,7 +18,7 @@
     <string name="masuk_di_sini">Masuk di sini</string>
     <string name="nama_produk">Nama Produk</string>
     <string name="harga_produk">Harga Produk</string>
-    <string name="rp_0_00">Rp 0,00</string>
+    <string name="rp_0_00">0,00</string>
     <string name="kategori">Kategori</string>
     <string name="pilih_kategori">Pilih Kategori</string>
     <string name="deskripsi">Deskripsi</string>
@@ -43,4 +43,7 @@
     <string name="notifikasi">Notifikasi</string>
     <string name="jual">Jual</string>
     <string name="profile">Profile</string>
+    <string name="rp">Rp</string>
+    <string name="telusuri_kategori">Telusuri Kategori</string>
+    <string name="semua">Semua</string>
 </resources>

@@ -5,11 +5,14 @@ import binar.lima.satu.secondhand.model.auth.login.LoginBody
 import binar.lima.satu.secondhand.model.auth.login.PostLoginResponse
 import binar.lima.satu.secondhand.model.auth.register.PostRegisterResponse
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
+import binar.lima.satu.secondhand.model.buyer.product.GetBuyerProductResponseItem
+import binar.lima.satu.secondhand.model.product.GetProductResponseItem
+import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponse
+import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponseItem
 import binar.lima.satu.secondhand.model.seller.product.ProductBody
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.http.*
 
 interface ApiService {
 
@@ -38,5 +41,28 @@ interface ApiService {
         @Header("access_token") token : String,
         @Body product : ProductBody
     )
+
+    @Multipart
+    @POST("/seller/product")
+    suspend fun testAddSellerProduct(
+        @Header("access_token") token : String,
+        @Part("name") name : RequestBody,
+        @Part("description") description : RequestBody,
+        @Part("base_price") base_price : RequestBody,
+        @Part("category_ids") category_ids : RequestBody,
+        @Part("location") location : RequestBody,
+        @Part image : MultipartBody.Part,
+    )
+    //--Category--
+    @GET("/seller/category")
+    suspend fun getAllCategory() : List<GetSellerCategoryResponseItem>
+
+    //=======================Buyer==============================
+    //--Product--
+    @GET("/buyer/product")
+    suspend fun getAllProduct(
+        @Query("status") status : String?,
+        @Query("category_id") category_id : Int?
+    ) : List<GetProductResponseItem>
 
 }

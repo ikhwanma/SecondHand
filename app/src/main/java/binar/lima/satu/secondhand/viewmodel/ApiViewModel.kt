@@ -9,12 +9,15 @@ import binar.lima.satu.secondhand.model.auth.register.RegisterBody
 import binar.lima.satu.secondhand.model.seller.product.ProductBody
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
 class ApiViewModel @Inject constructor(private val mainRepository: MainRepository) : ViewModel() {
 
+    //==================================Auth
     fun loginUser(loginBody: LoginBody) = liveData(Dispatchers.IO){
         emit(Resource.loading(null))
         try {
@@ -42,6 +45,7 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
         }
     }
 
+    //==================================Seller
     fun addSellerProduct(token: String, product: ProductBody) = liveData(Dispatchers.IO){
         emit(Resource.loading(null))
         try {
@@ -51,5 +55,66 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
         }
     }
 
+    fun getAllCategory() = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(mainRepository.getAllCategory()))
+        }catch (e : Exception){
+            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
+        }
+    }
+
+    //==================================Buyer
+    fun getAllProduct() = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(mainRepository.getAllProduct()))
+        }catch (e : Exception){
+            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
+        }
+    }
+
+    fun getAllProduct(status : String) = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(mainRepository.getAllProduct(status)))
+        }catch (e : Exception){
+            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
+        }
+    }
+
+    fun getAllProduct(category_id : Int) = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(mainRepository.getAllProduct(category_id = category_id)))
+        }catch (e : Exception){
+            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
+        }
+    }
+
+    fun getAllProduct(status: String, category_id: Int) = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(mainRepository.getAllProduct(status, category_id)))
+        }catch (e : Exception){
+            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
+        }
+    }
+
+
+    fun testAddSellerProduct(token : String,
+                             name : RequestBody,
+                             description : RequestBody,
+                             base_price : RequestBody,
+                             category_ids : RequestBody,
+                             location : RequestBody,
+                             image :  MultipartBody.Part,) = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(mainRepository.testAddSellerProduct(token, name, description, base_price, category_ids, location, image)))
+        }catch (e : Exception){
+            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
+        }
+    }
 
 }
