@@ -34,6 +34,12 @@ interface ApiService {
         @Body user : RegisterBody
     ) : PostRegisterResponse
 
+    //--Profile--
+    @PUT("/auth/user/{id}")
+    suspend fun updateUser(
+        @Header("access_token") header : String
+    ) : PostRegisterResponse
+
     //=======================Seller==============================
     //--Product--
     @POST("/seller/product")
