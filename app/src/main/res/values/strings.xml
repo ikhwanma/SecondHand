@@ -15,6 +15,7 @@
     <string name="belum_punya_akun">Belum punya akun ?</string>
     <string name="sudah_punya_akun">Sudah punya akun ?</string>
     <string name="daftar_di_sini">Daftar di sini</string>
+<<<<<<< HEAD
     <
     <
     <
@@ -24,6 +25,9 @@
     < HEAD
     <string name="masuk_di_sini">Masuk di sini</string>
     =======
+=======
+    <string name="masuk_di_sini">Masuk di sini</string>
+>>>>>>> 570aa51fbec4dbdc4a20593a32f01cbea03356f7
     <string name="nama_produk">Nama Produk</string>
     <string name="harga_produk">Harga Produk</string>
     <string name="rp_0_00">Rp 0,00</string>
@@ -46,5 +50,8 @@
     <string name="no_handphone">No Handphone</string>
     <string name="contoh_628123456789">Contoh : +628123456789</string>
     <string name="simpan">Simpan</string>
+<<<<<<< HEAD
     >>>>>>> 16524d46f3fc3c485ef57d0696d79e4404c03bd1
+=======
+>>>>>>> 570aa51fbec4dbdc4a20593a32f01cbea03356f7
 </resources>
