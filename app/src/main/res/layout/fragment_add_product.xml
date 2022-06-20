@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp"
+    tools:context=".view.fragment.AddProductFragment">
+
+    <TextView
+        style="@style/TextViewStyle"
+        android:text="@string/nama_produk"/>
+
+    <EditText
+        style="@style/EditTextStyle"
+        android:hint="@string/nama_produk"
+        android:inputType="text"
+        android:autofillHints="name"
+        android:layout_marginTop="4dp"/>
+
+    <TextView
+        style="@style/TextViewStyle"
+        android:text="@string/harga_produk"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        style="@style/EditTextStyle"
+        android:hint="@string/rp_0_00"
+        android:inputType="text"
+        android:autofillHints="name"
+        android:layout_marginTop="4dp"/>
+
+    <TextView
+        style="@style/TextViewStyle"
+        android:text="@string/kategori"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        style="@style/EditTextStyle"
+        android:hint="@string/pilih_kategori"
+        android:inputType="text"
+        android:autofillHints="name"
+        android:layout_marginTop="4dp"/>
+
+    <TextView
+        style="@style/TextViewStyle"
+        android:text="@string/deskripsi"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        style="@style/EditTextStyle"
+        android:hint= "@string/deskripsi"
+        android:inputType="textMultiLine"
+        android:layout_height="100dp"
+        android:gravity="top"
+        android:autofillHints="name"
+        android:layout_marginTop="4dp"/>
+
+    <TextView
+        style="@style/TextViewStyle"
+        android:text="@string/foto_produk"
+        android:layout_marginTop="16dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/btn_preview"
+            style="@style/ButtonStyle"
+            android:layout_width="160dp"
+            android:text="@string/preview"
+            android:layout_marginEnd="20dp"
+            android:layout_alignParentBottom="true"
+            />
+
+        <Button
+            android:id="@+id/btn_terbitkan"
+            style="@style/ButtonStyle"
+            android:layout_width="160dp"
+            android:layout_toEndOf="@+id/btn_preview"
+            android:text="@string/terbitkan"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

@@ -25,7 +25,7 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
     fun registerUser(registerBody: RegisterBody) = liveData(Dispatchers.IO){
         emit(Resource.loading(null))
         try {
-            emit(Resource.success(mainRepository.loginUser(registerBody)))
+            emit(Resource.success(mainRepository.registerUser(registerBody)))
         }catch (e : Exception){
             emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
         }
