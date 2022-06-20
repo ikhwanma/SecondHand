@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.fragment.PreviewProductFragment">
+
+    <ImageView
+        android:src="@color/purple_700"
+        android:layout_width="411dp"
+        android:layout_height="250dp"/>
+
+    <TextView
+    style="@style/TextViewStyle"
+    android:layout_marginTop="20dp"
+    android:text="Jam Tangan Caslo"
+    android:textSize="28sp"
+    android:textStyle="bold" />
+
+    <TextView
+       style="@style/TextViewStyle"
+        android:layout_margin="10dp"
+        android:text="Aksesoris"
+        android:textSize="16sp"/>
+    <TextView
+        style="@style/TextViewStyle"
+        android:layout_marginTop="2dp"
+        android:text="Rp 250.000"
+        android:textSize="28sp"
+        android:textColor="@color/black"/>
+
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@color/black"/>
+
+    <EditText
+        style="@style/EditTextStyle"
+        android:layout_marginTop="4dp"
+        android:autofillHints="Kota"
+        android:hint="kota"
+        android:inputType="textEmailAddress"/>
+
+    <TextView
+        style="@style/TextViewStyle"
+        android:layout_marginTop="24dp"
+        android:text="Deskripsi"
+        android:textSize="28sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/et_username"
+        style="@style/EditTextStyle"
+        android:layout_marginTop="4dp"
+        android:autofillHints="Username"
+        android:hint="@string/contoh_johndee"
+        android:inputType="textEmailAddress" />
+</LinearLayout>
