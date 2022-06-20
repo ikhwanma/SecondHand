@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.fragment.HomeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_atas"
+            android:layout_width="match_parent"
+            android:layout_height="398dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/telusuri_kategori"
+                    android:layout_marginTop="286dp"
+                    android:layout_marginStart="16dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="32dp"
+                    android:layout_alignParentBottom="true">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/btn_all"
+                        android:layout_marginStart="16dp"
+                        android:layout_width="124dp"
+                        android:layout_height="44dp"
+                        android:backgroundTint="@color/light_purple"
+                        app:cardCornerRadius="12dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="18dp">
+
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:contentDescription="@string/add_image"
+                                android:src="@drawable/ic_baseline_search_24" />
+
+                            <TextView
+                                android:id="@+id/tv_category"
+                                style="@style/TextViewStyle"
+                                android:layout_marginStart="8dp"
+                                android:text="@string/semua"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_kategory"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginHorizontal="16dp"
+                        android:overScrollMode="never" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_product"
+            android:overScrollMode="never"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_product"/>
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
