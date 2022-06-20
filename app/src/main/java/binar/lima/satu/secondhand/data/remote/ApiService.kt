@@ -23,7 +23,7 @@ interface ApiService {
         @Body user : LoginBody
     ) : PostLoginResponse
 
-    @GET("/auth/user/{id}")
+    @GET("/auth/user")
     suspend fun getLoginUser(
         @Header("access_token") header : String
     ) : GetLoginResponse
@@ -58,7 +58,7 @@ interface ApiService {
         @Part("category_ids") category_ids : RequestBody,
         @Part("location") location : RequestBody,
         @Part image : MultipartBody.Part,
-    )
+    ) : RequestBody
     //--Category--
     @GET("/seller/category")
     suspend fun getAllCategory() : List<GetSellerCategoryResponseItem>

@@ -1,8 +1,10 @@
 package binar.lima.satu.secondhand.view.fragment
 
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.os.FileUtils
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.Status.*
+import binar.lima.satu.secondhand.data.utils.URIPathHelper
 import binar.lima.satu.secondhand.databinding.FragmentAddProductBinding
 import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponseItem
 import binar.lima.satu.secondhand.model.seller.product.ProductBody
@@ -20,6 +23,7 @@ import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import pl.aprilapps.easyphotopicker.EasyImage
@@ -45,6 +49,8 @@ class AddProductFragment : Fragment(), View.OnClickListener {
         registerForActivityResult(ActivityResultContracts.GetContent()) { result ->
             binding.imgProduct.setImageURI(result)
             image = result!!
+
+
         }
 
     override fun onCreateView(
@@ -90,27 +96,25 @@ class AddProductFragment : Fragment(), View.OnClickListener {
                             when (it.status) {
                                 SUCCESS -> {
                                     val data = it.data!!
-                                    imgFile = File("/storage/emulated/0/Download/tes.jpg")
+//                                    imgFile = File("/storage/emulated/0/Download/tes2.jpg")
+                                    imgFile = File("/storage/emulated/0/Download/tes2.jpg")
                                     val requestFile = imgFile
                                         .asRequestBody("multipart/form-data".toMediaTypeOrNull())
                                     val nameUpload = name
-                                        .toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                                        .toRequestBody(MultipartBody.FORM)
                                     val priceUpload = price
-                                        .toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                                        .toRequestBody(MultipartBody.FORM)
                                     val categoryUpload = category
-                                        .toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                                        .toRequestBody("*/*".toMediaTypeOrNull())
                                     val descriptionUpload = description
-                                        .toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                                        .toRequestBody(MultipartBody.FORM)
                                     val addressUpload = data.address
-                                        .toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                                        .toRequestBody(MultipartBody.FORM)
                                     val imageUpload = MultipartBody.Part.createFormData(
                                         "foto",
                                         imgFile.name,
                                         requestFile
                                     )
-
-                                    val headers = HashMap<String, String>()
-                                    headers["access_token"] = token
 
                                     apiViewModel.testAddSellerProduct(
                                         token,
@@ -145,23 +149,28 @@ class AddProductFragment : Fragment(), View.OnClickListener {
                                             }
                                         }
                                     }
+                                    /*val pathHelper = URIPathHelper()
 
-/*                                    val bitmap = (imgProduct.drawable as BitmapDrawable).bitmap
+                                    imgFile = File(pathHelper.getPath(requireContext(),image)!!)
+
+                                    val bitmap = (imgProduct.drawable as BitmapDrawable).bitmap
                                     val bitmaps = Bitmap.createScaledBitmap(bitmap, 720, 720, true)
                                     val baos = ByteArrayOutputStream()
                                     bitmaps.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-                                    val dataImage = baos.toByteArray()*/
+                                    val dataImage = baos.toByteArray()
 
-/*                                   val bitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, image)
+*//*                                   val bitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, image)
                                     val baos = ByteArrayOutputStream()
                                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-                                    val bitmaps = Bitmap.createScaledBitmap(bitmap, 720, 720, true)*/
-//                                    val product = ProductBody(name, description, price.toInt(), listOf(category.toInt()), data.address, bitmaps)
-//                                    Toast.makeText(requireContext(), image.toString(), Toast.LENGTH_SHORT).show()
+                                    val bitmaps = Bitmap.createScaledBitmap(bitmap, 720, 720, true)*//*
+                                    val product = ProductBody(name, description, price.toInt(), listOf(category.toInt()), data.address,
+                                        bitMapToString(bitmaps)!!
+                                    )
+                                    Toast.makeText(requireContext(), imgFile.toString(), Toast.LENGTH_SHORT).show()*/
 //                                    addProcuct(product, token)
                                 }
                                 ERROR -> {
-                                    Toast.makeText(requireContext(), "Err", Toast.LENGTH_SHORT)
+                                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT)
                                         .show()
                                 }
                                 LOADING -> {

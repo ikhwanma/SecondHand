@@ -15,4 +15,6 @@ data class RegisterBody(
     val password: String,
     @SerializedName("phone_number")
     val phoneNumber: Long,
+    @SerializedName("city")
+    val city: String,
 )
