@@ -21,5 +21,7 @@ data class PostRegisterResponse(
     @SerializedName("phone_number")
     val phoneNumber: Long,
     @SerializedName("updatedAt")
-    val updatedAt: String
+    val updatedAt: String,
+    @SerializedName("access_token")
+    val accessToken: String
 )
