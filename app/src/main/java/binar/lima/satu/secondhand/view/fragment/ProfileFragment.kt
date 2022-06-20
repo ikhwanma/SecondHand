@@ -31,7 +31,6 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnUbahAkun.setOnClickListener {
-            userViewModel.setToken("")
             Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_editProfileFragment)
         }
 

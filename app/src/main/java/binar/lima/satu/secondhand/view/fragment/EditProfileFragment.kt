@@ -29,19 +29,14 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_profile, container, false)
+    ): View {
+        _binding = FragmentEditProfileBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        userViewModel.getToken().observe(viewLifecycleOwner){
-            if (it != ""){
-                Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_homeFragment)
-            }
-        }
         binding.btnSimpan.setOnClickListener(this)
 
         binding.btnPanah.setOnClickListener {
@@ -63,7 +58,7 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
                         apiViewModel.getLoginUser(it).observe(viewLifecycleOwner){
                             when(it.status){
                                 Status.SUCCESS -> {
-                                    val registerBody = RegisterBody(kota, it.data!!.email, nama, image, it.data.password, handphone)
+                                    val registerBody = RegisterBody(alamat, it.data!!.email, nama, image, it.data.password, handphone, kota)
                                     updateUser(registerBody)
                                 }
                                 Status.ERROR -> {
@@ -88,7 +83,6 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
         apiViewModel.registerUser(registerBody).observe(viewLifecycleOwner){
             when(it.status){
                 Status.SUCCESS -> {
-                    userViewModel.setToken(it.data!!.accessToken)
                     Navigation.findNavController(requireView()).navigate(R.id.action_editProfileFragment_to_profileFragment)
                     Toast.makeText(requireContext(), "Update User Berhasil", Toast.LENGTH_SHORT).show()
                 }
