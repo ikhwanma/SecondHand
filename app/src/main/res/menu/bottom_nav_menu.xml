@@ -6,12 +6,17 @@
         android:title="@string/home" />
 
     <item
+        android:id="@+id/notificationFragment"
+        android:icon="@drawable/ic_baseline_notifications_none_24"
+        android:title="@string/notifikasi" />
+
+    <item
         android:id="@+id/addProductFragment"
         android:icon="@drawable/ic_baseline_add_circle_outline_24"
         android:title="@string/jual" />
 
     <item
-        android:id="@+id/profileFragment"
+        android:id="@+id/loginFragment"
         android:icon="@drawable/ic_outline_person_24"
         android:title="@string/profile" />
 

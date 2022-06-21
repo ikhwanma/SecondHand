@@ -48,4 +48,10 @@
     <string name="semua">Semua</string>
     <string name="daftar_jual_saya">Daftar Jual Saya</string>
     <string name="nama_penjual">Nama Penjual</string>
+    <string name="penawaran_produk">penawaran produk</string>
+    <string name="jam_tangan_casio">Jam Tangan Casio</string>
+    <string name="rp_250_000">Rp 250.000</string>
+    <string name="ditawar_rp_200_0000">Ditawar Rp 200.0000</string>
+    <string name="_20_apr_14_04">20 Apr, 14:04</string>
+    <string name="image_allert">image allert</string>
 </resources>

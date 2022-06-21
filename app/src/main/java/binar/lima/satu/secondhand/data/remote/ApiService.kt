@@ -6,6 +6,7 @@ import binar.lima.satu.secondhand.model.auth.login.PostLoginResponse
 import binar.lima.satu.secondhand.model.auth.register.PostRegisterResponse
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
 import binar.lima.satu.secondhand.model.buyer.product.GetBuyerProductResponseItem
+import binar.lima.satu.secondhand.model.notification.GetNotificationResponseItem
 import binar.lima.satu.secondhand.model.product.GetProductResponseItem
 import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponse
 import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponseItem
@@ -71,4 +72,22 @@ interface ApiService {
         @Query("category_id") category_id : Int?
     ) : List<GetProductResponseItem>
 
+    @GET("/buyer/product/{id}")
+    suspend fun getProduct(
+        @Path("id") id : Int
+    ) : GetProductResponseItem
+
+
+    //====================Notification===========================
+    //--Product--
+    @GET("/notification")
+    suspend fun getNotification(
+        @Header("access_token") token : String
+    ) : List<GetNotificationResponseItem>
+
+    @PATCH("/notification/{id}")
+    suspend fun patchNotification(
+        @Header("access_token") token : String,
+        @Path("id") id : Int
+    ) : GetNotificationResponseItem
 }

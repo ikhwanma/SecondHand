@@ -35,4 +35,9 @@ class ApiHelper @Inject constructor(private val apiService: ApiService){
 
     //================Buyer================
     suspend fun getAllProduct(status : String? = "", category_id : Int? = null) = apiService.getAllProduct(status = status, category_id = category_id)
+    suspend fun getProduct(id: Int) = apiService.getProduct(id)
+
+    //=============Notification=============
+    suspend fun getNotification(header: String) = apiService.getNotification(header)
+    suspend fun patchNotification(header: String, id: Int) = apiService.patchNotification(header, id)
 }

@@ -37,7 +37,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
 
         userViewModel.getToken().observe(viewLifecycleOwner){
             if (it != ""){
-                Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_homeFragment)
+                Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_profileFragment)
             }
         }
 

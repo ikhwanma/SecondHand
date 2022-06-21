@@ -32,4 +32,9 @@ class MainRepository @Inject constructor(private val apiHelper : ApiHelper) {
 
     //================Buyer================
     suspend fun getAllProduct(status : String? = "", category_id : Int? = null) = apiHelper.getAllProduct(status = status, category_id = category_id)
+    suspend fun getProduct(id: Int) = apiHelper.getProduct(id)
+
+    //=============Notification=============
+    suspend fun getNotification(header: String) = apiHelper.getNotification(header)
+    suspend fun patchNotification(header: String, id: Int) = apiHelper.patchNotification(header, id)
 }

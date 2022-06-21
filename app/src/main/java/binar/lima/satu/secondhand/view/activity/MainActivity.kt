@@ -22,15 +22,16 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
 
         binding.navView.setupWithNavController(navController)
-        navController.addOnDestinationChangedListener{ _, destination, _ ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             binding.apply {
-                if (destination.id == R.id.homeFragment || destination.id == R.id.profileFragment) {
+                if (destination.id == R.id.homeFragment || destination.id == R.id.profileFragment || destination.id == R.id.notificationFragment) {
                     navView.visibility = View.VISIBLE
-                }else{
+                } else {
                     navView.visibility = View.GONE
                 }
             }

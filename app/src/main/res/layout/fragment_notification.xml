@@ -1,66 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="8dp"
-    app:cardElevation="5dp"
+    android:layout_height="match_parent"
     tools:context=".view.fragment.NotificationFragment">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/tv_title"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="20dp"
+        style="@style/TextViewStyle"
+        android:text="@string/notifikasi" />
+
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_notification"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv_title"
+        tools:listitem="@layout/item_notification" />
 
-        <ImageView
-            android:id="@+id/img_film"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:scaleType="fitXY"
-            tools:src="@tools:sample/avatars"
-            tools:ignore="ContentDescription" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/info_posisi_notif"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="penawaran produk"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/notif_nama_produk"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Jam Tangan Casio"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-            <TextView
-                android:id="@+id/notif_harga_produk"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Rp 250.000"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-            <TextView
-                android:id="@+id/notif_info_harga_penawaran"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Ditawar Rp 200.0000"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-
-
-
-        </LinearLayout>
-    </LinearLayout>
-
-</androidx.cardview.widget.CardView>
+</RelativeLayout>
