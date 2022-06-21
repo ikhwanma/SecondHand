@@ -1,6 +1,7 @@
 package binar.lima.satu.secondhand.view.fragment
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
@@ -97,7 +98,8 @@ class AddProductFragment : Fragment(), View.OnClickListener {
                                 SUCCESS -> {
                                     val data = it.data!!
 //                                    imgFile = File("/storage/emulated/0/Download/tes2.jpg")
-                                    imgFile = File("/storage/emulated/0/Download/tes2.jpg")
+                                    imgFile = File("/storage/emulated/0/Download/Ellipse 1.jpg")
+
                                     val requestFile = imgFile
                                         .asRequestBody("multipart/form-data".toMediaTypeOrNull())
                                     val nameUpload = name
@@ -105,7 +107,7 @@ class AddProductFragment : Fragment(), View.OnClickListener {
                                     val priceUpload = price
                                         .toRequestBody(MultipartBody.FORM)
                                     val categoryUpload = category
-                                        .toRequestBody("*/*".toMediaTypeOrNull())
+                                        .toRequestBody(MultipartBody.FORM)
                                     val descriptionUpload = description
                                         .toRequestBody(MultipartBody.FORM)
                                     val addressUpload = data.address
@@ -149,6 +151,40 @@ class AddProductFragment : Fragment(), View.OnClickListener {
                                             }
                                         }
                                     }
+
+
+/*
+                                    val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
+
+                                    builder.addFormDataPart("name", name)
+                                    builder.addFormDataPart("description", description)
+                                    builder.addFormDataPart("base_price", price)
+                                    builder.addFormDataPart("category_ids", category)
+                                    builder.addFormDataPart("location", data.city)
+
+                                    val bmp = BitmapFactory.decodeFile(imgFile.absolutePath)
+                                    val baos = ByteArrayOutputStream()
+                                    bmp.compress(Bitmap.CompressFormat.JPEG, 30, baos)
+
+                                    builder.addFormDataPart("image", imgFile.name, RequestBody.create(MultipartBody.FORM, baos.toByteArray()))
+
+                                    val requestBody = builder.build()
+
+                                    apiViewModel.testAddSellerProduct(token, requestBody).observe(viewLifecycleOwner){ addProduct ->
+                                        when(addProduct.status){
+                                            SUCCESS -> {
+                                                Toast.makeText(requireContext(), "Sukses", Toast.LENGTH_SHORT).show()
+                                            }
+                                            ERROR -> {
+                                                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                                            }
+                                            LOADING -> {
+                                                Toast.makeText(requireContext(), "Load", Toast.LENGTH_SHORT).show()
+                                            }
+                                        }
+                                    }*/
+
+
                                     /*val pathHelper = URIPathHelper()
 
                                     imgFile = File(pathHelper.getPath(requireContext(),image)!!)

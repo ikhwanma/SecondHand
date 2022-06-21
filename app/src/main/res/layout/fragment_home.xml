@@ -14,11 +14,56 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardview_atas"
             android:layout_width="match_parent"
-            android:layout_height="398dp">
+            android:layout_height="398dp"
+            android:elevation="0dp"
+            android:translationZ="0dp">
+
+            <com.denzcoskun.imageslider.ImageSlider
+                android:id="@+id/img_slider"
+                android:layout_width="match_parent"
+                android:layout_height="320dp"
+                app:iss_auto_cycle="true"
+                app:iss_period="1000"
+                app:iss_delay="0"
+                />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    >
+
+                    <ImageView
+                        android:id="@+id/et_search"
+                        style="@style/EditTextStyle"
+                        android:autofillHints="search"
+                        android:contentDescription="@string/image_search"
+                        android:inputType="none" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="#BABABA"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="14dp"
+                        android:text="@string/cari_di_second_chance"
+                        tools:ignore="RelativeOverlap" />
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_gray_search_24"
+                        android:layout_marginEnd="18dp"
+                        android:contentDescription="@string/image_search" />
+                </RelativeLayout>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

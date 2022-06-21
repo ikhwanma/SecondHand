@@ -31,7 +31,8 @@ class MainRepository @Inject constructor(private val apiHelper : ApiHelper) {
     ) = apiHelper.testAddSellerProduct(token, name, description, base_price, category_ids, location, image)
 
     //================Buyer================
-    suspend fun getAllProduct(status : String? = "", category_id : Int? = null) = apiHelper.getAllProduct(status = status, category_id = category_id)
+    suspend fun getAllProduct(status: String? = null, category_id: Int? = null, search: String? = null) =
+        apiHelper.getAllProduct(status = status, category_id = category_id, search = search)
     suspend fun getProduct(id: Int) = apiHelper.getProduct(id)
 
     //=============Notification=============

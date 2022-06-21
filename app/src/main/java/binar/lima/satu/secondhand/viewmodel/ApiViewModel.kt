@@ -64,37 +64,11 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
     }
 
     //==================================Buyer
-    fun getAllProduct() = liveData(Dispatchers.IO){
-        emit(Resource.loading(null))
-        try {
-            emit(Resource.success(mainRepository.getAllProduct()))
-        }catch (e : Exception){
-            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
-        }
-    }
 
-    fun getAllProduct(status : String) = liveData(Dispatchers.IO){
+    fun getAllProduct(status: String? = null, category_id: Int? = null, search:String? = null) = liveData(Dispatchers.IO){
         emit(Resource.loading(null))
         try {
-            emit(Resource.success(mainRepository.getAllProduct(status)))
-        }catch (e : Exception){
-            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
-        }
-    }
-
-    fun getAllProduct(category_id : Int) = liveData(Dispatchers.IO){
-        emit(Resource.loading(null))
-        try {
-            emit(Resource.success(mainRepository.getAllProduct(category_id = category_id)))
-        }catch (e : Exception){
-            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
-        }
-    }
-
-    fun getAllProduct(status: String, category_id: Int) = liveData(Dispatchers.IO){
-        emit(Resource.loading(null))
-        try {
-            emit(Resource.success(mainRepository.getAllProduct(status, category_id)))
+            emit(Resource.success(mainRepository.getAllProduct(status, category_id, search = search)))
         }catch (e : Exception){
             emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
         }
@@ -108,7 +82,6 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
             emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
         }
     }
-
 
     fun testAddSellerProduct(token : String,
                              name : RequestBody,
