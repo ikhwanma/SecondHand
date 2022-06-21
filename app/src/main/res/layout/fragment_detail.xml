@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.fragment.ProductPreviewFragment">
+    tools:context=".view.fragment.DetailFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
@@ -24,7 +24,7 @@
         android:layout_height="match_parent"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="265dp">
-
+        
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -150,7 +150,8 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="24dp"
         style="@style/ButtonStyle"
-        android:text="@string/button_terbitkan"
+        android:text="Saya Tertarik dan Ingin Nego"
         android:id="@+id/btn_product_preview_nego"/>
+
 
 </RelativeLayout>
