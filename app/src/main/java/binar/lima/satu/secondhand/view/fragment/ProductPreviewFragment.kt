@@ -16,7 +16,6 @@ class ProductPreviewFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_product_preview, container, false)
-        btn_
     }
 
 }

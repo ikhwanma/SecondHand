@@ -8,7 +8,7 @@ data class GetProductResponseItem(
     val basePrice: Int,
     @SerializedName("Categories")
     val categories: List<Category>,
-    @SerializedName("created_at")
+    @SerializedName("createdAt")
     val createdAt: String,
     @SerializedName("id")
     val id: Int,
@@ -20,7 +20,7 @@ data class GetProductResponseItem(
     val location: String,
     @SerializedName("name")
     val name: String,
-    @SerializedName("updated_at")
+    @SerializedName("updatedAt")
     val updatedAt: String,
     @SerializedName("user_id")
     val userId: Int

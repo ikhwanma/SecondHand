@@ -26,15 +26,15 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
             emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
         }
     }
-    fun registerUser(registerBody: RegisterBody) = liveData(Dispatchers.IO){
+
+    fun getLoginUser(header: String) = liveData(Dispatchers.IO){
         emit(Resource.loading(null))
         try {
-            emit(Resource.success(mainRepository.registerUser(registerBody)))
+            emit(Resource.success(mainRepository.getLoginUser(header)))
         }catch (e : Exception){
             emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
         }
     }
-
     fun registerUser(registerBody: RegisterBody) = liveData(Dispatchers.IO){
         emit(Resource.loading(null))
         try {
@@ -100,6 +100,15 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
         }
     }
 
+    fun getProduct(id: Int) = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(mainRepository.getProduct(id)))
+        }catch (e : Exception){
+            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
+        }
+    }
+
 
     fun testAddSellerProduct(token : String,
                              name : RequestBody,
@@ -111,6 +120,25 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
         emit(Resource.loading(null))
         try {
             emit(Resource.success(mainRepository.testAddSellerProduct(token, name, description, base_price, category_ids, location, image)))
+        }catch (e : Exception){
+            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
+        }
+    }
+
+    //==================================Notification
+    fun getNotification(header: String) = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(mainRepository.getNotification(header)))
+        }catch (e : Exception){
+            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
+        }
+    }
+
+    fun patchNotification(header: String, id: Int) = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(mainRepository.patchNotification(header, id)))
         }catch (e : Exception){
             emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
         }
