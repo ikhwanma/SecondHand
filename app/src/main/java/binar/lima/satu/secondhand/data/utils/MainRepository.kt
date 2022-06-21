@@ -21,14 +21,22 @@ class MainRepository @Inject constructor(private val apiHelper : ApiHelper) {
     suspend fun getAllCategory() = apiHelper.getAllCategory()
 
     suspend fun testAddSellerProduct(
-        token : String,
-        name : RequestBody,
-        description : RequestBody,
-        base_price : RequestBody,
-        category_ids : RequestBody,
-        location : RequestBody,
-        image :  MultipartBody.Part,
-    ) = apiHelper.testAddSellerProduct(token, name, description, base_price, category_ids, location, image)
+        token: String,
+        name: String,
+        description: String,
+        base_price: Int,
+        category_ids: List<Int>,
+        location: String,
+        image: MultipartBody.Part,
+    ) = apiHelper.testAddSellerProduct(
+        token,
+        name,
+        description,
+        base_price,
+        category_ids,
+        location,
+        image
+    )
 
     //================Buyer================
     suspend fun getAllProduct(status: String? = null, category_id: Int? = null, search: String? = null) =

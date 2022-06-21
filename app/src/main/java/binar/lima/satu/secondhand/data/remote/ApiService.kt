@@ -7,6 +7,7 @@ import binar.lima.satu.secondhand.model.auth.register.PostRegisterResponse
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
 import binar.lima.satu.secondhand.model.buyer.product.GetBuyerProductResponseItem
 import binar.lima.satu.secondhand.model.notification.GetNotificationResponseItem
+import binar.lima.satu.secondhand.model.product.Category
 import binar.lima.satu.secondhand.model.product.GetProductResponseItem
 import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponse
 import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponseItem
@@ -53,13 +54,13 @@ interface ApiService {
     @POST("/seller/product")
     suspend fun testAddSellerProduct(
         @Header("access_token") token : String,
-        @Part("name") name : RequestBody,
-        @Part("description") description : RequestBody,
-        @Part("base_price") base_price : RequestBody,
-        @Part("category_ids") category_ids : RequestBody,
-        @Part("location") location : RequestBody,
+        @Part("name") name : String,
+        @Part("description") description : String,
+        @Part("base_price") base_price : Int,
+        @Query("category_ids[]") category_ids : List<Int>,
+        @Part("location") location : String,
         @Part image : MultipartBody.Part,
-    ) : RequestBody
+    )
     //--Category--
     @GET("/seller/category")
     suspend fun getAllCategory() : List<GetSellerCategoryResponseItem>

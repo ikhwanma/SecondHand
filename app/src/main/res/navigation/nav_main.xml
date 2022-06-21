@@ -59,9 +59,6 @@
             android:id="@+id/action_homeFragment_to_profileFragment3"
             app:destination="@id/profileFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
     </fragment>
@@ -78,7 +75,11 @@
         android:id="@+id/notificationFragment"
         android:name="binar.lima.satu.secondhand.view.fragment.NotificationFragment"
         android:label="fragment_notification"
-        tools:layout="@layout/fragment_notification" />
+        tools:layout="@layout/fragment_notification" >
+        <action
+            android:id="@+id/action_notificationFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="binar.lima.satu.secondhand.view.fragment.SearchFragment"

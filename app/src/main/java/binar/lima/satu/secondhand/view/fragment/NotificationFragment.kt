@@ -50,18 +50,20 @@ class NotificationFragment : Fragment() {
                             if (data.data!!.isNotEmpty()){
                                 val listProduct = mutableListOf<GetProductResponseItem>()
 
-                                for (dataProduct in data.data){
-                                    apiViewModel.getProduct(dataProduct.productId).observe(viewLifecycleOwner){ product ->
-                                        when(product.status){
-                                            SUCCESS -> {
-                                                listProduct.add(product.data!!)
-                                                setData(listProduct, data.data)
-                                            }
-                                            ERROR -> {
+                                if (data.data.isNotEmpty()){
+                                    for (dataProduct in data.data){
+                                        apiViewModel.getProduct(dataProduct.productId).observe(viewLifecycleOwner){ product ->
+                                            when(product.status){
+                                                SUCCESS -> {
+                                                    listProduct.add(product.data!!)
+                                                    setData(listProduct, data.data)
+                                                }
+                                                ERROR -> {
 
-                                            }
-                                            LOADING -> {
+                                                }
+                                                LOADING -> {
 
+                                                }
                                             }
                                         }
                                     }
@@ -76,6 +78,8 @@ class NotificationFragment : Fragment() {
                         }
                     }
                 }
+            }else{
+                Navigation.findNavController(requireView()).navigate(R.id.action_notificationFragment_to_loginFragment)
             }
         }
 
