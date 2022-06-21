@@ -25,11 +25,11 @@ class ApiHelper @Inject constructor(private val apiService: ApiService) {
 
     suspend fun testAddSellerProduct(
         token: String,
-        name: RequestBody,
-        description: RequestBody,
-        base_price: RequestBody,
-        category_ids: RequestBody,
-        location: RequestBody,
+        name: String,
+        description: String,
+        base_price: Int,
+        category_ids: List<Int>,
+        location: String,
         image: MultipartBody.Part,
     ) = apiService.testAddSellerProduct(
         token,

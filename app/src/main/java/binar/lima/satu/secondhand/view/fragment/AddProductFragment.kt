@@ -100,6 +100,8 @@ class AddProductFragment : Fragment(), View.OnClickListener {
 //                                    imgFile = File("/storage/emulated/0/Download/tes2.jpg")
                                     imgFile = File("/storage/emulated/0/Download/Ellipse 1.jpg")
 
+                                    val requestBody = imgFile.asRequestBody(null)
+
                                     val requestFile = imgFile
                                         .asRequestBody("multipart/form-data".toMediaTypeOrNull())
                                     val nameUpload = name
@@ -120,11 +122,11 @@ class AddProductFragment : Fragment(), View.OnClickListener {
 
                                     apiViewModel.testAddSellerProduct(
                                         token,
-                                        nameUpload,
-                                        descriptionUpload,
-                                        priceUpload,
-                                        categoryUpload,
-                                        addressUpload,
+                                        name,
+                                        description,
+                                        price.toInt(),
+                                        listOf(category.toInt()),
+                                        data.address,
                                         imageUpload
                                     ).observe(viewLifecycleOwner) {
                                         when (it.status) {

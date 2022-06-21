@@ -84,11 +84,11 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
     }
 
     fun testAddSellerProduct(token : String,
-                             name : RequestBody,
-                             description : RequestBody,
-                             base_price : RequestBody,
-                             category_ids : RequestBody,
-                             location : RequestBody,
+                             name : String,
+                             description : String,
+                             base_price : Int,
+                             category_ids : List<Int>,
+                             location : String,
                              image :  MultipartBody.Part,) = liveData(Dispatchers.IO){
         emit(Resource.loading(null))
         try {

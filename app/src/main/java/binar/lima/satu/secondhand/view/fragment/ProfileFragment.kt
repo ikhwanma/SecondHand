@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
 import binar.lima.satu.secondhand.R
@@ -30,13 +31,15 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
         binding.btnUbahAkun.setOnClickListener {
             Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_editProfileFragment)
         }
 
         binding.btnLogout.setOnClickListener {
             userViewModel.setToken("")
-            Navigation.findNavController(requireView()).navigate(R.id.loginFragment)
+            Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_loginFragment2)
         }
     }
 }
