@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import binar.lima.satu.secondhand.R
@@ -19,6 +20,8 @@ import binar.lima.satu.secondhand.view.adapter.CategoryAdapter
 import binar.lima.satu.secondhand.view.adapter.ProductAdapter
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 
 
 class HomeFragment : Fragment() {
@@ -43,12 +46,18 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val list = ArrayList<SlideModel>()
+
+        list.add(SlideModel("https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1655773426711-pexels-christian-heitz-842711.jpg?alt=media", ScaleTypes.FIT))
+        list.add(SlideModel("https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1655773426711-pexels-christian-heitz-842711.jpg?alt=media", ScaleTypes.FIT))
+
+        binding.imgSlider.setImageList(list)
         apiViewModel.getAllCategory().observe(viewLifecycleOwner){
             when(it.status){
                 SUCCESS -> {
                     val adapter = CategoryAdapter{ data ->
                         category = data.id
-                        apiViewModel.getAllProduct(category_id = category).observe(viewLifecycleOwner){ product ->
+                        apiViewModel.getAllProduct(category_id = category, status = "available").observe(viewLifecycleOwner){ product ->
                             when(product.status){
                                 SUCCESS -> {
                                     val adapter = ProductAdapter{ data ->
@@ -91,10 +100,13 @@ class HomeFragment : Fragment() {
         binding.btnAll.setOnClickListener {
             getData()
         }
+        binding.etSearch.setOnClickListener {
+            Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_searchFragment)
+        }
     }
 
     private fun getData() {
-        apiViewModel.getAllProduct().observe(viewLifecycleOwner){ product ->
+        apiViewModel.getAllProduct(status = "available").observe(viewLifecycleOwner){ product ->
             when(product.status){
                 SUCCESS -> {
                     val adapter = ProductAdapter{ data ->

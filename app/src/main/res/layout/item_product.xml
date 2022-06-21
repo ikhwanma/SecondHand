@@ -19,8 +19,8 @@
 
     <TextView
         android:id="@+id/tv_product"
-        android:layout_width="140dp"
-        android:layout_height="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
         android:layout_marginTop="116dp"
         android:text=""
@@ -30,8 +30,8 @@
 
     <TextView
         android:id="@+id/tv_category"
-        android:layout_width="140dp"
-        android:layout_height="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
         android:layout_marginTop="140dp"
         android:text=""
@@ -39,8 +39,8 @@
 
     <TextView
         android:id="@+id/tv_price"
-        android:layout_width="140dp"
-        android:layout_height="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
         android:layout_marginTop="162dp"
         android:text=""
