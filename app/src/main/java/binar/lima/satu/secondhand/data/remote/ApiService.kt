@@ -5,6 +5,8 @@ import binar.lima.satu.secondhand.model.auth.login.LoginBody
 import binar.lima.satu.secondhand.model.auth.login.PostLoginResponse
 import binar.lima.satu.secondhand.model.auth.register.PostRegisterResponse
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
+import binar.lima.satu.secondhand.model.buyer.order.PostOrderBody
+import binar.lima.satu.secondhand.model.buyer.order.PostOrderResponse
 import binar.lima.satu.secondhand.model.notification.GetNotificationResponseItem
 import binar.lima.satu.secondhand.model.product.GetDetailProductResponse
 import binar.lima.satu.secondhand.model.product.GetProductResponseItem
@@ -77,6 +79,12 @@ interface ApiService {
     suspend fun getProduct(
         @Path("id") id : Int
     ) : GetDetailProductResponse
+
+    @POST("/buyer/order")
+    suspend fun postOrder(
+        @Header("access_token") token : String,
+        @Body order : PostOrderBody
+    ) : PostOrderResponse
 
 
     //====================Notification===========================

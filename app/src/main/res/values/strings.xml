@@ -63,4 +63,8 @@
     <string name="image">image</string>
     <string name="info_penawar">Info Penawar</string>
     <string name="daftar_produuk_yang_ditawar">Daftar Produk yang Ditawar</string>
+    <string name="masukkan_harga_tawarmu">Masukkan Harga Tawarmu</string>
+    <string name="harga_tawaranmu_akan_diketahui_penual_jika_penjual_cocok_kamu_akan_segera_dihubungi_penjual">Harga tawaranmu akan diketahui penual, jika penjual cocok kamu akan segera dihubungi penjual.</string>
+    <string name="harga_tawar">Harga Tawar</string>
+    <string name="kirim">Kirim</string>
 </resources>
