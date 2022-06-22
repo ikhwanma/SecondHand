@@ -9,9 +9,14 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import binar.lima.satu.secondhand.R
+import binar.lima.satu.secondhand.data.utils.Status
+import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentAddProductBinding
+import binar.lima.satu.secondhand.databinding.FragmentHomeBinding
 import binar.lima.satu.secondhand.databinding.FragmentProductPreviewBinding
+import binar.lima.satu.secondhand.model.auth.login.GetLoginResponse
 import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponseItem
+import binar.lima.satu.secondhand.model.seller.product.ProductBody
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
 import pl.aprilapps.easyphotopicker.EasyImage
@@ -28,35 +33,61 @@ class ProductPreviewFragment : Fragment() {
     private val apiViewModel: ApiViewModel by hiltNavGraphViewModels(R.id.nav_main)
     private val userViewModel: UserViewModel by hiltNavGraphViewModels(R.id.nav_main)
 
-    private lateinit var imgFile: File
-    private lateinit var easyImage: EasyImage
+    private lateinit var token : String
+    private lateinit var user : GetLoginResponse
 
-    private val galleryResult =
-        registerForActivityResult(ActivityResultContracts.GetContent()) { result ->
-//            binding.imgProduct.setImageURI(result)
-            image = result!!
-
-
-        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_product_preview, container, false)
-        getPreviewData()
+    ): View {
+        _binding = FragmentProductPreviewBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    private fun getPreviewData(){
-        val args = this.arguments
-        val productName = args?.get("name")
-        val productPrice = args?.get("price")
-        val productCategory = args?.get("category")
-        val productDesc = args?.get("description")
-        binding.tvProductPreviewName.text = productName.toString()
-        binding.tvProductPreviewPrice.text = productPrice.toString()
-        binding.tvProductPreviewType.text = productCategory.toString()
-        binding.tvProductPreviewDescriptionLorem.text = productDesc.toString()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val product = arguments?.getParcelable<ProductBody>(EXTRA_PRODUCT) as ProductBody
+
+        binding.apply {
+            tvProduct.text = product.name
+            tvPrice.text = product.basePrice.toString()
+            tvDescription.text = product.description
+            imgProduct.setImageURI(product.image)
+            tvSellerCity.text = product.location
+        }
+
+        userViewModel.getToken().observe(viewLifecycleOwner){
+            setToken(it)
+            apiViewModel.getLoginUser(it).observe(viewLifecycleOwner){ it1 ->
+                when(it1.status){
+                    SUCCESS -> {
+                        setUser(it1.data)
+                    }
+                    ERROR -> {
+
+                    }
+                    LOADING -> {
+
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setUser(data: GetLoginResponse?) {
+        user = data!!
+        binding.apply {
+            tvSellerName.text = user.fullName
+
+        }
+    }
+
+    private fun setToken(it: String) {
+        token = it
+    }
+
+    companion object{
+        const val EXTRA_PRODUCT = "extra_product"
     }
 }

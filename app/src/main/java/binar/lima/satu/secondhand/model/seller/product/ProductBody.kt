@@ -1,8 +1,13 @@
 package binar.lima.satu.secondhand.model.seller.product
 
 
+import android.net.Uri
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+
+@Parcelize
 data class ProductBody(
     @SerializedName("name")
     val name: String,
@@ -15,5 +20,5 @@ data class ProductBody(
     @SerializedName("location")
     val location: String,
     @SerializedName("image")
-    val image: Any
-)
+    val image: Uri
+) : Parcelable
