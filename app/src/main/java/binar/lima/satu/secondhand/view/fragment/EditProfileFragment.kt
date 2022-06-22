@@ -1,18 +1,17 @@
 package binar.lima.satu.secondhand.view.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
 import binar.lima.satu.secondhand.R
-import binar.lima.satu.secondhand.data.utils.Status
+import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentEditProfileBinding
-import binar.lima.satu.secondhand.databinding.FragmentProfileBinding
-import binar.lima.satu.secondhand.model.auth.login.LoginBody
+import binar.lima.satu.secondhand.model.auth.login.GetLoginResponse
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
@@ -25,6 +24,9 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
     //Define viewModel
     private val apiViewModel: ApiViewModel by hiltNavGraphViewModels(R.id.nav_main)
     private val userViewModel: UserViewModel by hiltNavGraphViewModels(R.id.nav_main)
+
+    private lateinit var token : String
+    private lateinit var user : GetLoginResponse
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,9 +41,44 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
 
         binding.btnSimpan.setOnClickListener(this)
 
+        userViewModel.getToken().observe(viewLifecycleOwner){
+            setToken(it)
+            apiViewModel.getLoginUser(it).observe(viewLifecycleOwner){ user ->
+                when(user.status){
+                    SUCCESS -> {
+                        binding.apply {
+                            val data = user.data!!
+                            etNamaEditProfile.setText(data.fullName)
+                            etAlamatEditProfile.setText(data.address)
+                            etNoHandphoneEditProfile.setText(data.phoneNumber)
+                            etPilihKotaEditProfile.setText(data.city)
+
+                            setUser(data)
+                        }
+                    }
+                    ERROR -> {
+
+                    }
+                    LOADING -> {
+
+                    }
+                }
+            }
+        }
+
+
+
         binding.btnPanah.setOnClickListener {
             Navigation.findNavController(requireView()).navigate(R.id.action_editProfileFragment_to_profileFragment)
         }
+    }
+
+    private fun setUser(data: GetLoginResponse) {
+        user = data
+    }
+
+    private fun setToken(it: String) {
+        this.token = it
     }
 
     override fun onClick(p0: View?) {
@@ -54,47 +91,22 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
                     val alamat = etAlamatEditProfile.text.toString()
                     val handphone = etNoHandphoneEditProfile.text.toString().toLong()
 
-                    userViewModel.getToken().observe(viewLifecycleOwner){
-                        apiViewModel.getLoginUser(it).observe(viewLifecycleOwner){
-                            when(it.status){
-                                Status.SUCCESS -> {
-                                    val registerBody = RegisterBody(alamat, it.data!!.email, nama, image, it.data.password, handphone, kota)
-                                    updateUser(registerBody)
-                                }
-                                Status.ERROR -> {
-                                    if(it.message!!.contains("401")){
-                                        Toast.makeText(requireContext(), "Update User Gagal", Toast.LENGTH_SHORT).show()
-                                    }else{
-                                        Toast.makeText(requireContext(), "Gagal mendapatkan data", Toast.LENGTH_SHORT).show()
-                                    }
-                                }
-                                Status.LOADING -> {
-                                    Toast.makeText(requireContext(), "Load", Toast.LENGTH_SHORT).show()
-                                }
+                    val requestBody = RegisterBody(alamat, user.email, nama, "sdasda", user.password, handphone, kota)
+
+                    apiViewModel.updateUser(token, requestBody).observe(viewLifecycleOwner){
+                        when(it.status){
+                            SUCCESS -> {
+                                Toast.makeText(requireContext(), "Sukses", Toast.LENGTH_SHORT).show()
+                                Navigation.findNavController(requireView()).navigate(R.id.action_editProfileFragment_to_profileFragment)
+                            }
+                            ERROR -> {
+                                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                            }
+                            LOADING -> {
+                                Toast.makeText(requireContext(), "Load", Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
-                }
-            }
-        }
-    }
-
-    private fun updateUser(registerBody: RegisterBody){
-        apiViewModel.registerUser(registerBody).observe(viewLifecycleOwner){
-            when(it.status){
-                Status.SUCCESS -> {
-                    Navigation.findNavController(requireView()).navigate(R.id.action_editProfileFragment_to_profileFragment)
-                    Toast.makeText(requireContext(), "Update User Berhasil", Toast.LENGTH_SHORT).show()
-                }
-                Status.ERROR -> {
-                    if(it.message!!.contains("401")){
-                        Toast.makeText(requireContext(), "Update User Gagal", Toast.LENGTH_SHORT).show()
-                    }else{
-                        Toast.makeText(requireContext(), "Gagal mendapatkan data", Toast.LENGTH_SHORT).show()
-                    }
-                }
-                Status.LOADING -> {
-                    Toast.makeText(requireContext(), "Load", Toast.LENGTH_SHORT).show()
                 }
             }
         }

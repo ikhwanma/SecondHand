@@ -35,11 +35,11 @@ class LoginFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Toast.makeText(requireContext(), "Login terlebih dahulu", Toast.LENGTH_SHORT).show()
-
         userViewModel.getToken().observe(viewLifecycleOwner){
             if (it != ""){
                 Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_profileFragment)
+            }else{
+                Toast.makeText(requireContext(), "Login terlebih dahulu", Toast.LENGTH_SHORT).show()
             }
         }
 
