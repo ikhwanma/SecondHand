@@ -3,6 +3,7 @@ package binar.lima.satu.secondhand.data.helper
 import binar.lima.satu.secondhand.data.remote.ApiService
 import binar.lima.satu.secondhand.model.auth.login.LoginBody
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
+import binar.lima.satu.secondhand.model.buyer.order.PostOrderBody
 import binar.lima.satu.secondhand.model.seller.product.ProductBody
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -15,7 +16,7 @@ class ApiHelper @Inject constructor(private val apiService: ApiService) {
     suspend fun getLoginUser(header: String) = apiService.getLoginUser(header)
 
     suspend fun registerUser(registerBody: RegisterBody) = apiService.registerUser(registerBody)
-    suspend fun updateUser(header: String) = apiService.updateUser(header)
+    suspend fun updateUser(header: String, registerBody: RegisterBody) = apiService.updateUser(header, registerBody)
 
     //================Seller================
     suspend fun addSellerProduct(token: String, product: ProductBody) =
@@ -46,6 +47,7 @@ class ApiHelper @Inject constructor(private val apiService: ApiService) {
         apiService.getAllProduct(status = status, category_id = category_id, search = search)
 
     suspend fun getProduct(id: Int) = apiService.getProduct(id)
+    suspend fun postOrder(header: String, order: PostOrderBody) = apiService.postOrder(header, order)
 
     //=============Notification=============
     suspend fun getNotification(header: String) = apiService.getNotification(header)

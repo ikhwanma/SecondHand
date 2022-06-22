@@ -1,8 +1,6 @@
 package binar.lima.satu.secondhand.model.seller.product
 
 
-import android.graphics.Bitmap
-import android.net.Uri
 import com.google.gson.annotations.SerializedName
 
 data class ProductBody(

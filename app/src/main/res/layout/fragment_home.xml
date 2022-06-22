@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="320dp"
                 app:iss_auto_cycle="true"
-                app:iss_period="1000"
+                app:iss_period="5000"
                 app:iss_delay="0"
                 />
 

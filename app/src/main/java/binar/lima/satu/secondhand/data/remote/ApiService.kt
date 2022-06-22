@@ -5,10 +5,11 @@ import binar.lima.satu.secondhand.model.auth.login.LoginBody
 import binar.lima.satu.secondhand.model.auth.login.PostLoginResponse
 import binar.lima.satu.secondhand.model.auth.register.PostRegisterResponse
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
-import binar.lima.satu.secondhand.model.buyer.product.GetBuyerProductResponseItem
+import binar.lima.satu.secondhand.model.buyer.order.PostOrderBody
+import binar.lima.satu.secondhand.model.buyer.order.PostOrderResponse
 import binar.lima.satu.secondhand.model.notification.GetNotificationResponseItem
+import binar.lima.satu.secondhand.model.product.GetDetailProductResponse
 import binar.lima.satu.secondhand.model.product.GetProductResponseItem
-import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponse
 import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponseItem
 import binar.lima.satu.secondhand.model.seller.product.ProductBody
 import okhttp3.MultipartBody
@@ -36,9 +37,10 @@ interface ApiService {
     ) : PostRegisterResponse
 
     //--Profile--
-    @PUT("/auth/user/{id}")
+    @PUT("/auth/user")
     suspend fun updateUser(
-        @Header("access_token") header : String
+        @Header("access_token") header : String,
+        @Body user : RegisterBody
     ) : PostRegisterResponse
 
     //=======================Seller==============================
@@ -59,7 +61,7 @@ interface ApiService {
         @Part("category_ids") category_ids : RequestBody,
         @Part("location") location : RequestBody,
         @Part image : MultipartBody.Part,
-    ) : RequestBody
+    )
     //--Category--
     @GET("/seller/category")
     suspend fun getAllCategory() : List<GetSellerCategoryResponseItem>
@@ -76,7 +78,13 @@ interface ApiService {
     @GET("/buyer/product/{id}")
     suspend fun getProduct(
         @Path("id") id : Int
-    ) : GetProductResponseItem
+    ) : GetDetailProductResponse
+
+    @POST("/buyer/order")
+    suspend fun postOrder(
+        @Header("access_token") token : String,
+        @Body order : PostOrderBody
+    ) : PostOrderResponse
 
 
     //====================Notification===========================

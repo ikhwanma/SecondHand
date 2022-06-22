@@ -38,8 +38,11 @@ class LoginFragment : Fragment(), View.OnClickListener {
         userViewModel.getToken().observe(viewLifecycleOwner){
             if (it != ""){
                 Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_profileFragment)
+            }else{
+                Toast.makeText(requireContext(), "Login terlebih dahulu", Toast.LENGTH_SHORT).show()
             }
         }
+
 
         binding.btnLogin.setOnClickListener(this)
         binding.tvRegister.setOnClickListener(this)

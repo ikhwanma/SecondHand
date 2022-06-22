@@ -6,6 +6,7 @@ import binar.lima.satu.secondhand.data.utils.MainRepository
 import binar.lima.satu.secondhand.data.utils.Resource
 import binar.lima.satu.secondhand.model.auth.login.LoginBody
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
+import binar.lima.satu.secondhand.model.buyer.order.PostOrderBody
 import binar.lima.satu.secondhand.model.seller.product.ProductBody
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -44,6 +45,15 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
         }
     }
 
+    fun updateUser(header: String,registerBody: RegisterBody) = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(mainRepository.updateUser(header, registerBody)))
+        }catch (e : Exception){
+            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
+        }
+    }
+
     //==================================Seller
     fun addSellerProduct(token: String, product: ProductBody) = liveData(Dispatchers.IO){
         emit(Resource.loading(null))
@@ -58,6 +68,21 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
         emit(Resource.loading(null))
         try {
             emit(Resource.success(mainRepository.getAllCategory()))
+        }catch (e : Exception){
+            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
+        }
+    }
+
+    fun testAddSellerProduct(token : String,
+                             name : RequestBody,
+                             description : RequestBody,
+                             base_price : RequestBody,
+                             category_ids : RequestBody,
+                             location : RequestBody,
+                             image :  MultipartBody.Part) = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(mainRepository.testAddSellerProduct(token, name, description, base_price, category_ids, location, image)))
         }catch (e : Exception){
             emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
         }
@@ -83,16 +108,10 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
         }
     }
 
-    fun testAddSellerProduct(token : String,
-                             name : RequestBody,
-                             description : RequestBody,
-                             base_price : RequestBody,
-                             category_ids : RequestBody,
-                             location : RequestBody,
-                             image :  MultipartBody.Part,) = liveData(Dispatchers.IO){
+    fun postOrder(header: String, order: PostOrderBody) = liveData(Dispatchers.IO){
         emit(Resource.loading(null))
         try {
-            emit(Resource.success(mainRepository.testAddSellerProduct(token, name, description, base_price, category_ids, location, image)))
+            emit(Resource.success(mainRepository.postOrder(header, order)))
         }catch (e : Exception){
             emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
         }
