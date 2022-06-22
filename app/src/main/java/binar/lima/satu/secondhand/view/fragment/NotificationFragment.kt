@@ -1,11 +1,11 @@
 package binar.lima.satu.secondhand.view.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,7 +13,7 @@ import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentNotificationBinding
 import binar.lima.satu.secondhand.model.notification.GetNotificationResponseItem
-import binar.lima.satu.secondhand.model.product.GetProductResponseItem
+import binar.lima.satu.secondhand.model.product.GetDetailProductResponse
 import binar.lima.satu.secondhand.view.adapter.NotificationAdapter
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
@@ -48,7 +48,7 @@ class NotificationFragment : Fragment() {
                     when (data.status) {
                         SUCCESS -> {
                             if (data.data!!.isNotEmpty()){
-                                val listProduct = mutableListOf<GetProductResponseItem>()
+                                val listProduct = mutableListOf<GetDetailProductResponse>()
 
                                 if (data.data.isNotEmpty()){
                                     for (dataProduct in data.data){
@@ -90,7 +90,7 @@ class NotificationFragment : Fragment() {
     }
 
     private fun setData(
-        product: List<GetProductResponseItem>,
+        product: List<GetDetailProductResponse>,
         data: List<GetNotificationResponseItem>
     ){
         if (product.size == data.size){
@@ -99,7 +99,7 @@ class NotificationFragment : Fragment() {
         }
     }
 
-    private fun setList(product: List<GetProductResponseItem>, data: List<GetNotificationResponseItem>) {
+    private fun setList(product: List<GetDetailProductResponse>, data: List<GetNotificationResponseItem>) {
         binding.apply {
             val adapter = NotificationAdapter {
                 apiViewModel.patchNotification(token, it.id).observe(viewLifecycleOwner){ notif ->

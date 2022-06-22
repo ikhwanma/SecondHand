@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import binar.lima.satu.secondhand.data.utils.DateConverter
 import binar.lima.satu.secondhand.databinding.ItemNotificationBinding
 import binar.lima.satu.secondhand.model.notification.GetNotificationResponseItem
-import binar.lima.satu.secondhand.model.product.GetProductResponseItem
+import binar.lima.satu.secondhand.model.product.GetDetailProductResponse
 import com.bumptech.glide.Glide
 
 class NotificationAdapter(val onItemClick: (GetNotificationResponseItem) -> Unit) :
@@ -18,7 +18,7 @@ class NotificationAdapter(val onItemClick: (GetNotificationResponseItem) -> Unit
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
             data: GetNotificationResponseItem,
-            dataProduct: GetProductResponseItem,
+            dataProduct: GetDetailProductResponse,
             position: Int
         ){
             binding.apply {
@@ -58,17 +58,17 @@ class NotificationAdapter(val onItemClick: (GetNotificationResponseItem) -> Unit
         }
     }
 
-    private val diffCallbackProduct = object : DiffUtil.ItemCallback<GetProductResponseItem>(){
+    private val diffCallbackProduct = object : DiffUtil.ItemCallback<GetDetailProductResponse>(){
         override fun areItemsTheSame(
-            oldItem: GetProductResponseItem,
-            newItem: GetProductResponseItem
+            oldItem: GetDetailProductResponse,
+            newItem: GetDetailProductResponse
         ): Boolean {
             return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
-            oldItem: GetProductResponseItem,
-            newItem: GetProductResponseItem
+            oldItem: GetDetailProductResponse,
+            newItem: GetDetailProductResponse
         ): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
@@ -79,7 +79,7 @@ class NotificationAdapter(val onItemClick: (GetNotificationResponseItem) -> Unit
     private val differProduct = AsyncListDiffer(this, diffCallbackProduct)
 
     fun submitData(value : List<GetNotificationResponseItem>?) = differ.submitList(value)
-    fun submitDataProduct(value : List<GetProductResponseItem>?) = differProduct.submitList(value)
+    fun submitDataProduct(value : List<GetDetailProductResponse>?) = differProduct.submitList(value)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)

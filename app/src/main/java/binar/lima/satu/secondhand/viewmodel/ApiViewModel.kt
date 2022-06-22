@@ -44,6 +44,15 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
         }
     }
 
+    fun updateUser(header: String,registerBody: RegisterBody) = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(mainRepository.updateUser(header, registerBody)))
+        }catch (e : Exception){
+            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
+        }
+    }
+
     //==================================Seller
     fun addSellerProduct(token: String, product: ProductBody) = liveData(Dispatchers.IO){
         emit(Resource.loading(null))
@@ -84,12 +93,12 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
     }
 
     fun testAddSellerProduct(token : String,
-                             name : String,
-                             description : String,
-                             base_price : Int,
-                             category_ids : List<Int>,
-                             location : String,
-                             image :  MultipartBody.Part,) = liveData(Dispatchers.IO){
+                             name : RequestBody,
+                             description : RequestBody,
+                             base_price : RequestBody,
+                             category_ids : RequestBody,
+                             location : RequestBody,
+                             image :  MultipartBody.Part) = liveData(Dispatchers.IO){
         emit(Resource.loading(null))
         try {
             emit(Resource.success(mainRepository.testAddSellerProduct(token, name, description, base_price, category_ids, location, image)))

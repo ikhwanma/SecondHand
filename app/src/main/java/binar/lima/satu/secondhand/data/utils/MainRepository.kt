@@ -14,7 +14,7 @@ class MainRepository @Inject constructor(private val apiHelper : ApiHelper) {
     suspend fun loginUser(loginBody: LoginBody) = apiHelper.loginUser(loginBody)
     suspend fun getLoginUser(header: String) = apiHelper.getLoginUser(header)
     suspend fun registerUser(registerBody: RegisterBody) = apiHelper.registerUser(registerBody)
-    suspend fun updateUser(header: String) = apiHelper.updateUser(header)
+    suspend fun updateUser(header: String, registerBody: RegisterBody) = apiHelper.updateUser(header, registerBody)
 
     //================Seller================
     suspend fun addSellerProduct(token: String, product: ProductBody) = apiHelper.addSellerProduct(token, product)
@@ -22,11 +22,11 @@ class MainRepository @Inject constructor(private val apiHelper : ApiHelper) {
 
     suspend fun testAddSellerProduct(
         token: String,
-        name: String,
-        description: String,
-        base_price: Int,
-        category_ids: List<Int>,
-        location: String,
+        name: RequestBody,
+        description: RequestBody,
+        base_price: RequestBody,
+        category_ids: RequestBody,
+        location: RequestBody,
         image: MultipartBody.Part,
     ) = apiHelper.testAddSellerProduct(
         token,

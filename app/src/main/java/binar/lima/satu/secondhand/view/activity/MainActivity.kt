@@ -3,9 +3,7 @@ package binar.lima.satu.secondhand.view.activity
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.databinding.ActivityMainBinding
