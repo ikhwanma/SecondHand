@@ -1,5 +1,6 @@
 package binar.lima.satu.secondhand.view.fragment
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
@@ -12,6 +13,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.navigation.Navigation
 import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentAddProductBinding
@@ -65,6 +67,9 @@ class AddProductFragment : Fragment(), View.OnClickListener {
 //            easyImage.openGallery(requireActivity())
         }
         binding.btnTerbitkan.setOnClickListener(this)
+        binding.btnPreview.setOnClickListener {
+            toProductPreview()
+        }
     }
 
     private fun setCategory(listCategory: List<GetSellerCategoryResponseItem>) {
@@ -220,12 +225,13 @@ class AddProductFragment : Fragment(), View.OnClickListener {
                             }
                         }
                     }
+
                 }
             }
         }
     }
 
-    private fun addProcuct(product: ProductBody, token: String) {
+    private fun addProduct(product: ProductBody, token: String) {
         apiViewModel.addSellerProduct(token, product).observe(viewLifecycleOwner) {
             when (it.status) {
                 SUCCESS -> {
@@ -246,6 +252,24 @@ class AddProductFragment : Fragment(), View.OnClickListener {
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArray)
         val b: ByteArray = byteArray.toByteArray()
         return Base64.encodeToString(b, Base64.DEFAULT)
+    }
+
+    private fun toProductPreview(){
+        binding.apply {
+            val name = etProduct.text.toString()
+            val price = etPrice.text.toString()
+            val category = etCategory.text.toString()
+            val description = etDescription.text.toString()
+            val bundle = Bundle()
+            bundle.putString("name",name)
+            bundle.putString("price",price)
+            bundle.putString("category",category)
+            bundle.putString("description",description)
+            val fragment = ProductPreviewFragment()
+            fragment.arguments = bundle
+            fragmentManager?.beginTransaction()?.replace(R.id.action_addProductFragment_to_productPreviewFragment,fragment)?.commit()
+            Navigation.findNavController(requireView()).navigate(R.id.action_addProductFragment_to_productPreviewFragment)
+        }
     }
 
 }
