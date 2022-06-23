@@ -51,6 +51,11 @@ interface ApiService {
         @Body product : ProductBody
     )
 
+    @GET("/seller/product")
+    suspend fun getSellerProduct(
+        @Header("access_token") token : String
+    ) : List<GetProductResponseItem>
+
     @Multipart
     @POST("/seller/product")
     suspend fun testAddSellerProduct(
