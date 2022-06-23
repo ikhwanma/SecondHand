@@ -65,7 +65,6 @@
     <string name="harga_tawaranmu_akan_diketahui_penual_jika_penjual_cocok_kamu_akan_segera_dihubungi_penjual">Harga tawaranmu akan diketahui penual, jika penjual cocok kamu akan segera dihubungi penjual.</string>
     <string name="harga_tawar">Harga Tawar</string>
     <string name="kirim">Kirim</string>
-
     <!--info penawar-->
     <string name="info_penawar">Info Penawar</string>
     <string name="daftar_produuk_yang_ditawar">Daftar Produkmu yang Ditawar</string>
@@ -85,4 +84,5 @@
     <string name="kamu_membatalkan_transaksi_produk_ini_kepada_pembeli">Kamu membatalkan transaksi produk ini kepada pembeli</string>
     <string name="status_produk_berhasil_diperbarui">Status produk berhasil diperbarui</string>
 
+    <string name="daftar_jual">Daftar Jual</string>
 </resources>
