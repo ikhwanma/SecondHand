@@ -93,4 +93,10 @@
 
     </HorizontalScrollView>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_sell_list"
+        android:overScrollMode="never"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </LinearLayout>
