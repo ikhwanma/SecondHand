@@ -7,6 +7,7 @@ import binar.lima.satu.secondhand.model.buyer.order.PostOrderBody
 import binar.lima.satu.secondhand.model.seller.product.ProductBody
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.http.Header
 import javax.inject.Inject
 
 class ApiHelper @Inject constructor(private val apiService: ApiService) {
@@ -21,6 +22,7 @@ class ApiHelper @Inject constructor(private val apiService: ApiService) {
     //================Seller================
     suspend fun addSellerProduct(token: String, product: ProductBody) =
         apiService.addSellerProduct(token, product)
+    suspend fun getSellerProduct(token : String) = apiService.getSellerProduct(token)
 
     suspend fun getAllCategory() = apiService.getAllCategory()
 

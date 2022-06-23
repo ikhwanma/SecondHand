@@ -114,4 +114,9 @@
             app:popUpTo="@id/detailFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/daftarJualSayaFragment"
+        android:name="binar.lima.satu.secondhand.view.fragment.DaftarJualSayaFragment"
+        android:label="fragment_daftar_jual_saya"
+        tools:layout="@layout/fragment_daftar_jual_saya" />
 </navigation>

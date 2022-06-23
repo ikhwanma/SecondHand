@@ -142,7 +142,6 @@ class AddProductFragment : Fragment(), View.OnClickListener {
                         requestFile
                     )
 
-<<<<<<< HEAD
                     apiViewModel.testAddSellerProduct(
                         token,
                         nameUpload,
@@ -173,7 +172,6 @@ class AddProductFragment : Fragment(), View.OnClickListener {
                                     "Load",
                                     Toast.LENGTH_SHORT
                                 ).show()
-=======
                                     apiViewModel.testAddSellerProduct(
                                         token,
                                         nameUpload,
@@ -207,8 +205,6 @@ class AddProductFragment : Fragment(), View.OnClickListener {
                                             }
                                         }
                                     }*/
-
-
 /*
                                     val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
 
@@ -259,41 +255,8 @@ class AddProductFragment : Fragment(), View.OnClickListener {
                                     Toast.makeText(requireContext(), imgFile.toString(), Toast.LENGTH_SHORT).show()*/
 //                                    addProcuct(product, token)
 
-                                    val bitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, image)
-                                    val baos = ByteArrayOutputStream()
-                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-                                    val bitmaps = Bitmap.createScaledBitmap(bitmap, 720, 720, true)
 
-                                    val product = ProductBody(name, description, price.toInt(), listOf(category.toInt()), data.address,
-                                        bitMapToString(bitmaps)!!
-                                    )
-
-                                    addProduct(product, token)
-                                }
-
-
-                                ERROR -> {
-                                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT)
-                                        .show()
-                                }
-                                LOADING -> {
-
-                                }
->>>>>>> 37fb42150c3ca2cf06429926956ef33b62e3b030
-                            }
-                        }
-                    }
-
-
-                    val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
-
-                    builder.addFormDataPart("name", name)
-                    builder.addFormDataPart("description", description)
-                    builder.addFormDataPart("base_price", price)
-                    builder.addFormDataPart("category_ids", category)
-                    builder.addFormDataPart("location", data.city)
-
-                    val bmp = BitmapFactory.decodeFile(imgFile.absolutePath)
+                    /*val bmp = BitmapFactory.decodeFile(imgFile.absolutePath)
                     val baos = ByteArrayOutputStream()
                     bmp.compress(Bitmap.CompressFormat.JPEG, 30, baos)
 
@@ -313,10 +276,10 @@ class AddProductFragment : Fragment(), View.OnClickListener {
                                 Toast.makeText(requireContext(), "Load", Toast.LENGTH_SHORT).show()
                             }
                         }
-                    }
+                    }*/
 
 
-                    val pathHelper = URIPathHelper()
+                    /*val pathHelper = URIPathHelper()
 
                     imgFile = File(pathHelper.getPath(requireContext(),image)!!)
 
@@ -346,7 +309,6 @@ class AddProductFragment : Fragment(), View.OnClickListener {
                     )
 
                     addProduct(product, token)
-
 
                 }
             }
@@ -393,3 +355,4 @@ class AddProductFragment : Fragment(), View.OnClickListener {
     }
 
 }
+

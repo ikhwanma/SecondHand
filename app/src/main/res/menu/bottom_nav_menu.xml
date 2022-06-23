@@ -16,6 +16,11 @@
         android:title="@string/jual" />
 
     <item
+        android:id="@+id/daftarJualSayaFragment"
+        android:icon="@drawable/ic_baseline_list_24"
+        android:title="@string/daftar_jual" />
+
+    <item
         android:id="@+id/loginFragment"
         android:icon="@drawable/ic_outline_person_24"
         android:title="@string/profile" />

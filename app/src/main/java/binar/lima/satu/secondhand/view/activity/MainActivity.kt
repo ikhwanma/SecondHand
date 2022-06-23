@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         binding.navView.setupWithNavController(navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             binding.apply {
-                if (destination.id == R.id.homeFragment || destination.id == R.id.profileFragment || destination.id == R.id.notificationFragment) {
+                if (destination.id == R.id.homeFragment || destination.id == R.id.profileFragment || destination.id == R.id.notificationFragment || destination.id == R.id.daftarJualSayaFragment) {
                     navView.visibility = View.VISIBLE
                 } else {
                     navView.visibility = View.GONE
