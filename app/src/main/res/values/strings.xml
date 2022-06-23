@@ -66,11 +66,12 @@
     <string name="harga_tawar">Harga Tawar</string>
     <string name="kirim">Kirim</string>
 
-<!--info penawar-->
+    <!--info penawar-->
     <string name="info_penawar">Info Penawar</string>
-    <string name="daftar_produuk_yang_ditawar">Daftar Produk yang Ditawar</string>
+    <string name="daftar_produuk_yang_ditawar">Daftar Produkmu yang Ditawar</string>
     <string name="tolak">Tolak</string>
     <string name="terima">Terima</string>
+    <string name="nama_pembeli">Nama pembeli</string>
     <string name="yeay_kamu_berhasil_mendapatkan_harga_yang_sesuai">Yeay kamu berhasil mendapatkan harga yang sesuai</string>
     <string name="segera_hubungi_pembeli_melalui_whatsapp_untuk_transaksi_selanjutnya">Segera hubungi pembeli melalui whatsapp untuk transaksi selanjutnya</string>
     <string name="product_match">Product Match</string>
