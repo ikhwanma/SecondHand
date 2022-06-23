@@ -211,7 +211,7 @@ class AddProductFragment : Fragment(), View.OnClickListener {
                                         bitMapToString(bitmaps)!!
                                     )
 
-                                    addProcuct(product, token)
+                                    addProduct(product, token)
                                 }
 
 
