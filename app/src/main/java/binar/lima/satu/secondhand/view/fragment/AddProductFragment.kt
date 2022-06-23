@@ -142,6 +142,7 @@ class AddProductFragment : Fragment(), View.OnClickListener {
                         requestFile
                     )
 
+<<<<<<< HEAD
                     apiViewModel.testAddSellerProduct(
                         token,
                         nameUpload,
@@ -172,6 +173,113 @@ class AddProductFragment : Fragment(), View.OnClickListener {
                                     "Load",
                                     Toast.LENGTH_SHORT
                                 ).show()
+=======
+                                    apiViewModel.testAddSellerProduct(
+                                        token,
+                                        nameUpload,
+                                        descriptionUpload,
+                                        priceUpload,
+                                        categoryUpload,
+                                        addressUpload,
+                                        imageUpload
+                                    ).observe(viewLifecycleOwner) {
+                                        when (it.status) {
+                                            SUCCESS -> {
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    "Sukses",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+                                            ERROR -> {
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    it.message,
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+                                            LOADING -> {
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    "Load",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+                                        }
+                                    }*/
+
+
+/*
+                                    val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
+
+                                    builder.addFormDataPart("name", name)
+                                    builder.addFormDataPart("description", description)
+                                    builder.addFormDataPart("base_price", price)
+                                    builder.addFormDataPart("category_ids", category)
+                                    builder.addFormDataPart("location", data.city)
+
+                                    val bmp = BitmapFactory.decodeFile(imgFile.absolutePath)
+                                    val baos = ByteArrayOutputStream()
+                                    bmp.compress(Bitmap.CompressFormat.JPEG, 30, baos)
+
+                                    builder.addFormDataPart("image", imgFile.name, RequestBody.create(MultipartBody.FORM, baos.toByteArray()))
+
+                                    val requestBody = builder.build()
+
+                                    apiViewModel.testAddSellerProduct(token, requestBody).observe(viewLifecycleOwner){ addProduct ->
+                                        when(addProduct.status){
+                                            SUCCESS -> {
+                                                Toast.makeText(requireContext(), "Sukses", Toast.LENGTH_SHORT).show()
+                                            }
+                                            ERROR -> {
+                                                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                                            }
+                                            LOADING -> {
+                                                Toast.makeText(requireContext(), "Load", Toast.LENGTH_SHORT).show()
+                                            }
+                                        }
+                                    }*/
+
+
+                                    /*val pathHelper = URIPathHelper()
+
+                                    imgFile = File(pathHelper.getPath(requireContext(),image)!!)
+
+                                    val bitmap = (imgProduct.drawable as BitmapDrawable).bitmap
+                                    val bitmaps = Bitmap.createScaledBitmap(bitmap, 720, 720, true)
+                                    val baos = ByteArrayOutputStream()
+                                    bitmaps.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                                    val dataImage = baos.toByteArray()
+
+*//*                                   val bitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, image)
+                                    val baos = ByteArrayOutputStream()
+                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                                    val bitmaps = Bitmap.createScaledBitmap(bitmap, 720, 720, true)*//*
+
+                                    Toast.makeText(requireContext(), imgFile.toString(), Toast.LENGTH_SHORT).show()*/
+//                                    addProcuct(product, token)
+
+                                    val bitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, image)
+                                    val baos = ByteArrayOutputStream()
+                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                                    val bitmaps = Bitmap.createScaledBitmap(bitmap, 720, 720, true)
+
+                                    val product = ProductBody(name, description, price.toInt(), listOf(category.toInt()), data.address,
+                                        bitMapToString(bitmaps)!!
+                                    )
+
+                                    addProduct(product, token)
+                                }
+
+
+                                ERROR -> {
+                                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT)
+                                        .show()
+                                }
+                                LOADING -> {
+
+                                }
+>>>>>>> 37fb42150c3ca2cf06429926956ef33b62e3b030
                             }
                         }
                     }
