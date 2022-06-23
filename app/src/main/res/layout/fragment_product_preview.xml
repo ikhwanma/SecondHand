@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragment.ProductPreviewFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -11,10 +11,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="44dp"
-        android:src="@drawable/ic_arrow_back"/>
+        android:src="@drawable/ic_arrow_back" />
 
     <ImageView
-        android:id="@+id/img_sell_list"
+        android:id="@+id/img_product"
         android:layout_width="match_parent"
         android:layout_height="360dp"
         android:src="@color/purple" />
@@ -27,43 +27,48 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
-                android:elevation="4dp">
+                android:elevation="4dp"
+                app:cardCornerRadius="16dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
                     <TextView
+                        android:id="@+id/tv_product"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Jam Tangan Casio"
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="16dp"
-                        android:textSize="14sp"
+                        android:text="@string/jam_tangan_casio"
                         android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:id="@+id/tv_product_preview_name"/>
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
                     <TextView
+                        android:id="@+id/tv_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Aksesoris"
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="4dp"
-                        android:id="@+id/tv_product_preview_type"/>
+                        android:text="@string/aksesoris" />
+
                     <TextView
+                        android:id="@+id/tv_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:layout_marginStart="24dp"
+                        android:layout_marginTop="8dp"
                         android:paddingBottom="16dp"
-                        android:text="Rp 250.000"
-                        android:textColor="@color/black"
-                        android:id="@+id/tv_product_preview_price"/>
+                        android:text="@string/rp_250_000"
+                        android:textColor="@color/black" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -71,36 +76,43 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
+                android:layout_marginTop="16dp"
                 android:elevation="4dp"
-                android:layout_marginTop="16dp">
+                app:cardCornerRadius="16dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <ImageView
+                        android:id="@+id/img_seller"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:layout_margin="16dp"
-                        android:src="@drawable/ic_launcher_background"/>
+                        android:src="@drawable/ic_launcher_background"
+                        android:contentDescription="@string/image" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
+
                         <TextView
+                            android:id="@+id/tv_seller_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Nama Penjual"
                             android:layout_marginTop="16dp"
-                            android:textSize="14sp"
+                            android:text="@string/nama_penjual"
                             android:textColor="@color/black"
-                            android:textStyle="bold"
-                            android:id="@+id/tv_product_preview_seller_name"/>
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
                         <TextView
+                            android:id="@+id/tv_seller_city"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Kota"
                             android:layout_marginTop="4dp"
-                            android:id="@+id/tv_product_preview_seller_city"/>
+                            android:text="@string/kota" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -109,32 +121,34 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
+                android:layout_marginVertical="16dp"
                 android:elevation="4dp"
-                android:layout_marginVertical="16dp">
+                app:cardCornerRadius="16dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Deskripsi"
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="16dp"
-                        android:textSize="14sp"
+                        android:text="@string/deskripsi"
                         android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:id="@+id/tv_product_preview_description"/>
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
                     <TextView
+                        android:id="@+id/tv_description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
                         android:layout_marginHorizontal="24dp"
+                        android:layout_marginTop="16dp"
                         android:paddingBottom="16dp"
-                        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                        android:textColor="@color/black"
-                        android:id="@+id/tv_product_preview_description_lorem"/>
+                        android:text="@string/lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua_ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat_duis_aute_irure_dolor_in_reprehenderit_in_voluptate_velit_esse_cillum_dolore_eu_fugiat_nulla_pariatur_excepteur_sint_occaecat_cupidatat_non_proident_sunt_in_culpa_qui_officia_deserunt_mollit_anim_id_est_laborum"
+                        android:textColor="@color/black" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -144,13 +158,13 @@
     </ScrollView>
 
     <Button
+        android:id="@+id/btn_terbitkan"
+        style="@style/ButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="24dp"
-        style="@style/ButtonStyle"
-        android:text="@string/button_terbitkan"
-        android:id="@+id/btn_product_preview_nego"/>
+        android:text="@string/button_terbitkan" />
 
 </RelativeLayout>
