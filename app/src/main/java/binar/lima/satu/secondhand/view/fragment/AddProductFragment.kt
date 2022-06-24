@@ -1,11 +1,8 @@
 package binar.lima.satu.secondhand.view.fragment
 
-import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +20,12 @@ import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponse
 import binar.lima.satu.secondhand.model.seller.product.ProductBody
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import pl.aprilapps.easyphotopicker.EasyImage
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -39,9 +42,6 @@ class AddProductFragment : Fragment(), View.OnClickListener {
     private val apiViewModel: ApiViewModel by hiltNavGraphViewModels(R.id.nav_main)
     private val userViewModel: UserViewModel by hiltNavGraphViewModels(R.id.nav_main)
 
-    private lateinit var imgFile: File
-    private lateinit var easyImage: EasyImage
-
     private lateinit var token: String
     private lateinit var user: GetLoginResponse
 
@@ -49,8 +49,6 @@ class AddProductFragment : Fragment(), View.OnClickListener {
         registerForActivityResult(ActivityResultContracts.GetContent()) { result ->
             binding.imgProduct.setImageURI(result)
             image = result!!
-
-
         }
 
     override fun onCreateView(
@@ -64,8 +62,6 @@ class AddProductFragment : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        easyImage = EasyImage.Builder(requireContext()).build()
 
         binding.imgProduct.setOnClickListener {
             openGallery()
@@ -119,206 +115,40 @@ class AddProductFragment : Fragment(), View.OnClickListener {
                     val category = etCategory.text.toString()
                     val description = etDescription.text.toString()
 
-                    /*imgFile = File("/storage/emulated/0/Download/tes2.jpg")
-                    imgFile = File("/storage/emulated/0/Download/Ellipse 1.jpg")
-
-                    val requestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), "json")
-
-                    val requestFile = imgFile
-                        .asRequestBody("multipart/form-data".toMediaTypeOrNull())
-                    val nameUpload =
-                        name.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-                    val priceUpload =
-                        price.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-                    val categoryUpload =
-                        category.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-                    val descriptionUpload =
-                        description.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-                    val addressUpload =
-                        data.address.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-                    val imageUpload = MultipartBody.Part.createFormData(
-                        "foto",
-                        imgFile.name,
-                        requestFile
-                    )
-
-                    apiViewModel.testAddSellerProduct(
-                        token,
-                        nameUpload,
-                        descriptionUpload,
-                        priceUpload,
-                        categoryUpload,
-                        addressUpload,
-                        imageUpload
-                    ).observe(viewLifecycleOwner) {
-                        when (it.status) {
-                            SUCCESS -> {
-                                Toast.makeText(
-                                    requireContext(),
-                                    "Sukses",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                            ERROR -> {
-                                Toast.makeText(
-                                    requireContext(),
-                                    it.message,
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                            LOADING -> {
-                                Toast.makeText(
-                                    requireContext(),
-                                    "Load",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                    apiViewModel.testAddSellerProduct(
-                                        token,
-                                        nameUpload,
-                                        descriptionUpload,
-                                        priceUpload,
-                                        categoryUpload,
-                                        addressUpload,
-                                        imageUpload
-                                    ).observe(viewLifecycleOwner) {
-                                        when (it.status) {
-                                            SUCCESS -> {
-                                                Toast.makeText(
-                                                    requireContext(),
-                                                    "Sukses",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                            }
-                                            ERROR -> {
-                                                Toast.makeText(
-                                                    requireContext(),
-                                                    it.message,
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                            }
-                                            LOADING -> {
-                                                Toast.makeText(
-                                                    requireContext(),
-                                                    "Load",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                            }
-                                        }
-                                    }*/
-/*
-                                    val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
-
-                                    builder.addFormDataPart("name", name)
-                                    builder.addFormDataPart("description", description)
-                                    builder.addFormDataPart("base_price", price)
-                                    builder.addFormDataPart("category_ids", category)
-                                    builder.addFormDataPart("location", data.city)
-
-                                    val bmp = BitmapFactory.decodeFile(imgFile.absolutePath)
-                                    val baos = ByteArrayOutputStream()
-                                    bmp.compress(Bitmap.CompressFormat.JPEG, 30, baos)
-
-                                    builder.addFormDataPart("image", imgFile.name, RequestBody.create(MultipartBody.FORM, baos.toByteArray()))
-
-                                    val requestBody = builder.build()
-
-                                    apiViewModel.testAddSellerProduct(token, requestBody).observe(viewLifecycleOwner){ addProduct ->
-                                        when(addProduct.status){
-                                            SUCCESS -> {
-                                                Toast.makeText(requireContext(), "Sukses", Toast.LENGTH_SHORT).show()
-                                            }
-                                            ERROR -> {
-                                                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                                            }
-                                            LOADING -> {
-                                                Toast.makeText(requireContext(), "Load", Toast.LENGTH_SHORT).show()
-                                            }
-                                        }
-                                    }*/
-
-
-                                    /*val pathHelper = URIPathHelper()
-
-                                    imgFile = File(pathHelper.getPath(requireContext(),image)!!)
-
-                                    val bitmap = (imgProduct.drawable as BitmapDrawable).bitmap
-                                    val bitmaps = Bitmap.createScaledBitmap(bitmap, 720, 720, true)
-                                    val baos = ByteArrayOutputStream()
-                                    bitmaps.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-                                    val dataImage = baos.toByteArray()
-
-*//*                                   val bitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, image)
-                                    val baos = ByteArrayOutputStream()
-                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-                                    val bitmaps = Bitmap.createScaledBitmap(bitmap, 720, 720, true)*//*
-
-                                    Toast.makeText(requireContext(), imgFile.toString(), Toast.LENGTH_SHORT).show()*/
-//                                    addProcuct(product, token)
-
-
-                    /*val bmp = BitmapFactory.decodeFile(imgFile.absolutePath)
-                    val baos = ByteArrayOutputStream()
-                    bmp.compress(Bitmap.CompressFormat.JPEG, 30, baos)
-
-                    builder.addFormDataPart("image", imgFile.name, RequestBody.create(MultipartBody.FORM, baos.toByteArray()))
-
-                    val requestBody = builder.build()
-
-                    apiViewModel.testAddSellerProduct(token, requestBody).observe(viewLifecycleOwner){ addProduct ->
-                        when(addProduct.status){
-                            SUCCESS -> {
-                                Toast.makeText(requireContext(), "Sukses", Toast.LENGTH_SHORT).show()
-                            }
-                            ERROR -> {
-                                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                            }
-                            LOADING -> {
-                                Toast.makeText(requireContext(), "Load", Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    }*/
-
-
-                    /*val pathHelper = URIPathHelper()
-
-                    imgFile = File(pathHelper.getPath(requireContext(),image)!!)
-
-                    val bitmap = (imgProduct.drawable as BitmapDrawable).bitmap
-                    val bitmaps = Bitmap.createScaledBitmap(bitmap, 720, 720, true)
-                    val baos = ByteArrayOutputStream()
-                    bitmaps.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-                    val dataImage = baos.toByteArray()
-
-                   val bitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, image)
-                    val baos = ByteArrayOutputStream()
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-                    val bitmaps = Bitmap.createScaledBitmap(bitmap, 720, 720, true)
-
-                    Toast.makeText(requireContext(), imgFile.toString(), Toast.LENGTH_SHORT).show()
-                    addProcuct(product, token)*/
-
-                    val bitmap =
-                        MediaStore.Images.Media.getBitmap(requireContext().contentResolver, image)
-                    val baos = ByteArrayOutputStream()
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-                    val bitmaps = Bitmap.createScaledBitmap(bitmap, 720, 720, true)
-
-                    val product = ProductBody(
-                        name, description, price.toInt(), listOf(category.toInt()), user.address,
-                        image
-                    )
-
-                    addProduct(product, token)
-
+                    addProduct(name, price, category, description)
                 }
             }
         }
     }
 
+    private fun addProduct(name: String, price: String, category: String, description: String) {
+        val contentResolver = requireActivity().applicationContext.contentResolver
 
-    private fun addProduct(product: ProductBody, token: String) {
-        apiViewModel.addSellerProduct(token, product).observe(viewLifecycleOwner) {
-            when (it.status) {
+        val type = contentResolver.getType(image)
+        val tempFile = File.createTempFile("temp-", null, null)
+        val inputStream = contentResolver.openInputStream(image)
+
+        tempFile.outputStream().use {
+            inputStream?.copyTo(it)
+        }
+
+        val requestBody: RequestBody = tempFile.asRequestBody(type?.toMediaType())
+
+        val imageUpload =
+            MultipartBody.Part.createFormData("image", tempFile.name, requestBody)
+        val nameUpload =
+            name.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+        val priceUpload =
+            price.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+        val categoryUpload =
+            category.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+        val descriptionUpload =
+            description.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+        val addressUpload =
+            user.address.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+
+        apiViewModel.addSellerProduct(token, nameUpload, descriptionUpload, priceUpload, categoryUpload, addressUpload, imageUpload).observe(viewLifecycleOwner){
+            when(it.status){
                 SUCCESS -> {
                     Toast.makeText(requireContext(), "Sukses", Toast.LENGTH_SHORT).show()
                 }
@@ -326,18 +156,12 @@ class AddProductFragment : Fragment(), View.OnClickListener {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
                 LOADING -> {
-                    Toast.makeText(requireContext(), "Loading", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Load", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
 
-    private fun bitMapToString(bitmap: Bitmap): String? {
-        val byteArray = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArray)
-        val b: ByteArray = byteArray.toByteArray()
-        return Base64.encodeToString(b, Base64.DEFAULT)
-    }
 
     private fun toProductPreview() {
         binding.apply {
@@ -345,7 +169,6 @@ class AddProductFragment : Fragment(), View.OnClickListener {
             val price = etPrice.text.toString().toInt()
             val category = etCategory.text.toString()
             val description = etDescription.text.toString()
-
 
             val product = ProductBody(name, description, price, listOf(category.toInt()), user.city, image)
             val mBundle = bundleOf(ProductPreviewFragment.EXTRA_PRODUCT to product)

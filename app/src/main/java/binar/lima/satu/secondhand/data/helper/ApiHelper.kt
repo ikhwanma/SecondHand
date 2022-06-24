@@ -8,6 +8,7 @@ import binar.lima.satu.secondhand.model.seller.product.ProductBody
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Header
+import retrofit2.http.Part
 import javax.inject.Inject
 
 class ApiHelper @Inject constructor(private val apiService: ApiService) {
@@ -17,16 +18,26 @@ class ApiHelper @Inject constructor(private val apiService: ApiService) {
     suspend fun getLoginUser(header: String) = apiService.getLoginUser(header)
 
     suspend fun registerUser(registerBody: RegisterBody) = apiService.registerUser(registerBody)
-    suspend fun updateUser(header: String, registerBody: RegisterBody) = apiService.updateUser(header, registerBody)
+
+    suspend fun updateUser(
+        token : String,
+        fullName : RequestBody,
+        address : RequestBody,
+        email : RequestBody,
+        password : RequestBody,
+        phoneNumber : RequestBody,
+        city : RequestBody,
+        image : MultipartBody.Part,
+    ) = apiService.updateUser(
+        token, fullName, address, email, password, phoneNumber, city, image
+    )
 
     //================Seller================
-    suspend fun addSellerProduct(token: String, product: ProductBody) =
-        apiService.addSellerProduct(token, product)
     suspend fun getSellerProduct(token : String) = apiService.getSellerProduct(token)
 
     suspend fun getAllCategory() = apiService.getAllCategory()
 
-    suspend fun testAddSellerProduct(
+    suspend fun addSellerProduct(
         token: String,
         name: RequestBody,
         description: RequestBody,
@@ -34,7 +45,7 @@ class ApiHelper @Inject constructor(private val apiService: ApiService) {
         category_ids: RequestBody,
         location: RequestBody,
         image: MultipartBody.Part,
-    ) = apiService.testAddSellerProduct(
+    ) = apiService.addSellerProduct(
         token,
         name,
         description,

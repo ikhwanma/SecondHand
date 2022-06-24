@@ -48,7 +48,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
                     val password = etPassword.text.toString()
 
                     if (email != "" && password != "" && name != ""){
-                        val registerBody = RegisterBody("Jakarta", email, name, "ss", password, 81112333, "s")
+                        val registerBody = RegisterBody("temp", email, name, "temp", password, 0, "temp")
                         register(registerBody)
                     }
                 }

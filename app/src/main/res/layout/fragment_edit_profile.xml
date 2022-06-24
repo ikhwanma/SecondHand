@@ -21,7 +21,7 @@
 
         <TextView
             style="@style/TextViewStyle"
-            android:layout_marginLeft="80dp"
+            android:layout_marginStart="80dp"
             android:text="@string/lengkapi_info_akun"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -29,7 +29,7 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/btn_gambar_edit_profile"
+        android:id="@+id/img_user"
         android:layout_width="125dp"
         android:layout_height="125dp"
         android:layout_gravity="center_horizontal"

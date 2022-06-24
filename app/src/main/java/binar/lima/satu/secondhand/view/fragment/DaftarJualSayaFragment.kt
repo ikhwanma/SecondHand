@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.Status
@@ -18,6 +19,7 @@ import binar.lima.satu.secondhand.view.adapter.ProductAdapter
 
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
+import com.bumptech.glide.Glide
 
 class DaftarJualSayaFragment : Fragment() {
     private var _binding: FragmentDaftarJualSayaBinding? = null
@@ -62,7 +64,31 @@ class DaftarJualSayaFragment : Fragment() {
                     }
                 }
             }
+
+            apiViewModel.getLoginUser(it).observe(viewLifecycleOwner){ user ->
+                when(user.status){
+                    SUCCESS -> {
+                        val data = user.data!!
+                        binding.tvSellerName.text = data.fullName
+                        binding.tvSellerCity.text = data.city
+
+                        if (data.imageUrl.isNotEmpty()){
+                            Glide.with(requireView()).load(data.imageUrl).into(binding.imgSeller)
+                        }
+                    }
+                    ERROR -> {
+
+                    }
+                    LOADING -> {
+
+                    }
+                }
+            }
+        }
+        binding.btnEdit.setOnClickListener {
+            it.findNavController().navigate(R.id.action_daftarJualSayaFragment_to_editProfileFragment)
         }
     }
+
 
 }
