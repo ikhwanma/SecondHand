@@ -45,24 +45,23 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
         }
     }
 
-    fun updateUser(header: String,registerBody: RegisterBody) = liveData(Dispatchers.IO){
+    fun updateUser(token : String,
+                       fullName : RequestBody,
+                       address : RequestBody,
+                       email : RequestBody,
+                       password : RequestBody,
+                       phoneNumber : RequestBody,
+                       city : RequestBody,
+                       image : MultipartBody.Part) = liveData(Dispatchers.IO){
         emit(Resource.loading(null))
         try {
-            emit(Resource.success(mainRepository.updateUser(header, registerBody)))
+            emit(Resource.success(mainRepository.updateUser(token, fullName, address, email, password, phoneNumber, city, image)))
         }catch (e : Exception){
             emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
         }
     }
 
     //==================================Seller
-    fun addSellerProduct(token: String, product: ProductBody) = liveData(Dispatchers.IO){
-        emit(Resource.loading(null))
-        try {
-            emit(Resource.success(mainRepository.addSellerProduct(token, product)))
-        }catch (e : Exception){
-            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
-        }
-    }
 
     fun getSellerProduct(token: String) = liveData(Dispatchers.IO){
         emit(Resource.loading(null))
@@ -82,7 +81,7 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
         }
     }
 
-    fun testAddSellerProduct(token : String,
+    fun addSellerProduct(token : String,
                              name : RequestBody,
                              description : RequestBody,
                              base_price : RequestBody,
@@ -91,7 +90,7 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
                              image :  MultipartBody.Part) = liveData(Dispatchers.IO){
         emit(Resource.loading(null))
         try {
-            emit(Resource.success(mainRepository.testAddSellerProduct(token, name, description, base_price, category_ids, location, image)))
+            emit(Resource.success(mainRepository.addSellerProduct(token, name, description, base_price, category_ids, location, image)))
         }catch (e : Exception){
             emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
         }

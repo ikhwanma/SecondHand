@@ -36,21 +36,21 @@ interface ApiService {
         @Body user : RegisterBody
     ) : PostRegisterResponse
 
-    //--Profile--
+    @Multipart
     @PUT("/auth/user")
     suspend fun updateUser(
-        @Header("access_token") header : String,
-        @Body user : RegisterBody
-    ) : PostRegisterResponse
+        @Header("access_token") token : String,
+        @Part("full_name") fullName : RequestBody,
+        @Part("address") address : RequestBody,
+        @Part("email") email : RequestBody,
+        @Part("password") password : RequestBody,
+        @Part("phone_number") phoneNumber : RequestBody,
+        @Part("city") city : RequestBody,
+        @Part image : MultipartBody.Part,
+    )
 
     //=======================Seller==============================
     //--Product--
-    @POST("/seller/product")
-    suspend fun addSellerProduct(
-        @Header("access_token") token : String,
-        @Body product : ProductBody
-    )
-
     @GET("/seller/product")
     suspend fun getSellerProduct(
         @Header("access_token") token : String
@@ -58,7 +58,7 @@ interface ApiService {
 
     @Multipart
     @POST("/seller/product")
-    suspend fun testAddSellerProduct(
+    suspend fun addSellerProduct(
         @Header("access_token") token : String,
         @Part("name") name : RequestBody,
         @Part("description") description : RequestBody,
