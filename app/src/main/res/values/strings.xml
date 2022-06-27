@@ -71,10 +71,9 @@
     <string name="tolak">Tolak</string>
     <string name="terima">Terima</string>
     <string name="nama_pembeli">Nama pembeli</string>
-    <string name="yeay_kamu_berhasil_mendapatkan_harga_yang_sesuai">Yeay kamu berhasil mendapatkan harga yang sesuai</string>
     <string name="segera_hubungi_pembeli_melalui_whatsapp_untuk_transaksi_selanjutnya">Segera hubungi pembeli melalui whatsapp untuk transaksi selanjutnya</string>
     <string name="product_match">Product Match</string>
-    <string name="hubungi_via_whatsapp">Hubingi via Whatsapp</string>
+    <string name="hubungi_via_whatsapp">Hubungi via Whatsapp</string>
     <string name="status">Status</string>
     <string name="hubungi">Hubungi</string>
     <string name="pebarui_status_penjualan_produkmu">Perbarui status penjualan produkmu</string>
@@ -83,6 +82,8 @@
     <string name="batalkan_transaksi">Batalkan Transaksi</string>
     <string name="kamu_membatalkan_transaksi_produk_ini_kepada_pembeli">Kamu membatalkan transaksi produk ini kepada pembeli</string>
     <string name="status_produk_berhasil_diperbarui">Status produk berhasil diperbarui</string>
-
+    <string name="berhasil_mendapat_harga">Yeay kamu berhasil mendapat harga yang sesuai</string>
     <string name="daftar_jual">Daftar Jual</string>
+    <string name="ditawar">Ditawar</string>
+
 </resources>
