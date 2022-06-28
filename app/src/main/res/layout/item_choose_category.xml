@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:paddingHorizontal="20dp"
+    android:focusable="true">
+
+    <TextView
+        android:id="@+id/tv_category"
+        style="@style/TextViewStyle"
+        android:text="@string/kategori"
+        android:layout_centerVertical="true"
+        android:textSize="18sp"
+        />
+
+    <CheckBox
+        android:id="@+id/cb_category"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/cb_category"
+        android:background="@color/black"/>
+
+</RelativeLayout>

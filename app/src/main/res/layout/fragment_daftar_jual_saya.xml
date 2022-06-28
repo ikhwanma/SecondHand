@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/nama_penjual"
-                android:textStyle="bold"
+                android:fontFamily="@font/poppins_bold"
                 android:textColor="@color/black"
                 android:textSize="20sp"/>
 
@@ -49,6 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/kota"
+                android:fontFamily="@font/poppins_regular"
                 android:textSize="15sp"/>
 
         </LinearLayout>
@@ -56,15 +57,16 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <ImageView
                 android:id="@+id/btn_edit"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="30dp"
-                android:layout_marginStart="200dp"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@drawable/ic_edit"
-                android:contentDescription="@string/image" />
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="200dp"
+                android:layout_marginTop="30dp"
+                android:contentDescription="@string/image"
+                android:src="@drawable/ic_edit" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
