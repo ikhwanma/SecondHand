@@ -21,7 +21,7 @@
         android:title="@string/daftar_jual" />
 
     <item
-        android:id="@+id/loginFragment"
+        android:id="@+id/profileFragment"
         android:icon="@drawable/ic_outline_person_24"
         android:title="@string/profile" />
 

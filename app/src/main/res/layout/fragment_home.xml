@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="320dp"
                 app:iss_auto_cycle="true"
-                app:iss_period="5000"
+                app:iss_period="3000"
                 app:iss_delay="0"
                 />
 
@@ -50,6 +50,7 @@
                         android:textSize="16sp"
                         android:textColor="#BABABA"
                         android:layout_centerVertical="true"
+                        android:fontFamily="@font/poppins_regular"
                         android:layout_marginStart="14dp"
                         android:text="@string/cari_di_second_chance"
                         tools:ignore="RelativeOverlap" />
@@ -67,49 +68,19 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/telusuri_kategori"
-                    android:layout_marginTop="286dp"
                     android:layout_marginStart="16dp"
-                    android:textSize="14sp"
+                    android:layout_marginTop="286dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="@string/telusuri_kategori"
                     android:textColor="@color/black"
-                    android:textStyle="bold"/>
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="32dp"
                     android:layout_alignParentBottom="true">
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/btn_all"
-                        android:layout_marginStart="16dp"
-                        android:layout_width="124dp"
-                        android:layout_height="44dp"
-                        android:backgroundTint="@color/light_purple"
-                        app:cardCornerRadius="12dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingHorizontal="18dp">
-
-                            <ImageView
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
-                                android:contentDescription="@string/add_image"
-                                android:src="@drawable/ic_baseline_search_24" />
-
-                            <TextView
-                                android:id="@+id/tv_category"
-                                style="@style/TextViewStyle"
-                                android:layout_marginStart="8dp"
-                                android:text="@string/semua"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_kategory"

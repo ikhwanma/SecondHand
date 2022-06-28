@@ -9,8 +9,8 @@
         android:name="binar.lima.satu.secondhand.view.fragment.LoginFragment"
         android:label="LoginFragment" >
         <action
-            android:id="@+id/action_loginFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            android:id="@+id/action_loginFragment_to_homeFragment2"
+            app:destination="@id/homeFragment" />
     </fragment>
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
@@ -44,6 +44,9 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/addProductFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_addProductFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -51,13 +54,11 @@
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
-            android:id="@+id/action_profileFragment_to_loginFragment2"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@id/profileFragment"
-            app:popUpToInclusive="true" />
-        <action
             android:id="@+id/action_profileFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
         <action
             android:id="@+id/action_profileFragment_to_daftarJualSayaFragment"
             app:destination="@id/daftarJualSayaFragment" />
@@ -130,5 +131,8 @@
         <action
             android:id="@+id/action_daftarJualSayaFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_daftarJualSayaFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
 </navigation>

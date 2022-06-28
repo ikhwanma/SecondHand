@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentHomeBinding
+import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponseItem
 import binar.lima.satu.secondhand.view.adapter.CategoryAdapter
 import binar.lima.satu.secondhand.view.adapter.ProductAdapter
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
@@ -28,7 +29,6 @@ class HomeFragment : Fragment() {
 
     //Define viewModel
     private val apiViewModel: ApiViewModel by hiltNavGraphViewModels(R.id.nav_main)
-    private val userViewModel: UserViewModel by hiltNavGraphViewModels(R.id.nav_main)
 
     private var category = 0
 
@@ -54,30 +54,45 @@ class HomeFragment : Fragment() {
                 SUCCESS -> {
                     val adapter = CategoryAdapter{ data ->
                         category = data.id
-                        apiViewModel.getAllProduct(category_id = category, status = "available").observe(viewLifecycleOwner){ product ->
-                            when(product.status){
-                                SUCCESS -> {
-                                    val adapter = ProductAdapter{ data ->
-                                        val mBundle = bundleOf(DetailFragment.EXTRA_ID to data.id)
-                                        Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_detailFragment, mBundle)
+                        if (category == 0){
+                            getData()
+                        }else{
+                            apiViewModel.getAllProduct(category_id = category, status = "available").observe(viewLifecycleOwner){ product ->
+                                when(product.status){
+                                    SUCCESS -> {
+                                        val adapter = ProductAdapter{ data ->
+                                            val mBundle = bundleOf(DetailFragment.EXTRA_ID to data.id)
+                                            Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_detailFragment, mBundle)
+                                        }
+                                        adapter.submitData(product.data)
+
+                                        binding.apply {
+                                            rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
+                                            rvProduct.adapter = adapter
+                                        }
                                     }
-                                    adapter.submitData(product.data)
+                                    ERROR -> {
 
-                                    binding.apply {
-                                        rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
-                                        rvProduct.adapter = adapter
                                     }
-                                }
-                                ERROR -> {
+                                    LOADING -> {
 
-                                }
-                                LOADING -> {
-
+                                    }
                                 }
                             }
                         }
+                        }
+
+
+                    val listCat = mutableListOf(
+                        GetSellerCategoryResponseItem(
+                            "24-06-2022",0, "Semua", "24-06-2022"
+                        )
+                    )
+                    val category = it.data!!
+                    for (cat in category){
+                        listCat.add(cat)
                     }
-                    adapter.submitData(it.data)
+                    adapter.submitData(listCat)
 
 
                     binding.apply {
@@ -95,9 +110,6 @@ class HomeFragment : Fragment() {
         }
         getData()
 
-        binding.btnAll.setOnClickListener {
-            getData()
-        }
         binding.etSearch.setOnClickListener {
             Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_searchFragment)
         }

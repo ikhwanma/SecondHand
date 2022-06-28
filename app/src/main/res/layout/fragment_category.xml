@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".view.dialogfragment.CategoryFragment">
+
+    <TextView
+        android:id="@+id/tv_first"
+        style="@style/TextViewStyle"
+        android:text="@string/pilih_kategori"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_first"
+        android:layout_marginVertical="10dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_category_selected" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_choose_kategori"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btn_pilih"
+        android:layout_below="@+id/rv_category"
+        tools:listitem="@layout/item_choose_category" />
+
+    <Button
+        android:id="@+id/btn_pilih"
+        style="@style/ButtonStyle"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/poppins_medium"
+        android:layout_marginBottom="20dp"
+        android:text="@string/pilih_kategori" />
+
+</RelativeLayout>

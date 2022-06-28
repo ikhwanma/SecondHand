@@ -1,5 +1,6 @@
 package binar.lima.satu.secondhand.view.fragment
 
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -18,6 +19,7 @@ import binar.lima.satu.secondhand.databinding.FragmentAddProductBinding
 import binar.lima.satu.secondhand.model.auth.login.GetLoginResponse
 import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponseItem
 import binar.lima.satu.secondhand.model.seller.product.ProductBody
+import binar.lima.satu.secondhand.view.dialogfragment.CategoryFragment
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
 import okhttp3.MediaType.Companion.toMediaType
@@ -45,6 +47,8 @@ class AddProductFragment : Fragment(), View.OnClickListener {
     private lateinit var token: String
     private lateinit var user: GetLoginResponse
 
+
+
     private val galleryResult =
         registerForActivityResult(ActivityResultContracts.GetContent()) { result ->
             binding.imgProduct.setImageURI(result)
@@ -67,18 +71,35 @@ class AddProductFragment : Fragment(), View.OnClickListener {
             openGallery()
         }
 
+        userViewModel.listCategorySelected.observe(viewLifecycleOwner){
+            if (it.isNotEmpty()){
+                setCategory(it)
+                var txtCategory = ""
+
+                for (cat in it){
+                    txtCategory += "${cat.name} "
+                }
+                binding.tvSelectCategory.text = txtCategory
+                binding.tvSelectCategory.setTextColor(Color.BLACK)
+            }
+        }
+
         userViewModel.getToken().observe(viewLifecycleOwner) {
-            setToken(it)
-            apiViewModel.getLoginUser(it).observe(viewLifecycleOwner) { it1 ->
-                when (it1.status) {
-                    SUCCESS -> {
-                        setUser(it1.data!!)
-                    }
-                    ERROR -> {
+            if (it == ""){
+                Navigation.findNavController(requireView()).navigate(R.id.action_addProductFragment_to_loginFragment)
+            }else{
+                setToken(it)
+                apiViewModel.getLoginUser(it).observe(viewLifecycleOwner) { it1 ->
+                    when (it1.status) {
+                        SUCCESS -> {
+                            setUser(it1.data!!)
+                        }
+                        ERROR -> {
 
-                    }
-                    LOADING -> {
+                        }
+                        LOADING -> {
 
+                        }
                     }
                 }
             }
@@ -87,6 +108,9 @@ class AddProductFragment : Fragment(), View.OnClickListener {
         binding.btnTerbitkan.setOnClickListener(this)
         binding.btnPreview.setOnClickListener {
             toProductPreview()
+        }
+        binding.btnCategory.setOnClickListener {
+            CategoryFragment().show(requireActivity().supportFragmentManager, null)
         }
     }
 
@@ -112,16 +136,15 @@ class AddProductFragment : Fragment(), View.OnClickListener {
                 binding.apply {
                     val name = etProduct.text.toString()
                     val price = etPrice.text.toString()
-                    val category = etCategory.text.toString()
                     val description = etDescription.text.toString()
 
-                    addProduct(name, price, category, description)
+                    addProduct(name, price , description)
                 }
             }
         }
     }
 
-    private fun addProduct(name: String, price: String, category: String, description: String) {
+    private fun addProduct(name: String, price: String, description: String) {
         val contentResolver = requireActivity().applicationContext.contentResolver
 
         val type = contentResolver.getType(image)
@@ -130,6 +153,12 @@ class AddProductFragment : Fragment(), View.OnClickListener {
 
         tempFile.outputStream().use {
             inputStream?.copyTo(it)
+        }
+
+        var listCat = ""
+
+        for (cat in listCategory){
+            listCat += "${cat.id},"
         }
 
         val requestBody: RequestBody = tempFile.asRequestBody(type?.toMediaType())
@@ -141,7 +170,7 @@ class AddProductFragment : Fragment(), View.OnClickListener {
         val priceUpload =
             price.toRequestBody("multipart/form-data".toMediaTypeOrNull())
         val categoryUpload =
-            category.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+            listCat.toRequestBody("multipart/form-data".toMediaTypeOrNull())
         val descriptionUpload =
             description.toRequestBody("multipart/form-data".toMediaTypeOrNull())
         val addressUpload =
@@ -167,10 +196,10 @@ class AddProductFragment : Fragment(), View.OnClickListener {
         binding.apply {
             val name = etProduct.text.toString()
             val price = etPrice.text.toString().toInt()
-            val category = etCategory.text.toString()
+
             val description = etDescription.text.toString()
 
-            val product = ProductBody(name, description, price, listOf(category.toInt()), user.city, image)
+            val product = ProductBody(name, description, price, listOf("1".toInt()), user.city, image)
             val mBundle = bundleOf(ProductPreviewFragment.EXTRA_PRODUCT to product)
             Navigation.findNavController(requireView())
                 .navigate(R.id.action_addProductFragment_to_productPreviewFragment, mBundle)
