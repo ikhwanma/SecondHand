@@ -23,6 +23,7 @@
             android:layout_marginTop="40dp"
             android:text="@string/masukkan_harga_tawarmu"
             android:textColor="@color/black"
+            android:fontFamily="@font/poppins_bold"
             android:textStyle="bold" />
 
         <TextView
@@ -31,6 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppins_regular"
             android:text="@string/harga_tawaranmu_akan_diketahui_penual_jika_penjual_cocok_kamu_akan_segera_dihubungi_penjual"
             android:textColor="@color/black" />
 
@@ -63,6 +65,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="@string/nama_penjual"
+                        android:fontFamily="@font/poppins_bold"
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -71,6 +74,7 @@
                         android:id="@+id/tv_product_preview_seller_city"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_regular"
                         android:layout_marginTop="4dp"
                         android:text="@string/kota" />
                 </LinearLayout>
@@ -81,6 +85,7 @@
             android:id="@+id/tv_bottomsheet_nego_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
             android:layout_marginHorizontal="32dp"
             android:layout_marginTop="16dp"
             android:text="@string/harga_tawar"
@@ -93,13 +98,15 @@
             android:layout_marginHorizontal="32dp"
             android:layout_marginTop="4dp"
             android:hint="@string/rp_0_00"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:autofillHints="price" />
 
         <Button
             style="@style/ButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"
+            android:fontFamily="@font/poppins_bold"
             android:layout_marginTop="24dp"
             android:text="@string/kirim" />
 

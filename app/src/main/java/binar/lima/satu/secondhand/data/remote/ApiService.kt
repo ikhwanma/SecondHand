@@ -43,10 +43,9 @@ interface ApiService {
         @Part("full_name") fullName : RequestBody,
         @Part("address") address : RequestBody,
         @Part("email") email : RequestBody,
-        @Part("password") password : RequestBody,
         @Part("phone_number") phoneNumber : RequestBody,
         @Part("city") city : RequestBody,
-        @Part image : MultipartBody.Part,
+        @Part image : MultipartBody.Part
     )
 
     //=======================Seller==============================

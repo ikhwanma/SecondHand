@@ -49,13 +49,12 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
                        fullName : RequestBody,
                        address : RequestBody,
                        email : RequestBody,
-                       password : RequestBody,
                        phoneNumber : RequestBody,
                        city : RequestBody,
                        image : MultipartBody.Part) = liveData(Dispatchers.IO){
         emit(Resource.loading(null))
         try {
-            emit(Resource.success(mainRepository.updateUser(token, fullName, address, email, password, phoneNumber, city, image)))
+            emit(Resource.success(mainRepository.updateUser(token, fullName, address, email, phoneNumber, city, image)))
         }catch (e : Exception){
             emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
         }

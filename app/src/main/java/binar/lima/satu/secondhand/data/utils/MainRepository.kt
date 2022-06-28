@@ -21,12 +21,11 @@ class MainRepository @Inject constructor(private val apiHelper : ApiHelper) {
         fullName : RequestBody,
         address : RequestBody,
         email : RequestBody,
-        password : RequestBody,
         phoneNumber : RequestBody,
         city : RequestBody,
         image : MultipartBody.Part,
     ) = apiHelper.updateUser(
-        token, fullName, address, email, password, phoneNumber, city, image
+        token, fullName, address, email, phoneNumber, city, image
     )
 
     //================Seller================

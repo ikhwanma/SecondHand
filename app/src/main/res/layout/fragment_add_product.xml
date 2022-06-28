@@ -8,7 +8,30 @@
     android:paddingVertical="10dp"
     tools:context=".view.fragment.AddProductFragment">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:gravity="center_vertical">
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_back"
+            android:contentDescription="@string/image"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/lengkapi_detail_produk"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
     <TextView
+        android:layout_marginTop="24dp"
         style="@style/TextViewStyle"
         android:text="@string/nama_produk"/>
 
@@ -29,25 +52,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/rp"
-            android:paddingStart="16dp"
-            android:paddingVertical="18dp"
-            tools:ignore="RtlSymmetry" />
-
         <EditText
             android:id="@+id/et_price"
             style="@style/EditTextStyle"
-            android:hint="@string/rp_0_00"
-            android:paddingStart="35dp"
-            android:inputType="number"
-            android:autofillHints="price"
             android:layout_marginTop="4dp"
+            android:autofillHints="price"
+            android:hint="@string/rp_0_00"
+            android:inputType="number"
+            android:paddingStart="40dp"
+            android:paddingTop="200dp"
+            tools:ignore="RtlSymmetry" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:paddingStart="16dp"
+            android:paddingTop="14dp"
+            android:text="@string/rp"
             tools:ignore="RtlSymmetry" />
     </RelativeLayout>
-
 
 
     <TextView
@@ -55,13 +79,31 @@
         android:text="@string/kategori"
         android:layout_marginTop="16dp"/>
 
-    <EditText
-        android:id="@+id/et_category"
-        style="@style/EditTextStyle"
-        android:hint="@string/pilih_kategori"
-        android:inputType="text"
-        android:autofillHints="name"
-        android:layout_marginTop="4dp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageView
+            android:id="@+id/btn_category"
+            style="@style/EditTextStyle"
+            android:autofillHints="search"
+            android:contentDescription="@string/image_search"
+            android:inputType="none" />
+
+        <TextView
+            android:id="@+id/tv_select_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#BABABA"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="14dp"
+            android:text="@string/pilih_kategori"
+            android:fontFamily="@font/poppins_regular"
+            tools:ignore="RelativeOverlap" />
+
+    </RelativeLayout>
 
     <TextView
         style="@style/TextViewStyle"
@@ -99,6 +141,7 @@
         <Button
             android:id="@+id/btn_preview"
             style="@style/ButtonStyle"
+            android:fontFamily="@font/poppins_medium"
             android:layout_width="160dp"
             android:text="@string/preview"
             android:layout_marginEnd="20dp"
@@ -109,16 +152,11 @@
             android:id="@+id/btn_terbitkan"
             style="@style/ButtonStyle"
             android:layout_width="160dp"
+            android:layout_alignParentBottom="true"
+            android:fontFamily="@font/poppins_medium"
             android:layout_toEndOf="@+id/btn_preview"
-            android:text="@string/terbitkan"
-            android:layout_alignParentBottom="true"/>
+            android:text="@string/terbitkan" />
 
     </RelativeLayout>
-
-    <AutoCompleteTextView
-        android:id="@+id/autoCompleteTextView5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="AutoCompleteTextView" />
 
 </LinearLayout>

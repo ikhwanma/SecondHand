@@ -39,54 +39,63 @@ class DaftarJualSayaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        userViewModel.getToken().observe(viewLifecycleOwner){
-            apiViewModel.getSellerProduct(it).observe(viewLifecycleOwner){ product ->
-                when(product.status){
-                    SUCCESS -> {
-                        binding.apply {
-                            val data = product.data
+        userViewModel.getToken().observe(viewLifecycleOwner) {
+            if (it == "") {
+                Navigation.findNavController(requireView())
+                    .navigate(R.id.action_daftarJualSayaFragment_to_loginFragment)
+            } else {
+                apiViewModel.getSellerProduct(it).observe(viewLifecycleOwner) { product ->
+                    when (product.status) {
+                        SUCCESS -> {
+                            binding.apply {
+                                val data = product.data
 
-                            val adapter = ProductAdapter{
+                                val adapter = ProductAdapter {
+
+                                }
+                                adapter.submitData(data)
+
+                                rvDaftarJual.adapter = adapter
+                                rvDaftarJual.layoutManager = GridLayoutManager(requireContext(), 2)
 
                             }
-                            adapter.submitData(data)
-
-                            rvDaftarJual.adapter = adapter
-                            rvDaftarJual.layoutManager = GridLayoutManager(requireContext(), 2)
+                        }
+                        ERROR -> {
 
                         }
-                    }
-                    ERROR -> {
+                        LOADING -> {
 
-                    }
-                    LOADING -> {
-
+                        }
                     }
                 }
-            }
 
-            apiViewModel.getLoginUser(it).observe(viewLifecycleOwner){ user ->
-                when(user.status){
-                    SUCCESS -> {
-                        val data = user.data!!
-                        binding.tvSellerName.text = data.fullName
-                        binding.tvSellerCity.text = data.city
+                apiViewModel.getLoginUser(it).observe(viewLifecycleOwner) { user ->
+                    when (user.status) {
+                        SUCCESS -> {
+                            val data = user.data!!
+                            binding.tvSellerName.text = data.fullName
+                            binding.tvSellerCity.text = data.city
 
-                        if (data.imageUrl.isNotEmpty()){
-                            Glide.with(requireView()).load(data.imageUrl).into(binding.imgSeller)
+                            if (data.imageUrl.isNotEmpty()) {
+                                Glide.with(requireView()).load(data.imageUrl)
+                                    .into(binding.imgSeller)
+                            }
                         }
-                    }
-                    ERROR -> {
+                        ERROR -> {
 
-                    }
-                    LOADING -> {
+                        }
+                        LOADING -> {
 
+                        }
                     }
                 }
             }
         }
+
+
         binding.btnEdit.setOnClickListener {
-            it.findNavController().navigate(R.id.action_daftarJualSayaFragment_to_editProfileFragment)
+            Navigation.findNavController(requireView())
+                .navigate(R.id.action_daftarJualSayaFragment_to_editProfileFragment)
         }
     }
 

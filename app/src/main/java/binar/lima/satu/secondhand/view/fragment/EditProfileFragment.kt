@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
@@ -58,6 +59,15 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
 
         binding.btnSimpan.setOnClickListener(this)
 
+        val callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                Navigation.findNavController(requireView()).navigate(R.id.action_editProfileFragment_to_profileFragment)
+            }
+
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
+
         userViewModel.getToken().observe(viewLifecycleOwner) {
             setToken(it)
             apiViewModel.getLoginUser(it).observe(viewLifecycleOwner) { user ->
@@ -83,7 +93,7 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
             }
         }
 
-        binding.btnPanah.setOnClickListener {
+        binding.btnBack.setOnClickListener {
             Navigation.findNavController(requireView())
                 .navigate(R.id.action_editProfileFragment_to_profileFragment)
         }
@@ -136,7 +146,6 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
         val alamatUpload = alamat.toRequestBody("multipart/form-data".toMediaTypeOrNull())
         val handphoneUpload =
             handphone.toString().toRequestBody("multipart/form-data".toMediaTypeOrNull())
-        val passwordUpload = "123456".toRequestBody("multipart/form-data".toMediaTypeOrNull())
         val emailUpload = user.email.toRequestBody("multipart/form-data".toMediaTypeOrNull())
 
         apiViewModel.updateUser(
@@ -144,7 +153,6 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
             nameUpload,
             alamatUpload,
             emailUpload,
-            passwordUpload,
             handphoneUpload,
             kotaUpload,
             imageUpload

@@ -7,10 +7,18 @@
     android:padding="20dp"
     tools:context=".view.fragment.LoginFragment">
 
+    <ImageView
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_back"
+        android:contentDescription="@string/image"/>
+
     <TextView
         style="@style/TextViewStyle"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="43dp"
         android:text="@string/masuk"
+        android:fontFamily="@font/poppins_bold"
         android:textSize="28sp"
         android:textStyle="bold" />
 
@@ -34,17 +42,35 @@
         android:text="@string/password"
         android:textSize="14sp" />
 
-    <EditText
-        android:id="@+id/et_password"
-        style="@style/EditTextStyle"
-        android:layout_marginTop="4dp"
-        android:autofillHints="password"
-        android:hint="@string/masukkan_password"
-        android:inputType="textPassword" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/et_password"
+            style="@style/EditTextStyle"
+            android:layout_marginTop="10dp"
+            android:hint="@string/masukkan_password"
+            android:inputType="textPassword"
+            tools:ignore="Autofill" />
+
+        <ImageView
+            android:id="@+id/btn_view_pass"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="5dp"
+            android:layout_alignEnd="@+id/et_password"
+            android:layout_alignTop="@+id/et_password"
+            android:layout_alignBottom="@+id/et_password"
+            android:contentDescription="@string/image"
+            android:src="@drawable/ic_outline_remove_green_eye_24" />
+    </RelativeLayout>
+
 
     <Button
         android:id="@+id/btn_login"
         style="@style/ButtonStyle"
+        android:fontFamily="@font/poppins_medium"
         android:layout_marginTop="48dp"
         android:text="@string/masuk" />
 

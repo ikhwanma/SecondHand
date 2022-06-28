@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
@@ -34,19 +35,23 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         userViewModel.getToken().observe(viewLifecycleOwner) {
-            apiViewModel.getLoginUser(it).observe(viewLifecycleOwner) { it1 ->
-                when (it1.status) {
-                    Status.SUCCESS -> {
-                        val data = it1.data!!
-                        if (data.imageUrl.isNotEmpty()){
-                            Glide.with(requireView()).load(data.imageUrl).into(binding.imgUser)
+            if (it == ""){
+                Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_loginFragment)
+            }else{
+                apiViewModel.getLoginUser(it).observe(viewLifecycleOwner) { it1 ->
+                    when (it1.status) {
+                        Status.SUCCESS -> {
+                            val data = it1.data!!
+                            if (data.imageUrl.isNotEmpty()){
+                                Glide.with(requireView()).load(data.imageUrl).into(binding.imgUser)
+                            }
                         }
-                    }
-                    Status.ERROR -> {
+                        Status.ERROR -> {
 
-                    }
-                    Status.LOADING -> {
+                        }
+                        Status.LOADING -> {
 
+                        }
                     }
                 }
             }
@@ -58,7 +63,7 @@ class ProfileFragment : Fragment() {
 
         binding.btnLogout.setOnClickListener {
             userViewModel.setToken("")
-            Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_loginFragment2)
+            Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_loginFragment)
         }
     }
 }

@@ -1,11 +1,9 @@
 package binar.lima.satu.secondhand.model.seller.product
 
-
 import android.net.Uri
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
-
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ProductBody(
