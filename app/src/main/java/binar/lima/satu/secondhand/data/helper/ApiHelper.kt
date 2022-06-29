@@ -16,7 +16,6 @@ class ApiHelper @Inject constructor(private val apiService: ApiService) {
     //=================Auth=================
     suspend fun loginUser(loginBody: LoginBody) = apiService.loginUser(loginBody)
     suspend fun getLoginUser(header: String) = apiService.getLoginUser(header)
-
     suspend fun registerUser(registerBody: RegisterBody) = apiService.registerUser(registerBody)
 
     suspend fun updateUser(
@@ -33,6 +32,7 @@ class ApiHelper @Inject constructor(private val apiService: ApiService) {
 
     //================Seller================
     suspend fun getSellerProduct(token : String) = apiService.getSellerProduct(token)
+    suspend fun getSellerOrder(token : String) = apiService.getSellerOrder(token)
 
     suspend fun getAllCategory() = apiService.getAllCategory()
 

@@ -71,6 +71,15 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
         }
     }
 
+    fun getSellerOrder(token: String) = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(mainRepository.getSellerOrder(token)))
+        }catch (e : Exception){
+            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
+        }
+    }
+
     fun getAllCategory() = liveData(Dispatchers.IO){
         emit(Resource.loading(null))
         try {
