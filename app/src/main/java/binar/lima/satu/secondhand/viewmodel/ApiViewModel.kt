@@ -49,13 +49,12 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
                        fullName : RequestBody,
                        address : RequestBody,
                        email : RequestBody,
-                       password : RequestBody,
                        phoneNumber : RequestBody,
                        city : RequestBody,
                        image : MultipartBody.Part) = liveData(Dispatchers.IO){
         emit(Resource.loading(null))
         try {
-            emit(Resource.success(mainRepository.updateUser(token, fullName, address, email, password, phoneNumber, city, image)))
+            emit(Resource.success(mainRepository.updateUser(token, fullName, address, email, phoneNumber, city, image)))
         }catch (e : Exception){
             emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
         }
@@ -67,6 +66,15 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
         emit(Resource.loading(null))
         try {
             emit(Resource.success(mainRepository.getSellerProduct(token)))
+        }catch (e : Exception){
+            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
+        }
+    }
+
+    fun getSellerOrder(token: String) = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(mainRepository.getSellerOrder(token)))
         }catch (e : Exception){
             emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
         }

@@ -7,13 +7,13 @@
 
     <TextView
         android:id="@+id/tv_title"
-        android:textSize="25sp"
-        android:textStyle="bold"
+        style="@style/TextViewStyle"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="20dp"
-        style="@style/TextViewStyle"
-        android:text="@string/notifikasi" />
+        android:text="@string/notifikasi"
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
     <ProgressBar
         android:id="@+id/progress_circular"

@@ -10,6 +10,7 @@ import binar.lima.satu.secondhand.model.buyer.order.PostOrderResponse
 import binar.lima.satu.secondhand.model.notification.GetNotificationResponseItem
 import binar.lima.satu.secondhand.model.product.GetDetailProductResponse
 import binar.lima.satu.secondhand.model.product.GetProductResponseItem
+import binar.lima.satu.secondhand.model.seller.order.GetSellerOrderResponseItem
 import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponseItem
 import binar.lima.satu.secondhand.model.seller.product.ProductBody
 import okhttp3.MultipartBody
@@ -43,10 +44,9 @@ interface ApiService {
         @Part("full_name") fullName : RequestBody,
         @Part("address") address : RequestBody,
         @Part("email") email : RequestBody,
-        @Part("password") password : RequestBody,
         @Part("phone_number") phoneNumber : RequestBody,
         @Part("city") city : RequestBody,
-        @Part image : MultipartBody.Part,
+        @Part image : MultipartBody.Part
     )
 
     //=======================Seller==============================
@@ -55,6 +55,11 @@ interface ApiService {
     suspend fun getSellerProduct(
         @Header("access_token") token : String
     ) : List<GetProductResponseItem>
+
+    @GET("/seller/order")
+    suspend fun getSellerOrder(
+        @Header("access_token") token : String
+    ) : List<GetSellerOrderResponseItem>
 
     @Multipart
     @POST("/seller/product")

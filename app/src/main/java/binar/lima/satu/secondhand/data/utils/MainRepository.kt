@@ -21,17 +21,17 @@ class MainRepository @Inject constructor(private val apiHelper : ApiHelper) {
         fullName : RequestBody,
         address : RequestBody,
         email : RequestBody,
-        password : RequestBody,
         phoneNumber : RequestBody,
         city : RequestBody,
         image : MultipartBody.Part,
     ) = apiHelper.updateUser(
-        token, fullName, address, email, password, phoneNumber, city, image
+        token, fullName, address, email, phoneNumber, city, image
     )
 
     //================Seller================
     suspend fun getAllCategory() = apiHelper.getAllCategory()
     suspend fun getSellerProduct(token : String) = apiHelper.getSellerProduct(token)
+    suspend fun getSellerOrder(token : String) = apiHelper.getSellerOrder(token)
 
     suspend fun addSellerProduct(
         token: String,

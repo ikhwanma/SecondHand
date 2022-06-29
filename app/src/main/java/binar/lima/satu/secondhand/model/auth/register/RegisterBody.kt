@@ -12,9 +12,9 @@ data class RegisterBody(
     @SerializedName("image")
     val image: Any,
     @SerializedName("password")
-    val password: String,
+    val password: String?,
     @SerializedName("phone_number")
-    val phoneNumber: Long,
+    val phoneNumber: Long?,
     @SerializedName("city")
     val city: String,
 )

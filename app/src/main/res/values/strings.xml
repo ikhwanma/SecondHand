@@ -36,7 +36,6 @@
     <string name="alamat">Alamat</string>
     <string name="contoh_jalan_ikan_hiu_33">Contoh : Jalan Ikan Hiu 33</string>
     <string name="no_handphone">No Handphone</string>
-    <string name="contoh_628123456789">Contoh : +628123456789</string>
     <string name="simpan">Simpan</string>
     <string name="add_image">add image</string>
     <string name="home">Home</string>
@@ -85,5 +84,16 @@
     <string name="berhasil_mendapat_harga">Yeay kamu berhasil mendapat harga yang sesuai</string>
     <string name="daftar_jual">Daftar Jual</string>
     <string name="ditawar">Ditawar</string>
-
+    <string name="nama_minimal_3_karakter">Nama minimal 3 karakter</string>
+    <string name="password_minimal_6_karakter">Password minimal 6 karakter</string>
+    <string name="email_tidak_sesuai_format">Email tidak sesuai format</string>
+    <string name="x">X</string>
+    <string name="lengkapi_detail_produk">Lengkapi Detail Produk</string>
+    <string name="_62">+62</string>
+    <string name="_8123456789">8123456789</string>
+    <string name="version_1_0_0">Version 1.0.0</string>
+    <string name="produk">Produk</string>
+    <string name="diminati">Diminati</string>
+    <string name="terjual">Terjual</string>
+    <string name="_dollar">$</string>
 </resources>
