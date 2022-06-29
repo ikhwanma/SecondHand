@@ -1,20 +1,17 @@
 package binar.lima.satu.secondhand.view.fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import binar.lima.satu.secondhand.R
-import binar.lima.satu.secondhand.data.utils.Status
 import binar.lima.satu.secondhand.data.utils.Status.*
-import binar.lima.satu.secondhand.databinding.FragmentAddProductBinding
 import binar.lima.satu.secondhand.databinding.FragmentDaftarJualSayaBinding
 import binar.lima.satu.secondhand.view.adapter.ProductAdapter
 import binar.lima.satu.secondhand.view.adapter.SellerOrderAdapter
@@ -49,10 +46,22 @@ class DaftarJualSayaFragment : Fragment() {
         }
 
         binding.btnProduct.setOnClickListener {
+            productSelected()
+            diminatiNotSelected()
+            terjualNotSelected()
             getDataProduct()
         }
         binding.btnDiminati.setOnClickListener {
+            productNotSelected()
+            diminatiSelected()
+            terjualNotSelected()
             getDataDiminati()
+        }
+        binding.btnTerjual.setOnClickListener {
+            productNotSelected()
+            diminatiNotSelected()
+            terjualSelected()
+
         }
 
         getDataProduct()
@@ -61,6 +70,53 @@ class DaftarJualSayaFragment : Fragment() {
                 .navigate(R.id.action_daftarJualSayaFragment_to_editProfileFragment)
         }
     }
+
+    private fun productSelected() {
+        binding.apply {
+            btnProduct.setBackgroundResource(R.drawable.style_button)
+            tvProduct.setTextColor(Color.WHITE)
+        }
+    }
+
+    private fun productNotSelected() {
+        binding.apply {
+            btnProduct.setBackgroundResource(R.drawable.style_btn_category_unselected)
+            tvProduct.setTextColor(Color.BLACK)
+        }
+    }
+
+    private fun diminatiSelected() {
+        binding.apply {
+            btnDiminati.setBackgroundResource(R.drawable.style_button)
+            tvDiminati.setTextColor(Color.WHITE)
+            imgDiminati.setImageResource(R.drawable.ic_white_favorite_border_24)
+        }
+    }
+
+    private fun diminatiNotSelected() {
+        binding.apply {
+            btnDiminati.setBackgroundResource(R.drawable.style_btn_category_unselected)
+            tvDiminati.setTextColor(Color.BLACK)
+            imgDiminati.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+        }
+    }
+
+    private fun terjualSelected() {
+        binding.apply {
+            btnTerjual.setBackgroundResource(R.drawable.style_button)
+            tvTerjual.setTextColor(Color.WHITE)
+            imgTerjual.setTextColor(Color.WHITE)
+        }
+    }
+
+    private fun terjualNotSelected() {
+        binding.apply {
+            btnTerjual.setBackgroundResource(R.drawable.style_btn_category_unselected)
+            tvTerjual.setTextColor(Color.BLACK)
+            imgTerjual.setTextColor(Color.BLACK)
+        }
+    }
+
 
     private fun getDataDiminati() {
         userViewModel.getToken().observe(viewLifecycleOwner){ token ->
