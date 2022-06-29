@@ -12,7 +12,6 @@ import binar.lima.satu.secondhand.databinding.FragmentInfoPenawarBinding
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
 
-
 class InfoPenawarFragment : Fragment() {
 
     private var _binding: FragmentInfoPenawarBinding? = null
@@ -21,7 +20,10 @@ class InfoPenawarFragment : Fragment() {
     private val apiViewModel: ApiViewModel by hiltNavGraphViewModels(R.id.nav_main)
     private val userViewModel: UserViewModel by hiltNavGraphViewModels(R.id.nav_main)
 
-    override fun onCreateView(
+    private lateinit var bottomSheetBehavior: BottomSheetDialogFragment
+    private var idProduct : Int = 0
+    val bottomsheet : InfoPenawarBottomSheet()
+     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
