@@ -81,6 +81,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:id="@+id/btn_product"
                 android:layout_width="150dp"
                 android:layout_height="60dp"
                 android:layout_marginEnd="20dp"
@@ -88,6 +89,7 @@
                 android:contentDescription="@string/image" />
 
             <ImageView
+                android:id="@+id/btn_diminati"
                 android:layout_width="150dp"
                 android:layout_height="60dp"
                 android:layout_marginEnd="20dp"
@@ -95,6 +97,7 @@
                 android:contentDescription="@string/image" />
 
             <ImageView
+                android:id="@+id/btn_terjual"
                 android:layout_width="120dp"
                 android:layout_height="60dp"
                 android:src="@drawable/ic_btn_terjual"

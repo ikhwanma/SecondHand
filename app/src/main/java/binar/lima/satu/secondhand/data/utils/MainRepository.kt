@@ -31,6 +31,7 @@ class MainRepository @Inject constructor(private val apiHelper : ApiHelper) {
     //================Seller================
     suspend fun getAllCategory() = apiHelper.getAllCategory()
     suspend fun getSellerProduct(token : String) = apiHelper.getSellerProduct(token)
+    suspend fun getSellerOrder(token : String) = apiHelper.getSellerOrder(token)
 
     suspend fun addSellerProduct(
         token: String,
