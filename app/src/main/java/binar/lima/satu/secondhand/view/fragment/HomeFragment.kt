@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
@@ -48,11 +49,12 @@ class HomeFragment : Fragment() {
         list.add(SlideModel("https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1655773426711-pexels-christian-heitz-842711.jpg?alt=media", ScaleTypes.FIT))
         list.add(SlideModel("https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1655773426711-pexels-christian-heitz-842711.jpg?alt=media", ScaleTypes.FIT))
 
+
         binding.imgSlider.setImageList(list)
         apiViewModel.getAllCategory().observe(viewLifecycleOwner){
             when(it.status){
                 SUCCESS -> {
-                    val adapter = CategoryAdapter{ data ->
+                    val adapter = CategoryAdapter(requireContext()){ data ->
                         category = data.id
                         if (category == 0){
                             getData()
@@ -60,6 +62,8 @@ class HomeFragment : Fragment() {
                             apiViewModel.getAllProduct(category_id = category, status = "available").observe(viewLifecycleOwner){ product ->
                                 when(product.status){
                                     SUCCESS -> {
+                                        binding.rvProduct.visibility = View.VISIBLE
+                                        binding.progressCircular.visibility = View.GONE
                                         val adapter = ProductAdapter{ data ->
                                             val mBundle = bundleOf(DetailFragment.EXTRA_ID to data.id)
                                             Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_detailFragment, mBundle)
@@ -75,7 +79,8 @@ class HomeFragment : Fragment() {
 
                                     }
                                     LOADING -> {
-
+                                        binding.rvProduct.visibility = View.INVISIBLE
+                                        binding.progressCircular.visibility = View.VISIBLE
                                     }
                                 }
                             }
@@ -119,6 +124,8 @@ class HomeFragment : Fragment() {
         apiViewModel.getAllProduct(status = "available").observe(viewLifecycleOwner){ product ->
             when(product.status){
                 SUCCESS -> {
+                    binding.rvProduct.visibility = View.VISIBLE
+                    binding.progressCircular.visibility = View.GONE
                     val adapter = ProductAdapter{ data ->
                         val mBundle = bundleOf(DetailFragment.EXTRA_ID to data.id)
                         Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_detailFragment, mBundle)
@@ -134,7 +141,8 @@ class HomeFragment : Fragment() {
 
                 }
                 LOADING -> {
-
+                    binding.rvProduct.visibility = View.INVISIBLE
+                    binding.progressCircular.visibility = View.VISIBLE
                 }
             }
         }
