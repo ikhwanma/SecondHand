@@ -40,7 +40,7 @@ class CategoryFragment : DialogFragment() {
         super.onResume()
         dialog?.window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT
         )
     }
 
@@ -84,9 +84,14 @@ class CategoryFragment : DialogFragment() {
     }
 
 
-    private fun setList(list: List<GetSellerCategoryResponseItem>) {
+    private fun setList(list: MutableList<GetSellerCategoryResponseItem>) {
 
-        val adapter = SelectedCategoryAdapter()
+        val newList = list
+
+        val adapter = SelectedCategoryAdapter(){
+            newList.remove(it)
+            setList(newList)
+        }
         adapter.submitData(list)
 
         binding.apply {

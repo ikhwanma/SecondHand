@@ -13,25 +13,15 @@ import binar.lima.satu.secondhand.view.dialogfragment.CategoryFragment
 
 class ChooseCategoryAdapter(val onItemClick: (GetSellerCategoryResponseItem) -> Unit): RecyclerView.Adapter<ChooseCategoryAdapter.ViewHolder>() {
 
-    var listData : MutableList<GetSellerCategoryResponseItem> = mutableListOf()
-
+    var listData = mutableListOf<GetSellerCategoryResponseItem>()
 
     inner class ViewHolder (private val binding : ItemChooseCategoryBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(data: GetSellerCategoryResponseItem){
             binding.apply {
                 tvCategory.text = data.name
-                var cek = false
-
                 root.setOnClickListener {
                     onItemClick(data)
                 }
-
-                if (listData.isNotEmpty()){
-                    if (listData[0].id == data.id){
-                        cbCategory.isChecked = true
-                    }
-                }
-
             }
         }
     }

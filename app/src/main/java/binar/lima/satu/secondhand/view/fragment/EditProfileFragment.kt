@@ -59,15 +59,6 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
 
         binding.btnSimpan.setOnClickListener(this)
 
-        val callback = object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                Navigation.findNavController(requireView()).navigate(R.id.action_editProfileFragment_to_profileFragment)
-            }
-
-        }
-
-        requireActivity().onBackPressedDispatcher.addCallback(callback)
-
         userViewModel.getToken().observe(viewLifecycleOwner) {
             setToken(it)
             apiViewModel.getLoginUser(it).observe(viewLifecycleOwner) { user ->

@@ -1,6 +1,7 @@
 package binar.lima.satu.secondhand.view.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -24,6 +25,13 @@ class ProductAdapter(val onItemClick : (GetProductResponseItem) -> Unit) : Recyc
                 tvPrice.text = txtPrice
                 root.setOnClickListener {
                     onItemClick(data)
+                }
+
+                if (data.id == -1){
+                    tvProduct.visibility = View.INVISIBLE
+                    imgProduct.visibility = View.INVISIBLE
+                    tvCategory.visibility = View.INVISIBLE
+                    tvPrice.visibility = View.INVISIBLE
                 }
             }
         }
