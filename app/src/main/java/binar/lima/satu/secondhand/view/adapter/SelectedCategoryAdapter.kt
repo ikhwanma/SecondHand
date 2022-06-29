@@ -8,11 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import binar.lima.satu.secondhand.databinding.ItemCategorySelectedBinding
 import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponseItem
 
-class SelectedCategoryAdapter(): RecyclerView.Adapter<SelectedCategoryAdapter.ViewHolder>(){
+class SelectedCategoryAdapter(val onItemClick : (GetSellerCategoryResponseItem) -> Unit): RecyclerView.Adapter<SelectedCategoryAdapter.ViewHolder>(){
     inner class ViewHolder (private val binding : ItemCategorySelectedBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(data : GetSellerCategoryResponseItem){
             binding.apply {
                 tvCategory.text = data.name
+                root.setOnClickListener {
+                    onItemClick(data)
+                }
             }
         }
     }

@@ -3,15 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:layout_margin="20dp"
     tools:context=".view.fragment.DaftarJualSayaFragment">
 
     <TextView
-        style="@style/TextViewStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/daftar_jual_saya"
-        android:textSize="28sp"
-        android:textStyle="bold" />
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins_bold" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -59,119 +62,73 @@
 
             <ImageView
                 android:id="@+id/btn_edit"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="28dp"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="200dp"
                 android:layout_marginTop="30dp"
-                android:contentDescription="@string/image"
-                android:src="@drawable/ic_edit" />
+                android:src="@drawable/style_white_button"
+                android:contentDescription="@string/image" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/edit"
+                android:layout_alignEnd="@+id/btn_edit"
+                android:layout_alignStart="@+id/btn_edit"
+                android:layout_alignTop="@+id/btn_edit"
+                android:layout_alignBottom="@+id/btn_edit"
+                android:textSize="13sp"
+
+                />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
-    <HorizontalScrollView
-        android:layout_width="match_parent"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp">
-
-        <LinearLayout
+        android:layout_marginTop="20dp"
+        app:tabIndicator="@drawable/style_button"
+        app:tabPaddingStart="20dp"
+        app:tabPaddingEnd="20dp"
+        app:tabInlineLabel="true"
+        app:tabTextColor="@color/black"
+        app:tabIconTint="@color/color_selector_tab"
+        app:tabMaxWidth="0dp"
+        app:tabGravity="fill"
+        app:tabMode="scrollable"
+        app:tabBackground="@drawable/style_btn_category_unselected"
+        app:tabIndicatorAnimationMode="elastic"
+        app:tabIndicatorGravity="stretch"
+        app:tabSelectedTextColor="@color/white">
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
-            android:layout_height="44dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:text="@string/product"
+            />
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/diminati"
+            />
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/terjual"
+            />
+    </com.google.android.material.tabs.TabLayout>
 
-            <LinearLayout
-                android:id="@+id/btn_product"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/style_btn_category_unselected"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="18dp"
-                tools:ignore="UseCompoundDrawables">
 
-                <ImageView
-                    android:id="@+id/img_icon"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:contentDescription="@string/add_image"
-                    android:src="@drawable/ic_box" />
-
-                <TextView
-                    android:id="@+id/tv_product"
-                    style="@style/TextViewStyle"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/produk"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/btn_diminati"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:background="@drawable/style_btn_category_unselected"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="18dp"
-                tools:ignore="UseCompoundDrawables">
-
-                <ImageView
-                    android:id="@+id/img_diminati"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:contentDescription="@string/add_image"
-                    android:src="@drawable/ic_baseline_favorite_border_24" />
-
-                <TextView
-                    android:id="@+id/tv_diminati"
-                    style="@style/TextViewStyle"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/diminati"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/btn_terjual"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:background="@drawable/style_btn_category_unselected"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="18dp"
-                tools:ignore="UseCompoundDrawables">
-
-                <TextView
-                    android:id="@+id/img_terjual"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/add_image"
-                    android:fontFamily="@font/poppins_medium"
-                    android:src="@drawable/ic_dollar"
-                    android:text="@string/_dollar"
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/tv_terjual"
-                    style="@style/TextViewStyle"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/terjual"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </HorizontalScrollView>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_daftar_jual"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

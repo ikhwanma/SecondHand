@@ -13,6 +13,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentAddProductBinding
@@ -46,8 +47,6 @@ class AddProductFragment : Fragment(), View.OnClickListener {
 
     private lateinit var token: String
     private lateinit var user: GetLoginResponse
-
-
 
     private val galleryResult =
         registerForActivityResult(ActivityResultContracts.GetContent()) { result ->
@@ -111,6 +110,9 @@ class AddProductFragment : Fragment(), View.OnClickListener {
         }
         binding.btnCategory.setOnClickListener {
             CategoryFragment().show(requireActivity().supportFragmentManager, null)
+        }
+        binding.btnBack.setOnClickListener {
+            it.findNavController().navigate(R.id.action_addProductFragment_to_homeFragment)
         }
     }
 
@@ -188,6 +190,7 @@ class AddProductFragment : Fragment(), View.OnClickListener {
                 SUCCESS -> {
                     Toast.makeText(requireContext(), "Sukses", Toast.LENGTH_SHORT).show()
                     userViewModel.listCategorySelected.postValue(mutableListOf())
+                    Navigation.findNavController(requireView()).navigate(R.id.action_addProductFragment_to_daftarJualSayaFragment)
                 }
                 ERROR -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
