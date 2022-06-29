@@ -3,15 +3,32 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="20dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.fragment.InfoPenawarFragment">
 
-    <TextView
-        style="@style/TextViewStyle"
-        android:text="@string/info_penawar"
-        android:textSize="28sp"
-        android:textStyle="bold" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:gravity="center_vertical">
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_back"
+            android:contentDescription="@string/image"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/info_penawar"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
 
     <androidx.cardview.widget.CardView
         android:layout_marginTop="20dp"
@@ -37,14 +54,14 @@
                 android:text="@string/nama_pembeli"
                 android:textStyle="bold"
                 android:textColor="@color/black"
-                android:textSize="20dp"/>
+                android:textSize="20sp"/>
 
             <TextView
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/kota"
-                android:textSize="15dp"/>
+                android:textSize="15sp"/>
 
         </LinearLayout>
 
@@ -57,14 +74,13 @@
         android:layout_marginTop="40dp"
         android:layout_marginBottom="20dp"
         android:text="@string/daftar_produuk_yang_ditawar"
-        android:textSize="25sp"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_notification"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tv_title"
         tools:listitem="@layout/item_infopenawar" />
 
 

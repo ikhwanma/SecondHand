@@ -92,4 +92,8 @@
     <string name="_62">+62</string>
     <string name="_8123456789">8123456789</string>
     <string name="version_1_0_0">Version 1.0.0</string>
+    <string name="produk">Produk</string>
+    <string name="diminati">Diminati</string>
+    <string name="terjual">Terjual</string>
+    <string name="_dollar">$</string>
 </resources>
