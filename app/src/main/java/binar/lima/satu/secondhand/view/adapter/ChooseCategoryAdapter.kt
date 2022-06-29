@@ -20,6 +20,7 @@ class ChooseCategoryAdapter(val onItemClick: (GetSellerCategoryResponseItem) -> 
         fun bind(data: GetSellerCategoryResponseItem){
             binding.apply {
                 tvCategory.text = data.name
+                var cek = false
 
                 root.setOnClickListener {
                     onItemClick(data)

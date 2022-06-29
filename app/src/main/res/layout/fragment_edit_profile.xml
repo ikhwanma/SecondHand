@@ -31,100 +31,111 @@
 
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/img_user"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
-        android:src="@drawable/ic_photo_profile"
-        android:contentDescription="@string/image" />
-
-    <TextView
-        style="@style/TextViewStyle"
-        android:layout_marginTop="20dp"
-        android:text="@string/nama"
-        android:textSize="15sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <EditText
-        android:id="@+id/et_nama_edit_profile"
-        style="@style/EditTextStyle"
-        android:layout_marginTop="4dp"
-        android:autofillHints="Nama"
-        android:hint="@string/nama"
-        android:inputType="textEmailAddress" />
-
-    <TextView
-        style="@style/TextViewStyle"
-        android:layout_marginTop="20dp"
-        android:text="@string/kota"
-        android:textSize="15sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <EditText
-        android:id="@+id/et_pilih_kota_edit_profile"
-        style="@style/EditTextStyle"
-        android:layout_marginTop="4dp"
-        android:autofillHints="pilihKota"
-        android:hint="@string/pilih_kota"
-        android:inputType="textEmailAddress" />
-
-    <TextView
-        style="@style/TextViewStyle"
-        android:layout_marginTop="20dp"
-        android:text="@string/alamat"
-        android:textSize="15sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <EditText
-        android:id="@+id/et_alamat_edit_profile"
-        style="@style/EditTextStyle"
-        android:layout_marginTop="4dp"
-        android:autofillHints="alamat"
-        android:hint="@string/contoh_jalan_ikan_hiu_33"
-        android:inputType="textEmailAddress" />
-
-    <TextView
-        style="@style/TextViewStyle"
-        android:layout_marginTop="20dp"
-        android:text="@string/no_handphone"
-        android:textSize="15sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/et_no_handphone_edit_profile"
-            style="@style/EditTextStyle"
-            android:layout_marginTop="4dp"
-            android:autofillHints="alamat"
-            android:hint="@string/_8123456789"
-            android:paddingStart="46dp"
-            android:inputType="textEmailAddress"
-            tools:ignore="RtlSymmetry" />
-        <TextView
-            android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_medium"
-            android:paddingStart="16dp"
-            android:paddingTop="15dp"
-            android:text="@string/_62"
-            tools:ignore="RtlSymmetry" />
-    </RelativeLayout>
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/img_user"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/ic_photo_profile"
+                android:contentDescription="@string/image" />
+
+            <TextView
+                style="@style/TextViewStyle"
+                android:layout_marginTop="20dp"
+                android:text="@string/nama"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/et_nama_edit_profile"
+                style="@style/EditTextStyle"
+                android:layout_marginTop="4dp"
+                android:autofillHints="Nama"
+                android:hint="@string/nama"
+                android:inputType="textEmailAddress" />
+
+            <TextView
+                style="@style/TextViewStyle"
+                android:layout_marginTop="20dp"
+                android:text="@string/kota"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/et_pilih_kota_edit_profile"
+                style="@style/EditTextStyle"
+                android:layout_marginTop="4dp"
+                android:autofillHints="pilihKota"
+                android:hint="@string/pilih_kota"
+                android:inputType="textEmailAddress" />
+
+            <TextView
+                style="@style/TextViewStyle"
+                android:layout_marginTop="20dp"
+                android:text="@string/alamat"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/et_alamat_edit_profile"
+                style="@style/EditTextStyle"
+                android:layout_marginTop="4dp"
+                android:autofillHints="alamat"
+                android:hint="@string/contoh_jalan_ikan_hiu_33"
+                android:inputType="textEmailAddress" />
+
+            <TextView
+                style="@style/TextViewStyle"
+                android:layout_marginTop="20dp"
+                android:text="@string/no_handphone"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/et_no_handphone_edit_profile"
+                    style="@style/EditTextStyle"
+                    android:layout_marginTop="4dp"
+                    android:autofillHints="alamat"
+                    android:hint="@string/_8123456789"
+                    android:paddingStart="46dp"
+                    android:inputType="textEmailAddress"
+                    tools:ignore="RtlSymmetry" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:paddingStart="16dp"
+                    android:paddingTop="15dp"
+                    android:text="@string/_62"
+                    tools:ignore="RtlSymmetry" />
+            </RelativeLayout>
 
 
 
-    <Button
-        android:id="@+id/btn_simpan"
-        style="@style/ButtonStyle"
-        android:fontFamily="@font/poppins_medium"
-        android:layout_marginTop="20dp"
-        android:text="@string/simpan" />
+            <Button
+                android:id="@+id/btn_simpan"
+                style="@style/ButtonStyle"
+                android:fontFamily="@font/poppins_medium"
+                android:layout_marginTop="20dp"
+                android:text="@string/simpan" />
+        </LinearLayout>
+    </ScrollView>
+
+
 
 </LinearLayout>

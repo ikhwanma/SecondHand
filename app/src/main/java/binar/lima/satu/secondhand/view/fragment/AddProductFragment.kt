@@ -157,9 +157,16 @@ class AddProductFragment : Fragment(), View.OnClickListener {
 
         var listCat = ""
 
-        for (cat in listCategory){
-            listCat += "${cat.id},"
+        for (i in listCategory.indices){
+            listCat += if(i == listCategory.size-1){
+                "${listCategory[i].id}"
+            }else{
+                "${listCategory[i].id},"
+            }
+
         }
+
+        Toast.makeText(requireContext(), listCat, Toast.LENGTH_SHORT).show()
 
         val requestBody: RequestBody = tempFile.asRequestBody(type?.toMediaType())
 
@@ -180,6 +187,7 @@ class AddProductFragment : Fragment(), View.OnClickListener {
             when(it.status){
                 SUCCESS -> {
                     Toast.makeText(requireContext(), "Sukses", Toast.LENGTH_SHORT).show()
+                    userViewModel.listCategorySelected.postValue(mutableListOf())
                 }
                 ERROR -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()

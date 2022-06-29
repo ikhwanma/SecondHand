@@ -11,6 +11,7 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_green_eye_24.xml" value="0.28" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_outline_remove_green_eye_24.xml" value="0.28" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_settings.xml" value="0.279" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/style_btn_category_unselected.xml" value="0.216" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/style_button.xml" value="0.114" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/style_button_gray.xml" value="0.152" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/style_et.xml" value="0.2" />
@@ -30,7 +31,7 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_detail.xml" value="0.25" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_dialog.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_edit_profile.xml" value="0.3555253623188406" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_home.xml" value="0.29248026589115084" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_info_penawar.xml" value="0.322463768115942" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_info_penawar_dua.xml" value="0.33" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_info_penawar_tiga.xml" value="0.322463768115942" />
