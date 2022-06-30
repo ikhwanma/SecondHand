@@ -28,10 +28,13 @@ class ProductAdapter(val onItemClick : (GetProductResponseItem) -> Unit) : Recyc
                 }
 
                 if (data.id == -1){
-                    tvProduct.visibility = View.INVISIBLE
-                    imgProduct.visibility = View.INVISIBLE
-                    tvCategory.visibility = View.INVISIBLE
-                    tvPrice.visibility = View.INVISIBLE
+                    cvImgProduct.visibility = View.GONE
+                    tvProduct.visibility = View.GONE
+                    imgProduct.visibility = View.GONE
+                    tvCategory.visibility = View.GONE
+                    tvPrice.visibility = View.GONE
+                    tvAdd.visibility = View.VISIBLE
+                    imgAdd.visibility = View.VISIBLE
                 }
             }
         }

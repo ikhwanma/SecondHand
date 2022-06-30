@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.viewpageritem.TerjualTabFragment">
+    tools:context=".view.viewpageritem.HomeProductFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_terjual"
+        android:id="@+id/rv_product"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

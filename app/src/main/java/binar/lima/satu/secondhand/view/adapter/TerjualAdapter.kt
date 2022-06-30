@@ -8,14 +8,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import binar.lima.satu.secondhand.data.utils.DateConverter
 import binar.lima.satu.secondhand.databinding.ItemNotificationBinding
-import binar.lima.satu.secondhand.model.notification.GetNotificationResponseItem
-import binar.lima.satu.secondhand.model.seller.order.GetSellerOrderResponse
 import binar.lima.satu.secondhand.model.seller.order.GetSellerOrderResponseItem
 import com.bumptech.glide.Glide
 
-class SellerOrderAdapter(val onItemClick: (GetSellerOrderResponseItem) -> Unit) :
-    RecyclerView.Adapter<SellerOrderAdapter.ViewHolder>() {
-
+class TerjualAdapter (val onItemClick: (GetSellerOrderResponseItem) -> Unit) :
+    RecyclerView.Adapter<TerjualAdapter.ViewHolder>() {
     inner class ViewHolder(private val binding: ItemNotificationBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: GetSellerOrderResponseItem, position: Int) {
@@ -23,12 +20,13 @@ class SellerOrderAdapter(val onItemClick: (GetSellerOrderResponseItem) -> Unit) 
                 root.setOnClickListener {
                     onItemClick(data)
                 }
-                val txtBid = "Ditawar Rp ${data.price}"
-                val txtPrice = "Rp ${data.product.basePrice}"
+                val txtStatus = "Berhasil Terjual"
+                val txtBid = "Rp ${data.price}"
                 tvBid.text = txtBid
-                tvPrice.text = txtPrice
+                tvPrice.visibility = View.GONE
                 tvProduct.text = data.product.name
                 tvDate.text = DateConverter.convertDate(data.updatedAt)
+                tvStatus.text = txtStatus
                 Glide.with(itemView).load(data.product.imageUrl).into(imgProduct)
                 if (position == differ.currentList.size - 1) {
                     viewBorder.visibility = View.INVISIBLE
@@ -58,12 +56,12 @@ class SellerOrderAdapter(val onItemClick: (GetSellerOrderResponseItem) -> Unit) 
 
     fun submitData(value: List<GetSellerOrderResponseItem>?) = differ.submitList(value)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TerjualAdapter.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return ViewHolder(ItemNotificationBinding.inflate(inflater, parent, false))
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TerjualAdapter.ViewHolder, position: Int) {
         val data = differ.currentList[position]
         data.let {
             holder.bind(data, position)
