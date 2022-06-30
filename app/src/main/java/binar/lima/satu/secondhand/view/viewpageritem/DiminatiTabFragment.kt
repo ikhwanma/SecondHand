@@ -53,6 +53,13 @@ class DiminatiTabFragment : Fragment() {
                             }
                         }
 
+                        binding.ivListKosong.visibility = if(list.isEmpty()){
+                            View.VISIBLE
+                        }
+                        else{
+                            View.INVISIBLE
+                        }
+
                         adapter.submitData(list)
                         binding.apply {
                             rvDiminati.adapter = adapter
@@ -68,6 +75,10 @@ class DiminatiTabFragment : Fragment() {
                 }
             }
         }
+    }
+
+    fun View.showOrInvisible(getDataDiminati: Boolean){
+
     }
 
 }
