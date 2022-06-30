@@ -4,14 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Kampus Merdeka/Binar Academy/Chapter 8/SecondHand/app/src/main/res/layout/fragment_daftar_jual_saya.xml" value="0.209375" />
-        <entry key="..\:/Kampus Merdeka/Binar Academy/Chapter 8/SecondHand/app/src/main/res/layout/fragment_diminati_tab.xml" value="0.209375" />
         <entry key="..\:/Kampus Merdeka/Binar Academy/Chapter 8/SecondHand/app/src/main/res/layout/fragment_edit_profile.xml" value="0.25" />
-        <entry key="..\:/Kampus Merdeka/Binar Academy/Chapter 8/SecondHand/app/src/main/res/layout/fragment_home.xml" value="0.209375" />
-        <entry key="..\:/Kampus Merdeka/Binar Academy/Chapter 8/SecondHand/app/src/main/res/layout/fragment_info_penawar.xml" value="0.209375" />
         <entry key="..\:/Kampus Merdeka/Binar Academy/Chapter 8/SecondHand/app/src/main/res/layout/fragment_login.xml" value="0.209375" />
         <entry key="..\:/Kampus Merdeka/Binar Academy/Chapter 8/SecondHand/app/src/main/res/layout/fragment_profile.xml" value="0.209375" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/activity_main.xml" value="0.17831813576494426" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_login.xml" value="0.18958333333333333" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_arrow_back.xml" value="0.279" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.279" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_green_eye_24.xml" value="0.28" />
@@ -53,7 +48,7 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/info_penawar_bottom_sheet.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/item_category.xml" value="0.33" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/item_category_selected.xml" value="0.5" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/item_choose_category.xml" value="0.365625" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/item_choose_category.xml" value="0.33" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/item_infopenawar.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/item_notification.xml" value="0.5" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/item_product.xml" value="0.33" />
