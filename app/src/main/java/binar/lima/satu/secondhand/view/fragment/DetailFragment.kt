@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
@@ -18,6 +17,7 @@ import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 
 
 class DetailFragment : Fragment() , View.OnClickListener{
@@ -83,6 +83,17 @@ class DetailFragment : Fragment() , View.OnClickListener{
         binding.btnTertarik.setOnClickListener {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
+
+        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED) binding.bg.visibility = View.GONE
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                binding.bg.visibility = View.VISIBLE
+                binding.bg.alpha = slideOffset
+            }
+        })
 
         binding.btnKirim.setOnClickListener(this)
     }
