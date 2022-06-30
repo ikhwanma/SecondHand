@@ -2,25 +2,29 @@ package binar.lima.satu.secondhand.view.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.databinding.ItemChooseCategoryBinding
-import binar.lima.satu.secondhand.model.notification.GetNotificationResponseItem
 import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponseItem
-import binar.lima.satu.secondhand.view.dialogfragment.CategoryFragment
 
 class ChooseCategoryAdapter(val onItemClick: (GetSellerCategoryResponseItem) -> Unit): RecyclerView.Adapter<ChooseCategoryAdapter.ViewHolder>() {
 
     var listData = mutableListOf<GetSellerCategoryResponseItem>()
 
+    val listPosition = mutableListOf<GetSellerCategoryResponseItem>()
+
     inner class ViewHolder (private val binding : ItemChooseCategoryBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(data: GetSellerCategoryResponseItem){
+        fun bind(data: GetSellerCategoryResponseItem, position: Int){
             binding.apply {
                 tvCategory.text = data.name
+
                 root.setOnClickListener {
                     onItemClick(data)
+
                 }
             }
         }
@@ -54,7 +58,7 @@ class ChooseCategoryAdapter(val onItemClick: (GetSellerCategoryResponseItem) -> 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = differ.currentList[position]
         data.let {
-            holder.bind(data)
+            holder.bind(data, position)
         }
     }
 
