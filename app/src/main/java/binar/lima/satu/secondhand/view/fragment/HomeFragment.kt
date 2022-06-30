@@ -16,11 +16,14 @@ import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentHomeBinding
 import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponseItem
 import binar.lima.satu.secondhand.view.adapter.CategoryAdapter
+import binar.lima.satu.secondhand.view.adapter.DaftarJualPageAdapter
+import binar.lima.satu.secondhand.view.adapter.HomePageAdapter
 import binar.lima.satu.secondhand.view.adapter.ProductAdapter
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
+import com.google.android.material.tabs.TabLayoutMediator
 
 
 class HomeFragment : Fragment() {
@@ -48,7 +51,6 @@ class HomeFragment : Fragment() {
 
         list.add(SlideModel("https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1655773426711-pexels-christian-heitz-842711.jpg?alt=media", ScaleTypes.FIT))
         list.add(SlideModel("https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1655773426711-pexels-christian-heitz-842711.jpg?alt=media", ScaleTypes.FIT))
-
 
         binding.imgSlider.setImageList(list)
         apiViewModel.getAllCategory().observe(viewLifecycleOwner){
