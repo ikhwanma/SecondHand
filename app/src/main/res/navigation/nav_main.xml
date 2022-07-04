@@ -142,5 +142,19 @@
         <action
             android:id="@+id/action_daftarJualSayaFragment_to_addProductFragment"
             app:destination="@id/addProductFragment" />
+        <action
+            android:id="@+id/action_daftarJualSayaFragment_to_infoPenawarFragment"
+            app:destination="@id/infoPenawarFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/infoPenawarFragment"
+        android:name="binar.lima.satu.secondhand.view.fragment.InfoPenawarFragment"
+        android:label="fragment_info_penawar"
+        tools:layout="@layout/fragment_info_penawar" >
+        <action
+            android:id="@+id/action_infoPenawarFragment_to_daftarJualSayaFragment"
+            app:destination="@id/daftarJualSayaFragment"
+            app:popUpTo="@id/infoPenawarFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

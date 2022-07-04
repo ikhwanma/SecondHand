@@ -10,7 +10,10 @@ import binar.lima.satu.secondhand.model.buyer.order.PostOrderResponse
 import binar.lima.satu.secondhand.model.notification.GetNotificationResponseItem
 import binar.lima.satu.secondhand.model.product.GetDetailProductResponse
 import binar.lima.satu.secondhand.model.product.GetProductResponseItem
+import binar.lima.satu.secondhand.model.seller.banner.GetSellerBannerResponseItem
 import binar.lima.satu.secondhand.model.seller.order.GetSellerOrderResponseItem
+import binar.lima.satu.secondhand.model.seller.order.PatchOrderBody
+import binar.lima.satu.secondhand.model.seller.order.PatchSellerOrderResponse
 import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponseItem
 import binar.lima.satu.secondhand.model.seller.product.ProductBody
 import okhttp3.MultipartBody
@@ -56,10 +59,27 @@ interface ApiService {
         @Header("access_token") token : String
     ) : List<GetProductResponseItem>
 
+    @GET("/seller/banner")
+    suspend fun getSellerBanner() : List<GetSellerBannerResponseItem>
+
     @GET("/seller/order")
     suspend fun getSellerOrder(
-        @Header("access_token") token : String
+        @Header("access_token") token : String,
+        @Query("status") status : String?
     ) : List<GetSellerOrderResponseItem>
+
+    @GET("/seller/order/{id}")
+    suspend fun getDetailSellerOrder(
+        @Header("access_token") token : String,
+        @Path("id") id : Int
+    ) : GetSellerOrderResponseItem
+
+    @PATCH("/seller/order/{id}")
+    suspend fun patchSellerOrder(
+        @Header("access_token") token : String,
+        @Path("id") id : Int,
+        @Body body: PatchOrderBody
+    ) : PatchSellerOrderResponse
 
     @Multipart
     @POST("/seller/product")

@@ -18,19 +18,19 @@ class NotificationAdapter(val onItemClick: (GetNotificationResponseItem) -> Unit
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
             data: GetNotificationResponseItem,
-            dataProduct: GetDetailProductResponse,
             position: Int
         ){
             binding.apply {
                 root.setOnClickListener {
                     onItemClick(data)
                 }
+                val product = data.product
                 val txtBid = "Ditawar Rp ${data.bidPrice}"
-                val txtPrice = "Rp ${dataProduct.basePrice}"
+                val txtPrice = "Rp ${product.basePrice}"
                 tvBid.text = txtBid
-                tvProduct.text = dataProduct.name
+                tvProduct.text = product.name
                 tvPrice.text = txtPrice
-                tvDate.text = DateConverter.convertDate(data.updatedAt)
+                tvDate.text = DateConverter.convertDate(data.transactionDate)
                 Glide.with(itemView).load(data.imageUrl).into(imgProduct)
                 if (position == differ.currentList.size-1){
                     viewBorder.visibility = View.INVISIBLE
@@ -58,28 +58,9 @@ class NotificationAdapter(val onItemClick: (GetNotificationResponseItem) -> Unit
         }
     }
 
-    private val diffCallbackProduct = object : DiffUtil.ItemCallback<GetDetailProductResponse>(){
-        override fun areItemsTheSame(
-            oldItem: GetDetailProductResponse,
-            newItem: GetDetailProductResponse
-        ): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(
-            oldItem: GetDetailProductResponse,
-            newItem: GetDetailProductResponse
-        ): Boolean {
-            return oldItem.hashCode() == newItem.hashCode()
-        }
-
-    }
-
     private val differ = AsyncListDiffer(this, diffCallback)
-    private val differProduct = AsyncListDiffer(this, diffCallbackProduct)
 
     fun submitData(value : List<GetNotificationResponseItem>?) = differ.submitList(value)
-    fun submitDataProduct(value : List<GetDetailProductResponse>?) = differProduct.submitList(value)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -88,9 +69,8 @@ class NotificationAdapter(val onItemClick: (GetNotificationResponseItem) -> Unit
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = differ.currentList[position]
-        val dataProduct = differProduct.currentList[position]
         data.let {
-            holder.bind(data, dataProduct, position)
+            holder.bind(data, position)
         }
     }
 

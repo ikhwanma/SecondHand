@@ -7,6 +7,7 @@ import binar.lima.satu.secondhand.data.utils.Resource
 import binar.lima.satu.secondhand.model.auth.login.LoginBody
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
 import binar.lima.satu.secondhand.model.buyer.order.PostOrderBody
+import binar.lima.satu.secondhand.model.seller.order.PatchOrderBody
 import binar.lima.satu.secondhand.model.seller.product.ProductBody
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -71,10 +72,37 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
         }
     }
 
-    fun getSellerOrder(token: String) = liveData(Dispatchers.IO){
+    fun getSellerBanner() = liveData(Dispatchers.IO){
         emit(Resource.loading(null))
         try {
-            emit(Resource.success(mainRepository.getSellerOrder(token)))
+            emit(Resource.success(mainRepository.getSellerBanner()))
+        }catch (e : Exception){
+            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
+        }
+    }
+
+    fun getSellerOrder(token: String, status: String?) = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(mainRepository.getSellerOrder(token, status)))
+        }catch (e : Exception){
+            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
+        }
+    }
+
+    fun getDetailSellerOrder(token: String, id : Int) = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(mainRepository.getDetailSellerOrder(token, id)))
+        }catch (e : Exception){
+            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
+        }
+    }
+
+    fun patchSellerOrder(token: String,id: Int, body: PatchOrderBody) = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(mainRepository.patchSellerOrder(token, id, body)))
         }catch (e : Exception){
             emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
         }

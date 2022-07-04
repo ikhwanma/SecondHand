@@ -98,6 +98,7 @@
                         android:layout_height="match_parent">
 
                         <ImageView
+                            android:id="@+id/img_seller"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:layout_margin="16dp"
@@ -240,7 +241,7 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/img_seller"
+                        android:id="@+id/img_seller_bottomsheet"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:layout_margin="16dp"
@@ -253,7 +254,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/tv_seller_name"
+                            android:id="@+id/tv_seller_bottomsheet"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
@@ -263,7 +264,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/tv_seller_city"
+                            android:id="@+id/tv_seller_city_bottomsheet"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"

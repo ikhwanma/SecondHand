@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
@@ -45,6 +46,15 @@ class DetailFragment : Fragment() , View.OnClickListener{
 
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet)
 
+        val callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                Navigation.findNavController(requireView()).navigate(R.id.action_detailFragment_to_homeFragment)
+            }
+
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
+
         idProduct = arguments?.getInt(EXTRA_ID) as Int
 
         apiViewModel.getProduct(idProduct).observe(viewLifecycleOwner){
@@ -66,8 +76,13 @@ class DetailFragment : Fragment() , View.OnClickListener{
                         tvProduct.text = data.name
                         tvPrice.text = txtPrice
                         tvLocation.text = data.location
+                        tvSellerCityBottomsheet.text = data.location
                         tvCategory.text = txtCategory
                         tvDescription.text = data.description
+                        tvSeller.text = data.user.fullName
+                        tvSellerBottomsheet.text = data.user.fullName
+                        Glide.with(requireView()).load(data.user.imageUrl).into(imgSeller)
+                        Glide.with(requireView()).load(data.user.imageUrl).into(imgSellerBottomsheet)
                     }
 
                 }

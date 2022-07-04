@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.Status
@@ -14,6 +16,8 @@ import binar.lima.satu.secondhand.databinding.FragmentDiminatiTabBinding
 import binar.lima.satu.secondhand.databinding.FragmentProductTabBinding
 import binar.lima.satu.secondhand.model.seller.order.GetSellerOrderResponseItem
 import binar.lima.satu.secondhand.view.adapter.SellerOrderAdapter
+import binar.lima.satu.secondhand.view.fragment.DetailFragment
+import binar.lima.satu.secondhand.view.fragment.InfoPenawarFragment
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
 
@@ -37,26 +41,30 @@ class DiminatiTabFragment : Fragment() {
 
     private fun getDataDiminati() {
         userViewModel.getToken().observe(viewLifecycleOwner) { token ->
-            apiViewModel.getSellerOrder(token).observe(viewLifecycleOwner) {
+            apiViewModel.getSellerOrder(token, "").observe(viewLifecycleOwner) {
                 when (it.status) {
                     Status.SUCCESS -> {
                         val data = it.data
+                        binding.progressCircular.visibility = View.GONE
 
-                        val adapter = SellerOrderAdapter {
-
+                        val adapter = SellerOrderAdapter { order ->
+                            val mBundle = bundleOf(InfoPenawarFragment.EXTRA_ORDER_ID to order.id)
+                            Navigation.findNavController(requireView()).navigate(
+                                R.id.action_daftarJualSayaFragment_to_infoPenawarFragment,
+                                mBundle
+                            )
                         }
                         val list = mutableListOf<GetSellerOrderResponseItem>()
 
                         for (order in data!!) {
-                            if (order.status == "pending" && order.product.status == "available") {
+                            if (order.status == "pending" && order.product.status == "available" || order.status == "success" && order.product.status == "available") {
                                 list.add(order)
                             }
                         }
 
-                        binding.ivListKosong.visibility = if(list.isEmpty()){
+                        binding.ivListKosong.visibility = if (list.isEmpty()) {
                             View.VISIBLE
-                        }
-                        else{
+                        } else {
                             View.INVISIBLE
                         }
 
@@ -67,18 +75,13 @@ class DiminatiTabFragment : Fragment() {
                         }
                     }
                     Status.ERROR -> {
-
+                        binding.progressCircular.visibility = View.GONE
                     }
                     Status.LOADING -> {
-
+                        binding.progressCircular.visibility = View.VISIBLE
                     }
                 }
             }
         }
     }
-
-    fun View.showOrInvisible(getDataDiminati: Boolean){
-
-    }
-
 }

@@ -18,6 +18,15 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_daftar_kosong"
         android:layout_centerInParent="true"
+        android:visibility="gone"
         android:contentDescription="@string/image" />
+
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        />
 
 </RelativeLayout>
