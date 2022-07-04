@@ -42,6 +42,7 @@ class ProductTabFragment : Fragment() {
                 when (product.status) {
                     Status.SUCCESS -> {
                         binding.apply {
+                            progressCircular.visibility = View.GONE
                             val data = product.data!!
 
                             val listProduct = mutableListOf(
@@ -75,10 +76,10 @@ class ProductTabFragment : Fragment() {
                         }
                     }
                     Status.ERROR -> {
-
+                        binding.progressCircular.visibility = View.GONE
                     }
                     Status.LOADING -> {
-
+                        binding.progressCircular.visibility = View.VISIBLE
                     }
                 }
             }

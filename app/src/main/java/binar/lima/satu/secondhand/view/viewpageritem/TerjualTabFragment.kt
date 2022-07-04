@@ -36,33 +36,26 @@ class TerjualTabFragment : Fragment() {
 
     private fun getDataTerjual() {
         userViewModel.getToken().observe(viewLifecycleOwner) { token ->
-            apiViewModel.getSellerOrder(token).observe(viewLifecycleOwner){
+            apiViewModel.getSellerOrder(token, "accepted").observe(viewLifecycleOwner){
                 when(it.status){
                     SUCCESS -> {
                         val data = it.data!!
-
-                        val listTerjual = mutableListOf<GetSellerOrderResponseItem>()
-
-                        for (terjual in data){
-                            if (terjual.status == "accepted"){
-                                listTerjual.add(terjual)
-                            }
-                        }
+                        binding.progressCircular.visibility = View.GONE
 
                         val adapter = TerjualAdapter(){
 
                         }
-                        adapter.submitData(listTerjual)
+                        adapter.submitData(data)
                         binding.apply {
                             rvTerjual.adapter = adapter
                             rvTerjual.layoutManager = LinearLayoutManager(requireContext())
                         }
                     }
                     ERROR -> {
-
+                        binding.progressCircular.visibility = View.GONE
                     }
                     LOADING -> {
-
+                        binding.progressCircular.visibility = View.VISIBLE
                     }
                 }
             }

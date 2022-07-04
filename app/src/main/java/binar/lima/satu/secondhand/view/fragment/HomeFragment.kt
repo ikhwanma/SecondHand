@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
@@ -16,14 +15,10 @@ import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentHomeBinding
 import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponseItem
 import binar.lima.satu.secondhand.view.adapter.CategoryAdapter
-import binar.lima.satu.secondhand.view.adapter.DaftarJualPageAdapter
-import binar.lima.satu.secondhand.view.adapter.HomePageAdapter
 import binar.lima.satu.secondhand.view.adapter.ProductAdapter
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
-import binar.lima.satu.secondhand.viewmodel.UserViewModel
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
-import com.google.android.material.tabs.TabLayoutMediator
 
 
 class HomeFragment : Fragment() {
@@ -47,12 +42,26 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val list = ArrayList<SlideModel>()
+        apiViewModel.getSellerBanner().observe(viewLifecycleOwner){
+            when(it.status){
+                SUCCESS -> {
+                    val data = it.data!!
+                    val list = ArrayList<SlideModel>()
 
-        list.add(SlideModel("https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1655773426711-pexels-christian-heitz-842711.jpg?alt=media", ScaleTypes.FIT))
-        list.add(SlideModel("https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1655773426711-pexels-christian-heitz-842711.jpg?alt=media", ScaleTypes.FIT))
+                    for(img in data){
+                        list.add(SlideModel(img.imageUrl, ScaleTypes.FIT))
+                    }
 
-        binding.imgSlider.setImageList(list)
+                    binding.imgSlider.setImageList(list)
+                }
+                ERROR -> {
+
+                }
+                LOADING -> {
+
+                }
+            }
+        }
         apiViewModel.getAllCategory().observe(viewLifecycleOwner){
             when(it.status){
                 SUCCESS -> {

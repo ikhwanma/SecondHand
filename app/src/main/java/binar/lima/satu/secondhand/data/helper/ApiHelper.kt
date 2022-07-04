@@ -4,9 +4,11 @@ import binar.lima.satu.secondhand.data.remote.ApiService
 import binar.lima.satu.secondhand.model.auth.login.LoginBody
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
 import binar.lima.satu.secondhand.model.buyer.order.PostOrderBody
+import binar.lima.satu.secondhand.model.seller.order.PatchOrderBody
 import binar.lima.satu.secondhand.model.seller.product.ProductBody
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.Part
 import javax.inject.Inject
@@ -32,7 +34,10 @@ class ApiHelper @Inject constructor(private val apiService: ApiService) {
 
     //================Seller================
     suspend fun getSellerProduct(token : String) = apiService.getSellerProduct(token)
-    suspend fun getSellerOrder(token : String) = apiService.getSellerOrder(token)
+    suspend fun getSellerOrder(token : String, status : String?) = apiService.getSellerOrder(token, status)
+    suspend fun getDetailSellerOrder(token : String, id: Int) = apiService.getDetailSellerOrder(token, id)
+    suspend fun patchSellerOrder(token : String,id : Int, body: PatchOrderBody) = apiService.patchSellerOrder(token, id, body)
+    suspend fun getSellerBanner() = apiService.getSellerBanner()
 
     suspend fun getAllCategory() = apiService.getAllCategory()
 

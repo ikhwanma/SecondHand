@@ -4,6 +4,7 @@ import binar.lima.satu.secondhand.data.helper.ApiHelper
 import binar.lima.satu.secondhand.model.auth.login.LoginBody
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
 import binar.lima.satu.secondhand.model.buyer.order.PostOrderBody
+import binar.lima.satu.secondhand.model.seller.order.PatchOrderBody
 import binar.lima.satu.secondhand.model.seller.product.ProductBody
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -31,7 +32,10 @@ class MainRepository @Inject constructor(private val apiHelper : ApiHelper) {
     //================Seller================
     suspend fun getAllCategory() = apiHelper.getAllCategory()
     suspend fun getSellerProduct(token : String) = apiHelper.getSellerProduct(token)
-    suspend fun getSellerOrder(token : String) = apiHelper.getSellerOrder(token)
+    suspend fun getSellerOrder(token : String, status : String?) = apiHelper.getSellerOrder(token, status)
+    suspend fun getDetailSellerOrder(token : String, id: Int) = apiHelper.getDetailSellerOrder(token, id)
+    suspend fun patchSellerOrder(token : String,id : Int, body: PatchOrderBody) = apiHelper.patchSellerOrder(token, id, body)
+    suspend fun getSellerBanner() = apiHelper.getSellerBanner()
 
     suspend fun addSellerProduct(
         token: String,
