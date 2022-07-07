@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
 import binar.lima.satu.secondhand.R
@@ -53,6 +54,7 @@ class DaftarJualSayaFragment : Fragment() {
         }
         userViewModel.getToken().observe(viewLifecycleOwner) {
             if (it == "") {
+                Toast.makeText(requireContext(), "Login terlebih dahulu", Toast.LENGTH_SHORT).show()
                 Navigation.findNavController(requireView())
                     .navigate(R.id.action_daftarJualSayaFragment_to_loginFragment)
             }else{
@@ -62,7 +64,9 @@ class DaftarJualSayaFragment : Fragment() {
                             val data = user.data!!
 
                             binding.apply {
-                                tvSellerCity.text = data.city
+                                if (data.city != "temp"){
+                                    tvSellerCity.text = data.city
+                                }
                                 tvSellerName.text = data.fullName
                                 Glide.with(requireView()).load(data.imageUrl).into(binding.imgSeller)
                             }

@@ -85,13 +85,21 @@ class AddProductFragment : Fragment(), View.OnClickListener {
 
         userViewModel.getToken().observe(viewLifecycleOwner) {
             if (it == ""){
+                Toast.makeText(requireContext(), "Login terlebih dahulu", Toast.LENGTH_SHORT).show()
                 Navigation.findNavController(requireView()).navigate(R.id.action_addProductFragment_to_loginFragment)
             }else{
                 setToken(it)
                 apiViewModel.getLoginUser(it).observe(viewLifecycleOwner) { it1 ->
                     when (it1.status) {
                         SUCCESS -> {
-                            setUser(it1.data!!)
+                            val data = it1.data!!
+
+                            if (data.address == ""){
+                                Toast.makeText(requireContext(), "Lengkapi profile terlebih dahulu", Toast.LENGTH_SHORT).show()
+                                Navigation.findNavController(requireView()).navigate(R.id.action_addProductFragment_to_editProfileFragment)
+                            }else{
+                                setUser(data)
+                            }
                         }
                         ERROR -> {
 

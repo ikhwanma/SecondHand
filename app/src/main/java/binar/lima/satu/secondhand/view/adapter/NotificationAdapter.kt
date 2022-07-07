@@ -1,5 +1,6 @@
 package binar.lima.satu.secondhand.view.adapter
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import binar.lima.satu.secondhand.data.utils.DateConverter
 import binar.lima.satu.secondhand.databinding.ItemNotificationBinding
 import binar.lima.satu.secondhand.model.notification.GetNotificationResponseItem
-import binar.lima.satu.secondhand.model.product.GetDetailProductResponse
 import com.bumptech.glide.Glide
 
 class NotificationAdapter(val onItemClick: (GetNotificationResponseItem) -> Unit) :
@@ -21,16 +21,46 @@ class NotificationAdapter(val onItemClick: (GetNotificationResponseItem) -> Unit
             position: Int
         ){
             binding.apply {
+                var txtBid = "Ditawar Rp ${data.bidPrice}"
+                var txtStatus = "Penawaran Produk"
                 root.setOnClickListener {
                     onItemClick(data)
                 }
+                when (data.status) {
+                    "create" -> {
+                        txtStatus = "Membuat Produk"
+                        tvBid.text = ""
+                    }
+                    "success" -> {
+                        txtStatus = "Tawaran diterima"
+                        txtBid = "Menawar Rp ${data.bidPrice}"
+                        tvBid.text = txtBid
+                    }
+                    "declined" -> {
+                        txtStatus = "Tawaran Ditolak"
+                        txtBid = "Menawar Rp ${data.bidPrice}"
+                        tvBid.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                        tvBid.text = txtBid
+                    }
+                    "accepted" -> {
+                        txtStatus = "Produk Terjual"
+                        txtBid = "Dibeli Rp ${data.bidPrice}"
+                        tvBid.text = txtBid
+                    }
+                    else -> {
+                        tvBid.text = txtBid
+                    }
+                }
                 val product = data.product
-                val txtBid = "Ditawar Rp ${data.bidPrice}"
                 val txtPrice = "Rp ${product.basePrice}"
-                tvBid.text = txtBid
+                tvStatus.text = txtStatus
                 tvProduct.text = product.name
                 tvPrice.text = txtPrice
-                tvDate.text = DateConverter.convertDate(data.transactionDate)
+                if (data.transactionDate != null){
+                    tvDate.text = DateConverter.convertDate(data.transactionDate)
+                }else{
+                    tvDate.text = ""
+                }
                 Glide.with(itemView).load(data.imageUrl).into(imgProduct)
                 if (position == differ.currentList.size-1){
                     viewBorder.visibility = View.INVISIBLE

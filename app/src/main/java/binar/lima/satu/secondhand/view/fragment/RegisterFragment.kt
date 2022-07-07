@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
@@ -131,7 +132,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
                     val password = etPassword.text.toString()
 
                     if (email != "" && password != "" && name != ""){
-                        val registerBody = RegisterBody("temp", email, name, "ss", password, 0, "temp")
+                        val registerBody = RegisterBody("", email, name, "", password, 0, "")
                         if (cekData){
                             register(registerBody)
                         }

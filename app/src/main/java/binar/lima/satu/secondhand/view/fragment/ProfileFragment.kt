@@ -36,6 +36,7 @@ class ProfileFragment : Fragment() {
 
         userViewModel.getToken().observe(viewLifecycleOwner) {
             if (it == ""){
+                Toast.makeText(requireContext(), "Login terlebih dahulu", Toast.LENGTH_SHORT).show()
                 Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_loginFragment)
             }else{
                 apiViewModel.getLoginUser(it).observe(viewLifecycleOwner) { it1 ->

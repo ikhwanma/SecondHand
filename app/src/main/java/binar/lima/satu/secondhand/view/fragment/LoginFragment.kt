@@ -40,7 +40,6 @@ class LoginFragment : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Toast.makeText(requireContext(), "Login Terlebih dahulu", Toast.LENGTH_SHORT).show()
 
         val callback = object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {

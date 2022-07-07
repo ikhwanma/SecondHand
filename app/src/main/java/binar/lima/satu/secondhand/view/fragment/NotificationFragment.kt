@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
@@ -48,30 +49,10 @@ class NotificationFragment : Fragment() {
                     when (data.status) {
                         SUCCESS -> {
                             if (data.data!!.isNotEmpty()) {
-                                val listProduct = mutableListOf<GetDetailProductResponse>()
                                 val notif = data.data
 
                                 setList(notif)
                                 binding.progressCircular.visibility = View.GONE
-                                /*if (data.data.isNotEmpty()) {
-                                    for (dataProduct in data.data) {
-                                        apiViewModel.getProduct(dataProduct.productId)
-                                            .observe(viewLifecycleOwner) { product ->
-                                                when (product.status) {
-                                                    SUCCESS -> {
-                                                        listProduct.add(product.data!!)
-
-                                                    }
-                                                    ERROR -> {
-
-                                                    }
-                                                    LOADING -> {
-
-                                                    }
-                                                }
-                                            }
-                                    }
-                                }*/
                             }
                         }
                         ERROR -> {
@@ -83,6 +64,7 @@ class NotificationFragment : Fragment() {
                     }
                 }
             } else {
+                Toast.makeText(requireContext(), "Login terlebih dahulu", Toast.LENGTH_SHORT).show()
                 Navigation.findNavController(requireView())
                     .navigate(R.id.action_notificationFragment_to_loginFragment)
             }
@@ -94,16 +76,11 @@ class NotificationFragment : Fragment() {
         this.token = token
     }
 
-    private fun setData(
-        data: List<GetNotificationResponseItem>
-    ) {
-
-    }
-
     private fun setList(data: List<GetNotificationResponseItem>) {
         binding.apply {
             val adapter = NotificationAdapter {
-                apiViewModel.patchNotification(token, it.id).observe(viewLifecycleOwner) { notif ->
+                Toast.makeText(requireContext(), it.status, Toast.LENGTH_SHORT).show()
+                /*apiViewModel.patchNotification(token, it.id).observe(viewLifecycleOwner) { notif ->
                     when (notif.status) {
                         SUCCESS -> {
                             Navigation.findNavController(requireView())
@@ -117,7 +94,7 @@ class NotificationFragment : Fragment() {
 
                         }
                     }
-                }
+                }*/
             }
             adapter.submitData(data)
             rvNotification.adapter = adapter
