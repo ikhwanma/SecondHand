@@ -19,6 +19,7 @@ import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponse
 import binar.lima.satu.secondhand.model.seller.product.ProductBody
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
+import com.bumptech.glide.Glide
 import pl.aprilapps.easyphotopicker.EasyImage
 import java.io.File
 
@@ -27,15 +28,11 @@ class ProductPreviewFragment : Fragment() {
     private var _binding: FragmentProductPreviewBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var image: Uri
-    private lateinit var listCategory: List<GetSellerCategoryResponseItem>
-
     private val apiViewModel: ApiViewModel by hiltNavGraphViewModels(R.id.nav_main)
     private val userViewModel: UserViewModel by hiltNavGraphViewModels(R.id.nav_main)
 
     private lateinit var token : String
     private lateinit var user : GetLoginResponse
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,7 +76,8 @@ class ProductPreviewFragment : Fragment() {
         user = data!!
         binding.apply {
             tvSellerName.text = user.fullName
-
+            tvSellerCity.text = user.city
+            Glide.with(requireView()).load(user.imageUrl).into(imgSeller)
         }
     }
 

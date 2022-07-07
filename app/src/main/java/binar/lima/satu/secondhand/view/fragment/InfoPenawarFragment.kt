@@ -22,7 +22,6 @@ import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class InfoPenawarFragment : Fragment(), View.OnClickListener {
 
@@ -38,7 +37,6 @@ class InfoPenawarFragment : Fragment(), View.OnClickListener {
 
     private var token = ""
     private var phoneNumber = ""
-    private var status = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -146,7 +144,6 @@ class InfoPenawarFragment : Fragment(), View.OnClickListener {
                 }
                 else binding.root.setOnClickListener {
                     bottomSheetStatusBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-
                 }
             }
 

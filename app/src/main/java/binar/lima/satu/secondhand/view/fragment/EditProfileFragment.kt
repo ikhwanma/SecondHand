@@ -66,10 +66,15 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
                     SUCCESS -> {
                         binding.apply {
                             val data = user.data!!
-                            etNamaEditProfile.setText(data.fullName)
-                            etAlamatEditProfile.setText(data.address)
-                            etNoHandphoneEditProfile.setText(data.phoneNumber)
-                            etPilihKotaEditProfile.setText(data.city)
+
+                            if(data.address == "temp"){
+                                etNamaEditProfile.setText(data.fullName)
+                            }else{
+                                etNamaEditProfile.setText(data.fullName)
+                                etAlamatEditProfile.setText(data.address)
+                                etNoHandphoneEditProfile.setText(data.phoneNumber)
+                                etPilihKotaEditProfile.setText(data.city)
+                            }
 
                             setUser(data)
                         }
@@ -111,8 +116,9 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
                     val alamat = etAlamatEditProfile.text.toString()
                     val handphone = etNoHandphoneEditProfile.text.toString().toLong()
 
-                    updateProfile(nama, kota, alamat, handphone)
-
+                    if (nama != "" && kota != "" && alamat != "" && etNoHandphoneEditProfile.text.toString() != ""){
+                        updateProfile(nama, kota, alamat, handphone)
+                    }
                 }
             }
         }

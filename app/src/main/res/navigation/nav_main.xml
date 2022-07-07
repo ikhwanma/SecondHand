@@ -52,6 +52,9 @@
             app:destination="@id/daftarJualSayaFragment"
             app:popUpTo="@id/addProductFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_addProductFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -102,6 +105,9 @@
         <action
             android:id="@+id/action_notificationFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_notificationFragment_to_infoPenawarFragment"
+            app:destination="@id/infoPenawarFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -127,6 +133,9 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/detailFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_detailFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/daftarJualSayaFragment"

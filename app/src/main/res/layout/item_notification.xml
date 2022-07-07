@@ -102,6 +102,8 @@
                 android:text="@string/ditawar_rp_200_0000"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
+
+
         </LinearLayout>
 
         <View

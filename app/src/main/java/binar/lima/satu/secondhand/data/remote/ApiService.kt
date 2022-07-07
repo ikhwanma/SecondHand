@@ -11,6 +11,7 @@ import binar.lima.satu.secondhand.model.notification.GetNotificationResponseItem
 import binar.lima.satu.secondhand.model.product.GetDetailProductResponse
 import binar.lima.satu.secondhand.model.product.GetProductResponseItem
 import binar.lima.satu.secondhand.model.seller.banner.GetSellerBannerResponseItem
+import binar.lima.satu.secondhand.model.seller.order.GetSellerOrderResponse
 import binar.lima.satu.secondhand.model.seller.order.GetSellerOrderResponseItem
 import binar.lima.satu.secondhand.model.seller.order.PatchOrderBody
 import binar.lima.satu.secondhand.model.seller.order.PatchSellerOrderResponse
@@ -115,6 +116,11 @@ interface ApiService {
         @Header("access_token") token : String,
         @Body order : PostOrderBody
     ) : PostOrderResponse
+
+    @GET("/buyer/order")
+    suspend fun getBuyerOrder(
+        @Header("access_token") token : String
+    ) : List<GetSellerOrderResponseItem>
 
 
     //====================Notification===========================

@@ -42,13 +42,13 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        apiViewModel.getSellerBanner().observe(viewLifecycleOwner){
-            when(it.status){
+        apiViewModel.getSellerBanner().observe(viewLifecycleOwner) {
+            when (it.status) {
                 SUCCESS -> {
                     val data = it.data!!
                     val list = ArrayList<SlideModel>()
 
-                    for(img in data){
+                    for (img in data) {
                         list.add(SlideModel(img.imageUrl, ScaleTypes.FIT))
                     }
 
@@ -62,61 +62,72 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-        apiViewModel.getAllCategory().observe(viewLifecycleOwner){
-            when(it.status){
+        apiViewModel.getAllCategory().observe(viewLifecycleOwner) {
+            when (it.status) {
                 SUCCESS -> {
-                    val adapter = CategoryAdapter(requireContext()){ data ->
+                    val adapter = CategoryAdapter(requireContext()) { data ->
                         category = data.id
-                        if (category == 0){
+                        if (category == 0) {
                             getData()
-                        }else{
-                            apiViewModel.getAllProduct(category_id = category, status = "available").observe(viewLifecycleOwner){ product ->
-                                when(product.status){
-                                    SUCCESS -> {
-                                        binding.rvProduct.visibility = View.VISIBLE
-                                        binding.progressCircular.visibility = View.GONE
-                                        val adapter = ProductAdapter{ data ->
-                                            val mBundle = bundleOf(DetailFragment.EXTRA_ID to data.id)
-                                            Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_detailFragment, mBundle)
-                                        }
-                                        adapter.submitData(product.data)
+                        } else {
+                            apiViewModel.getAllProduct(category_id = category, status = "available")
+                                .observe(viewLifecycleOwner) { product ->
+                                    when (product.status) {
+                                        SUCCESS -> {
+                                            binding.rvProduct.visibility = View.VISIBLE
+                                            binding.progressCircular.visibility = View.GONE
+                                            val adapter = ProductAdapter { data ->
+                                                val mBundle =
+                                                    bundleOf(DetailFragment.EXTRA_ID to data.id)
+                                                Navigation.findNavController(requireView())
+                                                    .navigate(
+                                                        R.id.action_homeFragment_to_detailFragment,
+                                                        mBundle
+                                                    )
+                                            }
+                                            adapter.submitData(product.data)
 
-                                        binding.apply {
-                                            rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
-                                            rvProduct.adapter = adapter
+                                            binding.apply {
+                                                rvProduct.layoutManager =
+                                                    GridLayoutManager(requireContext(), 2)
+                                                rvProduct.adapter = adapter
+                                            }
                                         }
-                                    }
-                                    ERROR -> {
+                                        ERROR -> {
 
-                                    }
-                                    LOADING -> {
-                                        binding.rvProduct.visibility = View.INVISIBLE
-                                        binding.progressCircular.visibility = View.VISIBLE
+                                        }
+                                        LOADING -> {
+                                            binding.rvProduct.visibility = View.INVISIBLE
+                                            binding.progressCircular.visibility = View.VISIBLE
+                                        }
                                     }
                                 }
-                            }
                         }
-                        }
+                    }
 
 
                     val listCat = mutableListOf(
                         GetSellerCategoryResponseItem(
-                            "24-06-2022",0, "Semua", "24-06-2022"
+                            "24-06-2022", 0, "Semua", "24-06-2022"
                         )
                     )
                     val category = it.data!!
-                    for (cat in category){
+                    for (cat in category) {
                         listCat.add(cat)
                     }
                     adapter.submitData(listCat)
 
 
                     binding.apply {
-                        rvKategory.layoutManager = LinearLayoutManager( requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                        rvKategory.layoutManager = LinearLayoutManager(
+                            requireContext(),
+                            LinearLayoutManager.HORIZONTAL,
+                            false
+                        )
                         rvKategory.adapter = adapter
                     }
                 }
-                ERROR ->  {
+                ERROR -> {
 
                 }
                 LOADING -> {
@@ -127,19 +138,21 @@ class HomeFragment : Fragment() {
         getData()
 
         binding.etSearch.setOnClickListener {
-            Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_searchFragment)
+            Navigation.findNavController(requireView())
+                .navigate(R.id.action_homeFragment_to_searchFragment)
         }
     }
 
     private fun getData() {
-        apiViewModel.getAllProduct(status = "available").observe(viewLifecycleOwner){ product ->
-            when(product.status){
+        apiViewModel.getAllProduct(status = "available").observe(viewLifecycleOwner) { product ->
+            when (product.status) {
                 SUCCESS -> {
                     binding.rvProduct.visibility = View.VISIBLE
                     binding.progressCircular.visibility = View.GONE
-                    val adapter = ProductAdapter{ data ->
+                    val adapter = ProductAdapter { data ->
                         val mBundle = bundleOf(DetailFragment.EXTRA_ID to data.id)
-                        Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_detailFragment, mBundle)
+                        Navigation.findNavController(requireView())
+                            .navigate(R.id.action_homeFragment_to_detailFragment, mBundle)
                     }
                     adapter.submitData(product.data)
 

@@ -57,6 +57,44 @@ class DetailFragment : Fragment() , View.OnClickListener{
 
         idProduct = arguments?.getInt(EXTRA_ID) as Int
 
+        userViewModel.getToken().observe(viewLifecycleOwner){token ->
+            apiViewModel.getBuyerOrder(token).observe(viewLifecycleOwner){
+                when(it.status){
+                    SUCCESS -> {
+                        val data = it.data!!
+
+                        for (order in data){
+                            if (order.productId == idProduct){
+                                val txtButton = "Menunggu respon penjual"
+                                binding.apply {
+                                    btnTertarik.setBackgroundResource(R.drawable.style_button_order)
+                                    btnTertarik.isEnabled = false
+                                    btnTertarik.text = txtButton
+                                }
+                                break
+                            }
+                        }
+                        binding.apply {
+                            rlDetail.visibility = View.VISIBLE
+                            progressCircular.visibility = View.GONE
+                        }
+                    }
+                    ERROR -> {
+                        binding.apply {
+                            rlDetail.visibility = View.GONE
+                            progressCircular.visibility = View.GONE
+                        }
+                    }
+                    LOADING -> {
+                        binding.apply {
+                            rlDetail.visibility = View.GONE
+                            progressCircular.visibility = View.VISIBLE
+                        }
+                    }
+                }
+            }
+        }
+
         apiViewModel.getProduct(idProduct).observe(viewLifecycleOwner){
             when(it.status){
                 SUCCESS -> {
@@ -96,7 +134,28 @@ class DetailFragment : Fragment() , View.OnClickListener{
         }
 
         binding.btnTertarik.setOnClickListener {
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            userViewModel.getToken().observe(viewLifecycleOwner){
+                apiViewModel.getLoginUser(it).observe(viewLifecycleOwner){ user ->
+                    when(user.status){
+                        SUCCESS -> {
+                            val data = user.data!!
+
+                            if (data.address == ""){
+                                Navigation.findNavController(requireView()).navigate(R.id.action_detailFragment_to_editProfileFragment)
+                                Toast.makeText(requireContext(), "Lengkapi profile terlebih dahulu", Toast.LENGTH_SHORT).show()
+                            }else{
+                                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                            }
+                        }
+                        ERROR -> {
+
+                        }
+                        LOADING -> {
+
+                        }
+                    }
+                }
+            }
         }
 
         bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetCallback() {
