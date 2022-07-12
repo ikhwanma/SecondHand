@@ -1,11 +1,13 @@
 package binar.lima.satu.secondhand.view.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.databinding.ItemProductBinding
 import binar.lima.satu.secondhand.model.product.GetProductResponseItem
 import com.bumptech.glide.Glide
@@ -60,6 +62,9 @@ class ProductAdapter(val onItemClick: (GetProductResponseItem) -> Unit) :
                 }
 
                 if (data.id == -1) {
+                    root.setBackgroundResource(R.drawable.style_item_add_product)
+                    icLocation.visibility = View.GONE
+                    tvCity.visibility = View.GONE
                     tvProduct.visibility = View.GONE
                     imgProduct.visibility = View.GONE
                     tvCategory.visibility = View.GONE

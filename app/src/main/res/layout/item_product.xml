@@ -4,7 +4,7 @@
     android:layout_width="160dp"
     android:layout_height="310dp"
     android:layout_marginVertical="5dp"
-    android:layout_marginHorizontal="16dp"
+    android:layout_marginStart="10dp"
     android:elevation="8dp"
     app:cardCornerRadius="8dp">
 
@@ -62,7 +62,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="120dp"
             android:contentDescription="@string/image"
             android:src="@drawable/ic_baseline_add_24" />
 
@@ -74,6 +74,7 @@
             android:layout_below="@id/img_add"
             android:layout_centerInParent="true"
             android:layout_marginTop="8dp"
+            android:textColor="@color/blue_primary_variant"
             android:fontFamily="@font/poppins_regular"
             android:text="@string/tambah_produk" />
 
@@ -81,10 +82,10 @@
             android:id="@+id/ic_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_blue_location_on_24"
             android:layout_below="@id/tv_price"
             android:layout_marginStart="3dp"
-            android:contentDescription="@string/image" />
+            android:contentDescription="@string/image"
+            android:src="@drawable/ic_blue_location_on_24" />
 
         <TextView
             android:id="@+id/tv_city"

@@ -111,8 +111,8 @@
             android:layout_width="match_parent"
             android:layout_height=".5dp"
             android:layout_below="@id/ll_item"
-            android:layout_marginTop="16dp"
-            android:background="@color/grey" />
+            android:layout_marginTop="5dp"
+            android:background="@color/blue_primary_variant" />
 
     </RelativeLayout>
 

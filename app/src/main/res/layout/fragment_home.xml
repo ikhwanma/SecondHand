@@ -13,12 +13,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/et_search"
-            style="@style/EditTextStyle"
-            android:autofillHints="search"
-            android:contentDescription="@string/image_search"
-            android:inputType="none" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/et_search"
+                style="@style/EditTextStyle"
+                android:layout_weight="9"
+                android:autofillHints="search"
+                android:contentDescription="@string/image_search"
+                android:inputType="none" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="55dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="28dp"
+                android:layout_marginStart="5dp"
+                android:layout_gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/img_profile"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_outline_person_24"
+                    android:layout_gravity="center"
+                    android:scaleType="fitXY"
+                    android:contentDescription="@string/image" />
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -36,7 +61,7 @@
             android:layout_height="30dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="18dp"
+            android:layout_marginEnd="60dp"
             android:contentDescription="@string/image_search"
             android:src="@drawable/ic_gray_search_24" />
     </RelativeLayout>
@@ -54,16 +79,21 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_kategory"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                android:layout_gravity="center"
+                app:spanCount="4"
+                tools:listitem="@layout/item_category"
+                tools:itemCount="8"
+                android:paddingVertical="10dp"
                 android:overScrollMode="never" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Promo spesial di SecondHand"
+                android:text="@string/promo_spesial_di_secondhand"
                 android:textSize="20sp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppins_medium"
                 android:textStyle="bold"
@@ -81,7 +111,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Yuk, Belanja!"
+                android:text="@string/yuk_belanja"
                 android:textSize="20sp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"

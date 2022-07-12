@@ -24,6 +24,8 @@ import binar.lima.satu.secondhand.view.adapter.CategoryAdapter
 import binar.lima.satu.secondhand.view.adapter.ProductAdapter
 import binar.lima.satu.secondhand.view.adapter.ProductDbAdapter
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
+import binar.lima.satu.secondhand.viewmodel.UserViewModel
+import com.bumptech.glide.Glide
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import kotlinx.coroutines.CoroutineScope
@@ -37,6 +39,7 @@ class HomeFragment : Fragment() {
 
     //Define viewModel
     private val apiViewModel: ApiViewModel by hiltNavGraphViewModels(R.id.nav_main)
+    private val userViewModel: UserViewModel by hiltNavGraphViewModels(R.id.nav_main)
 
     private var category = 0
 
@@ -90,65 +93,35 @@ class HomeFragment : Fragment() {
             apiViewModel.getAllCategory().observe(viewLifecycleOwner) {
                 when (it.status) {
                     SUCCESS -> {
-                        val adapter = CategoryAdapter(requireContext()) { data ->
+                        val listImg = mutableListOf<Int>()
+                        listImg.add(R.drawable.ic_category_18)
+                        listImg.add(R.drawable.ic_category_1)
+                        listImg.add(R.drawable.ic_category_2)
+                        listImg.add(R.drawable.ic_category_3)
+                        listImg.add(R.drawable.ic_category_4)
+                        listImg.add(R.drawable.ic_category_5)
+                        listImg.add(R.drawable.ic_category_6)
+                        listImg.add(R.drawable.ic_category_7)
+                        val adapter = CategoryAdapter(requireContext(), listImg) { data ->
                             category = data.id
-                            if (category == 0) {
-                                getData()
-                            } else {
-                                apiViewModel.getAllProduct(category_id = category, status = "available")
-                                    .observe(viewLifecycleOwner) { product ->
-                                        when (product.status) {
-                                            SUCCESS -> {
-                                                binding.rvProduct.visibility = View.VISIBLE
-                                                binding.progressCircular.visibility = View.GONE
-                                                val adapter = ProductAdapter { data ->
-                                                    val mBundle =
-                                                        bundleOf(DetailFragment.EXTRA_ID to data.id)
-                                                    Navigation.findNavController(requireView())
-                                                        .navigate(
-                                                            R.id.action_homeFragment_to_detailFragment,
-                                                            mBundle
-                                                        )
-                                                }
-                                                adapter.submitData(product.data)
 
-                                                binding.apply {
-                                                    rvProduct.layoutManager =
-                                                        GridLayoutManager(requireContext(), 2)
-                                                    rvProduct.adapter = adapter
-                                                }
-                                            }
-                                            ERROR -> {
-
-                                            }
-                                            LOADING -> {
-                                                binding.rvProduct.visibility = View.INVISIBLE
-                                                binding.progressCircular.visibility = View.VISIBLE
-                                            }
-                                        }
-                                    }
-                            }
                         }
+                        val listCat = mutableListOf<GetSellerCategoryResponseItem>()
 
-
-                        val listCat = mutableListOf(
-                            GetSellerCategoryResponseItem(
-                                "24-06-2022", 0, "Semua", "24-06-2022"
-                            )
-                        )
                         val category = it.data!!
-                        for (cat in category) {
-                            listCat.add(cat)
+                        listCat.add(category[18])
+
+                        for (i in 1..6) {
+                            listCat.add(category[i])
                         }
+
+                        listCat.add(GetSellerCategoryResponseItem("", 0, "Lainnya", ""))
+
                         adapter.submitData(listCat)
 
 
                         binding.apply {
-                            rvKategory.layoutManager = LinearLayoutManager(
-                                requireContext(),
-                                LinearLayoutManager.HORIZONTAL,
-                                false
-                            )
+                            rvKategory.layoutManager = GridLayoutManager(requireContext(), 4)
                             rvKategory.adapter = adapter
                         }
                     }
@@ -161,10 +134,33 @@ class HomeFragment : Fragment() {
                 }
             }
             getData()
+            getProfile()
 
             binding.etSearch.setOnClickListener {
                 Navigation.findNavController(requireView())
                     .navigate(R.id.action_homeFragment_to_searchFragment)
+            }
+        }
+    }
+
+    private fun getProfile() {
+        userViewModel.getToken().observe(viewLifecycleOwner){ token ->
+            if (token != ""){
+                apiViewModel.getLoginUser(token).observe(viewLifecycleOwner){
+                    when(it.status){
+                        SUCCESS -> {
+                            val data = it.data!!
+
+                            Glide.with(requireView()).load(data.imageUrl).into(binding.imgProfile)
+                        }
+                        ERROR -> {
+
+                        }
+                        LOADING -> {
+
+                        }
+                    }
+                }
             }
         }
     }
@@ -211,14 +207,14 @@ class HomeFragment : Fragment() {
                             if (i == 15) break
                             else {
                                 var category = ""
-                                var j = 1
+                                var k = 1
                                 for (cat in dp.categories){
                                     category += if (j != dp.categories.size){
                                         "${cat.name}, "
                                     }else{
                                         cat.name
                                     }
-                                    j++
+                                    k++
                                 }
                                 val productEntity = ProductEntity(
                                     null,
