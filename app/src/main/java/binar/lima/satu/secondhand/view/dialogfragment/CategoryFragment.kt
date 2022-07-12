@@ -1,5 +1,6 @@
 package binar.lima.satu.secondhand.view.dialogfragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.Status.*
@@ -44,6 +46,7 @@ class CategoryFragment : DialogFragment() {
         )
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -57,17 +60,25 @@ class CategoryFragment : DialogFragment() {
                     val adapter = ChooseCategoryAdapter() { category ->
                         if (list.contains(category)) {
                             list.remove(category)
-                            setListSelected(list)
                         } else {
-                            list.add(category)
-                            setListSelected(list)
+                            if (list.size < 3) {
+                                list.add(category)
+                            } else {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Anda hanya dapat memilih maksimal 3 kategori",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
                         }
-                        setList(list)
+
+                        setTextChoosed(list)
                     }
                     adapter.listData = list
                     adapter.submitData(data)
+                    adapter.notifyDataSetChanged()
                     binding.rvChooseKategori.adapter = adapter
-                    binding.rvChooseKategori.layoutManager = LinearLayoutManager(requireContext())
+                    binding.rvChooseKategori.layoutManager = GridLayoutManager(requireContext(), 2)
                 }
                 ERROR -> {
 
@@ -83,35 +94,18 @@ class CategoryFragment : DialogFragment() {
         }
     }
 
-
-    private fun setList(list: MutableList<GetSellerCategoryResponseItem>) {
-
-        val newList = list
-
-        val adapter = SelectedCategoryAdapter(){
-            newList.remove(it)
-            setList(newList)
+    private fun setTextChoosed(list: MutableList<GetSellerCategoryResponseItem>) {
+        var i = 1
+        var txtCategory = ""
+        for (category in list) {
+            txtCategory += if (i != list.size) {
+                "${category.name}, "
+            } else {
+                category.name
+            }
+            i++
         }
-        adapter.submitData(list)
-
-        binding.apply {
-            rvCategory.adapter = adapter
-            rvCategory.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        }
-
-    }
-
-    companion object{
-        private var listSelected = mutableListOf<GetSellerCategoryResponseItem>()
-
-        fun setListSelected(list : MutableList<GetSellerCategoryResponseItem>){
-            listSelected = list
-        }
-
-        fun getListSelected(): List<GetSellerCategoryResponseItem>{
-            return listSelected
-        }
+        binding.tvChoosed.text = txtCategory
     }
 
 }

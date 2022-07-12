@@ -8,10 +8,14 @@
     <color name="black">#FF000000</color>
     <color name="grey">#434343</color>
     <color name="light_grey">#8A8A8A</color>
-    <color name="lighter_grey">#D0D0D0</color>
+    <color name="lighter_grey">#D0D0D0</color>P
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="purple">#7126b5</color>
     <color name="light_purple">#E2D4F0</color>
     <color name="red">#FF0048</color>
+    <color name="blue_primary">#005BBC</color>
+    <color name="blue_secondary">#0068D6</color>
+    <color name="light_blue">#7ED3FF</color>
+    <color name="blue_primary_variant">#061957</color>
 </resources>

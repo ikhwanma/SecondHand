@@ -1,16 +1,20 @@
 package binar.lima.satu.secondhand.data.utils
 
+import androidx.lifecycle.LiveData
 import binar.lima.satu.secondhand.data.helper.ApiHelper
+import binar.lima.satu.secondhand.data.local.room.ProductDao
+import binar.lima.satu.secondhand.data.local.room.ProductEntity
 import binar.lima.satu.secondhand.model.auth.login.LoginBody
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
 import binar.lima.satu.secondhand.model.buyer.order.PostOrderBody
 import binar.lima.satu.secondhand.model.seller.order.PatchOrderBody
+import binar.lima.satu.secondhand.model.seller.order.PutOrderBody
 import binar.lima.satu.secondhand.model.seller.product.ProductBody
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import javax.inject.Inject
 
-class MainRepository @Inject constructor(private val apiHelper : ApiHelper) {
+class MainRepository @Inject constructor(private val apiHelper : ApiHelper, private val productDao: ProductDao) {
 
     //=================Auth=================
     suspend fun loginUser(loginBody: LoginBody) = apiHelper.loginUser(loginBody)
@@ -61,8 +65,14 @@ class MainRepository @Inject constructor(private val apiHelper : ApiHelper) {
     suspend fun getProduct(id: Int) = apiHelper.getProduct(id)
     suspend fun postOrder(header: String, order: PostOrderBody) = apiHelper.postOrder(header, order)
     suspend fun getBuyerOrder(token : String) = apiHelper.getBuyerOrder(token)
+    suspend fun updateBuyerOrder(token: String, id: Int, order: PutOrderBody) = apiHelper.updateBuyerOrder(token, id, order)
 
     //=============Notification=============
     suspend fun getNotification(header: String) = apiHelper.getNotification(header)
     suspend fun patchNotification(header: String, id: Int) = apiHelper.patchNotification(header, id)
+
+    //=============DatabaseRoom=============
+    fun addProduct(productEntity: List<ProductEntity>) = productDao.addProduct(productEntity)
+    fun getProductDb(): LiveData<List<ProductEntity>> = productDao.getProduct()
+    fun deleteAllProduct() = productDao.deleteAll()
 }

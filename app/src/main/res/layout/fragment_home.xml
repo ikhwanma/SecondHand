@@ -1,131 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".view.fragment.HomeFragment">
 
-    <LinearLayout
+    <RelativeLayout
+        android:padding="16dp"
+        android:background="@color/blue_primary_variant"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardview_atas"
+        <ImageView
+            android:id="@+id/et_search"
+            style="@style/EditTextStyle"
+            android:autofillHints="search"
+            android:contentDescription="@string/image_search"
+            android:inputType="none" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="14dp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/cari_di_second_chance"
+            android:textColor="#BABABA"
+            android:textSize="16sp"
+            tools:ignore="RelativeOverlap" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="18dp"
+            android:contentDescription="@string/image_search"
+            android:src="@drawable/ic_gray_search_24" />
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="350dp"
-            android:elevation="0dp"
-            android:translationZ="0dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_kategory"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:overScrollMode="never" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Promo spesial di SecondHand"
+                android:textSize="20sp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_medium"
+                android:textStyle="bold"
+                />
             <com.denzcoskun.imageslider.ImageSlider
                 android:id="@+id/img_slider"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="220dp"
                 app:iss_auto_cycle="true"
+                android:layout_marginHorizontal="10dp"
+                app:iss_corner_radius="15"
                 app:iss_delay="0"
-                app:iss_period="3000"
+                app:iss_period="3000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yuk, Belanja!"
+                android:textSize="20sp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_medium"
+                android:textStyle="bold"
                 />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <RelativeLayout
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_product"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp">
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_product" />
 
-                    <ImageView
-                        android:id="@+id/et_search"
-                        style="@style/EditTextStyle"
-                        android:autofillHints="search"
-                        android:contentDescription="@string/image_search"
-                        android:inputType="none" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="14dp"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="@string/cari_di_second_chance"
-                        android:textColor="#BABABA"
-                        android:textSize="16sp"
-                        tools:ignore="RelativeOverlap" />
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="18dp"
-                        android:contentDescription="@string/image_search"
-                        android:src="@drawable/ic_gray_search_24" />
-                </RelativeLayout>
-
-                <androidx.cardview.widget.CardView
+                <ProgressBar
+                    android:id="@+id/progress_circular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="12dp"
-                    android:elevation="0dp"
-                    android:translationZ="0dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_above="@id/cv_category">
-                    <TextView
-                        android:layout_margin="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_above="@+id/rv_kategory"
-                        android:fontFamily="@font/poppins_bold"
-                        android:text="@string/telusuri_kategori"
-                        android:textColor="@color/black"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cv_category"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="16dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginVertical="10dp"
-                    >
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_kategory"
-                        android:layout_width="match_parent"
-                        android:layout_height="44dp"
-                        android:overScrollMode="never" />
-                </androidx.cardview.widget.CardView>
-
-
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="100dp"
+                    android:visibility="gone" />
             </RelativeLayout>
 
-        </androidx.cardview.widget.CardView>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_product"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:overScrollMode="never"
-                tools:listitem="@layout/item_product" />
-
-            <ProgressBar
-                android:id="@+id/progress_circular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="100dp"
-                android:visibility="gone" />
-        </RelativeLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 
-    </LinearLayout>
 
-</androidx.core.widget.NestedScrollView>
+</LinearLayout>

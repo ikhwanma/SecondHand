@@ -17,22 +17,31 @@
         android:layout_centerHorizontal="true"
         />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_category"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_dipilih"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_first"
-        android:layout_marginVertical="10dp"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_category_selected" />
+        android:text="@string/kategori_dipilih"
+        android:layout_marginStart="5dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins_bold"
+        android:layout_below="@+id/tv_first"/>
+    <TextView
+        android:id="@+id/tv_choosed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/anda_belum_memilih_kategori"
+        android:layout_marginStart="5dp"
+        android:textSize="12sp"
+        android:fontFamily="@font/poppins_regular"
+        android:layout_below="@+id/tv_dipilih"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_choose_kategori"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/btn_pilih"
-        android:layout_below="@+id/rv_category"
+        android:layout_below="@+id/tv_choosed"
         tools:listitem="@layout/item_choose_category" />
 
     <Button

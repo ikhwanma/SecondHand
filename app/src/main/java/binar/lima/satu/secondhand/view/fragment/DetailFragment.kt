@@ -14,6 +14,7 @@ import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentDetailBinding
 import binar.lima.satu.secondhand.model.buyer.order.PostOrderBody
+import binar.lima.satu.secondhand.model.seller.order.PutOrderBody
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
 import com.bumptech.glide.Glide
@@ -64,12 +65,36 @@ class DetailFragment : Fragment() , View.OnClickListener{
                         val data = it.data!!
 
                         for (order in data){
-                            if (order.productId == idProduct){
+                            if (order.productId == idProduct && order.status == "pending"){
                                 val txtButton = "Menunggu respon penjual"
                                 binding.apply {
                                     btnTertarik.setBackgroundResource(R.drawable.style_button_order)
                                     btnTertarik.isEnabled = false
                                     btnTertarik.text = txtButton
+                                }
+                                break
+                            }
+                            if (order.productId == idProduct && order.status == "declined"){
+                                val txtButton = "Berikan tawaran baru"
+                                binding.apply {
+                                    btnTertarik.text = txtButton
+                                    btnKirim.setOnClickListener {
+                                        val bid = binding.etNegoPrice.text.toString().toInt()
+                                        apiViewModel.updateBuyerOrder(token, order.id, PutOrderBody(bid)).observe(viewLifecycleOwner){ order->
+                                            when(order.status){
+                                                SUCCESS -> {
+                                                    Toast.makeText(requireContext(), "Sukses", Toast.LENGTH_SHORT).show()
+                                                    Navigation.findNavController(requireView()).navigate(R.id.action_detailFragment_to_homeFragment)
+                                                }
+                                                ERROR -> {
+                                                    Toast.makeText(requireContext(), order.message, Toast.LENGTH_SHORT).show()
+                                                }
+                                                LOADING -> {
+                                                    Toast.makeText(requireContext(), "Load", Toast.LENGTH_SHORT).show()
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                                 break
                             }
@@ -134,26 +159,31 @@ class DetailFragment : Fragment() , View.OnClickListener{
         }
 
         binding.btnTertarik.setOnClickListener {
-            userViewModel.getToken().observe(viewLifecycleOwner){
-                apiViewModel.getLoginUser(it).observe(viewLifecycleOwner){ user ->
-                    when(user.status){
-                        SUCCESS -> {
-                            val data = user.data!!
+            userViewModel.getToken().observe(viewLifecycleOwner){ token ->
+                if(token != ""){
+                    apiViewModel.getLoginUser(token).observe(viewLifecycleOwner){ user ->
+                        when(user.status){
+                            SUCCESS -> {
+                                val data = user.data!!
 
-                            if (data.address == ""){
-                                Navigation.findNavController(requireView()).navigate(R.id.action_detailFragment_to_editProfileFragment)
-                                Toast.makeText(requireContext(), "Lengkapi profile terlebih dahulu", Toast.LENGTH_SHORT).show()
-                            }else{
-                                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                                if (data.address == ""){
+                                    Navigation.findNavController(requireView()).navigate(R.id.action_detailFragment_to_editProfileFragment)
+                                    Toast.makeText(requireContext(), "Lengkapi profile terlebih dahulu", Toast.LENGTH_SHORT).show()
+                                }else{
+                                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                                }
+                            }
+                            ERROR -> {
+
+                            }
+                            LOADING -> {
+
                             }
                         }
-                        ERROR -> {
-
-                        }
-                        LOADING -> {
-
-                        }
                     }
+                }else{
+                    Navigation.findNavController(requireView()).navigate(R.id.action_detailFragment_to_loginFragment)
+                    Toast.makeText(requireContext(), "Login terlebih dahulu", Toast.LENGTH_SHORT).show()
                 }
             }
         }

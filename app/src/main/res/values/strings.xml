@@ -103,4 +103,7 @@
     <string name="edit">Edit</string>
     <string name="_plus">+</string>
     <string name="tambah_produk">Tambah Produk</string>
+    <string name="kategori_dipilih">Kategori dipilih:</string>
+    <string name="anda_belum_memilih_kategori">Anda belum memilih kategori</string>
+    <string name="promo">Promo</string>
 </resources>

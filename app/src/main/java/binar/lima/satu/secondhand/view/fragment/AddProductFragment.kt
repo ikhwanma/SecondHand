@@ -15,6 +15,7 @@ import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import binar.lima.satu.secondhand.R
+import binar.lima.satu.secondhand.data.utils.OnlineChecker
 import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentAddProductBinding
 import binar.lima.satu.secondhand.model.auth.login.GetLoginResponse
@@ -60,6 +61,10 @@ class AddProductFragment : Fragment(), View.OnClickListener {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentAddProductBinding.inflate(inflater, container, false)
+        val connected = OnlineChecker.isOnline(requireContext())
+        if (!connected){
+            Toast.makeText(requireContext(), "Anda tidak terhubung ke internet", Toast.LENGTH_SHORT).show()
+        }
         return binding.root
     }
 
@@ -75,8 +80,14 @@ class AddProductFragment : Fragment(), View.OnClickListener {
                 setCategory(it)
                 var txtCategory = ""
 
+                var i = 1
                 for (cat in it){
-                    txtCategory += "${cat.name} "
+                    txtCategory += if(i != it.size){
+                        "${cat.name}, "
+                    }else{
+                        cat.name
+                    }
+                    i++
                 }
                 binding.tvSelectCategory.text = txtCategory
                 binding.tvSelectCategory.setTextColor(Color.BLACK)
