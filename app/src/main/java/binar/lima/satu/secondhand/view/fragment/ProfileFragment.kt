@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
 import binar.lima.satu.secondhand.R
+import binar.lima.satu.secondhand.data.utils.OnlineChecker
 import binar.lima.satu.secondhand.data.utils.Status
 import binar.lima.satu.secondhand.databinding.FragmentProfileBinding
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
@@ -28,6 +29,10 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        val connected = OnlineChecker.isOnline(requireContext())
+        if (!connected){
+            Toast.makeText(requireContext(), "Anda tidak terhubung ke internet", Toast.LENGTH_SHORT).show()
+        }
         return binding.root
     }
 

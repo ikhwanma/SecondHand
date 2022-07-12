@@ -11,10 +11,7 @@ import binar.lima.satu.secondhand.model.notification.GetNotificationResponseItem
 import binar.lima.satu.secondhand.model.product.GetDetailProductResponse
 import binar.lima.satu.secondhand.model.product.GetProductResponseItem
 import binar.lima.satu.secondhand.model.seller.banner.GetSellerBannerResponseItem
-import binar.lima.satu.secondhand.model.seller.order.GetSellerOrderResponse
-import binar.lima.satu.secondhand.model.seller.order.GetSellerOrderResponseItem
-import binar.lima.satu.secondhand.model.seller.order.PatchOrderBody
-import binar.lima.satu.secondhand.model.seller.order.PatchSellerOrderResponse
+import binar.lima.satu.secondhand.model.seller.order.*
 import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponseItem
 import binar.lima.satu.secondhand.model.seller.product.ProductBody
 import okhttp3.MultipartBody
@@ -121,6 +118,13 @@ interface ApiService {
     suspend fun getBuyerOrder(
         @Header("access_token") token : String
     ) : List<GetSellerOrderResponseItem>
+
+    @PUT("/buyer/order/{id}")
+    suspend fun updateBuyerOrder(
+        @Header("access_token") token : String,
+        @Path("id") id : Int,
+        @Body order : PutOrderBody
+    ) : PostOrderResponse
 
 
     //====================Notification===========================

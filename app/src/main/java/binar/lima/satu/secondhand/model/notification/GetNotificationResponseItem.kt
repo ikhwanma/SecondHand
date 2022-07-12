@@ -4,16 +4,22 @@ package binar.lima.satu.secondhand.model.notification
 import com.google.gson.annotations.SerializedName
 
 data class GetNotificationResponseItem(
+    @SerializedName("base_price")
+    val basePrice: String,
     @SerializedName("bid_price")
     val bidPrice: Int,
     @SerializedName("buyer_name")
     val buyerName: String,
-    @SerializedName("created_at")
+    @SerializedName("createdAt")
     val createdAt: String,
     @SerializedName("id")
     val id: Int,
     @SerializedName("image_url")
     val imageUrl: String,
+    @SerializedName("notification_type")
+    val notificationType: String,
+    @SerializedName("order_id")
+    val orderId: Int,
     @SerializedName("Product")
     val product: Product,
     @SerializedName("product_id")
@@ -30,6 +36,8 @@ data class GetNotificationResponseItem(
     val status: String,
     @SerializedName("transaction_date")
     val transactionDate: String,
-    @SerializedName("updated_at")
-    val updatedAt: String
+    @SerializedName("updatedAt")
+    val updatedAt: String,
+    @SerializedName("User")
+    val user: User
 )

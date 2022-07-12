@@ -11,6 +11,7 @@ import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import binar.lima.satu.secondhand.R
+import binar.lima.satu.secondhand.data.utils.OnlineChecker
 import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentNotificationBinding
 import binar.lima.satu.secondhand.model.notification.GetNotificationResponseItem
@@ -36,6 +37,10 @@ class NotificationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentNotificationBinding.inflate(inflater, container, false)
+        val connected = OnlineChecker.isOnline(requireContext())
+        if (!connected){
+            Toast.makeText(requireContext(), "Anda tidak terhubung ke internet", Toast.LENGTH_SHORT).show()
+        }
         return binding.root
     }
 
@@ -80,7 +85,7 @@ class NotificationFragment : Fragment() {
         binding.apply {
             val adapter = NotificationAdapter {
                 Toast.makeText(requireContext(), it.status, Toast.LENGTH_SHORT).show()
-                /*apiViewModel.patchNotification(token, it.id).observe(viewLifecycleOwner) { notif ->
+                apiViewModel.patchNotification(token, it.id).observe(viewLifecycleOwner) { notif ->
                     when (notif.status) {
                         SUCCESS -> {
                             Navigation.findNavController(requireView())
@@ -94,7 +99,7 @@ class NotificationFragment : Fragment() {
 
                         }
                     }
-                }*/
+                }
             }
             adapter.submitData(data)
             rvNotification.adapter = adapter

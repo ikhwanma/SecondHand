@@ -1,7 +1,10 @@
 package binar.lima.satu.secondhand.di
 
 import android.content.Context
+import androidx.room.Room
 import binar.lima.satu.secondhand.data.local.datastore.DataStoreManager
+import binar.lima.satu.secondhand.data.local.room.ProductDao
+import binar.lima.satu.secondhand.data.local.room.ProductDatabase
 import binar.lima.satu.secondhand.data.remote.ApiService
 import dagger.Module
 import dagger.Provides
@@ -45,4 +48,14 @@ object AppModule {
     @Provides
     @Singleton
     fun providesPref(@ApplicationContext appContext: Context) : DataStoreManager =  DataStoreManager(appContext)
+
+    @Provides
+    @Singleton
+    fun providesAppDatabase(@ApplicationContext appContext: Context): ProductDatabase{
+        return Room.databaseBuilder(appContext, ProductDatabase::class.java, "product.db").build()
+    }
+
+    @Provides
+    @Singleton
+    fun providesInstanceRoom(productDatabase: ProductDatabase): ProductDao = productDatabase.productDao()
 }

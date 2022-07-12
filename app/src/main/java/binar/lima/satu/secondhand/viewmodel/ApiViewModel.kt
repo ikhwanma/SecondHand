@@ -2,15 +2,19 @@ package binar.lima.satu.secondhand.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
+import binar.lima.satu.secondhand.data.local.room.ProductEntity
 import binar.lima.satu.secondhand.data.utils.MainRepository
 import binar.lima.satu.secondhand.data.utils.Resource
 import binar.lima.satu.secondhand.model.auth.login.LoginBody
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
 import binar.lima.satu.secondhand.model.buyer.order.PostOrderBody
 import binar.lima.satu.secondhand.model.seller.order.PatchOrderBody
+import binar.lima.satu.secondhand.model.seller.order.PutOrderBody
 import binar.lima.satu.secondhand.model.seller.product.ProductBody
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.lang.Exception
@@ -137,7 +141,7 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
     fun getAllProduct(status: String? = null, category_id: Int? = null, search:String? = null) = liveData(Dispatchers.IO){
         emit(Resource.loading(null))
         try {
-            emit(Resource.success(mainRepository.getAllProduct(status, category_id, search = search)))
+            emit(Resource.success(mainRepository.getAllProduct(status, category_id, search)))
         }catch (e : Exception){
             emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
         }
@@ -170,6 +174,15 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
         }
     }
 
+    fun updateBuyerOrder(token: String, id: Int, order: PutOrderBody) = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(mainRepository.updateBuyerOrder(token, id, order)))
+        }catch (e : Exception){
+            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
+        }
+    }
+
     //==================================Notification
     fun getNotification(header: String) = liveData(Dispatchers.IO){
         emit(Resource.loading(null))
@@ -188,5 +201,16 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
             emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
         }
     }
+
+    //==================================DatabaseProduct
+    fun addProduct(productEntity: List<ProductEntity>) = viewModelScope.launch(Dispatchers.IO){
+        mainRepository.addProduct(productEntity)
+    }
+
+    fun deleteAllProduct() = viewModelScope.launch(Dispatchers.IO){
+        mainRepository.deleteAllProduct()
+    }
+
+    fun getProductDb() = mainRepository.getProductDb()
 
 }

@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
 import binar.lima.satu.secondhand.R
+import binar.lima.satu.secondhand.data.utils.OnlineChecker
 import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentDaftarJualSayaBinding
 import binar.lima.satu.secondhand.view.adapter.DaftarJualPageAdapter
@@ -29,6 +30,10 @@ class DaftarJualSayaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDaftarJualSayaBinding.inflate(inflater, container, false)
+        val connected = OnlineChecker.isOnline(requireContext())
+        if (!connected){
+            Toast.makeText(requireContext(), "Anda tidak terhubung ke internet", Toast.LENGTH_SHORT).show()
+        }
         return binding.root
     }
 

@@ -4,22 +4,31 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import binar.lima.satu.secondhand.R
+import binar.lima.satu.secondhand.data.local.room.ProductEntity
+import binar.lima.satu.secondhand.data.utils.AppExecutors
+import binar.lima.satu.secondhand.data.utils.OnlineChecker
 import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentHomeBinding
+import binar.lima.satu.secondhand.model.product.GetProductResponseItem
 import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponseItem
 import binar.lima.satu.secondhand.view.adapter.CategoryAdapter
 import binar.lima.satu.secondhand.view.adapter.ProductAdapter
+import binar.lima.satu.secondhand.view.adapter.ProductDbAdapter
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
-
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
@@ -42,104 +51,121 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        apiViewModel.getSellerBanner().observe(viewLifecycleOwner) {
-            when (it.status) {
-                SUCCESS -> {
-                    val data = it.data!!
-                    val list = ArrayList<SlideModel>()
-
-                    for (img in data) {
-                        list.add(SlideModel(img.imageUrl, ScaleTypes.FIT))
-                    }
-
-                    binding.imgSlider.setImageList(list)
-                }
-                ERROR -> {
-
-                }
-                LOADING -> {
-
+        val connected = OnlineChecker.isOnline(requireContext())
+        if (!connected) {
+            Toast.makeText(requireContext(), "Anda tidak terhubung ke internet", Toast.LENGTH_LONG).show()
+            binding.apply {
+                rvProduct.visibility = View.VISIBLE
+                progressCircular.visibility = View.GONE
+            }
+            apiViewModel.getProductDb().observe(viewLifecycleOwner){
+                val adapter = ProductDbAdapter()
+                adapter.submitData(it)
+                binding.apply {
+                    rvProduct.adapter = adapter
+                    rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
                 }
             }
-        }
-        apiViewModel.getAllCategory().observe(viewLifecycleOwner) {
-            when (it.status) {
-                SUCCESS -> {
-                    val adapter = CategoryAdapter(requireContext()) { data ->
-                        category = data.id
-                        if (category == 0) {
-                            getData()
-                        } else {
-                            apiViewModel.getAllProduct(category_id = category, status = "available")
-                                .observe(viewLifecycleOwner) { product ->
-                                    when (product.status) {
-                                        SUCCESS -> {
-                                            binding.rvProduct.visibility = View.VISIBLE
-                                            binding.progressCircular.visibility = View.GONE
-                                            val adapter = ProductAdapter { data ->
-                                                val mBundle =
-                                                    bundleOf(DetailFragment.EXTRA_ID to data.id)
-                                                Navigation.findNavController(requireView())
-                                                    .navigate(
-                                                        R.id.action_homeFragment_to_detailFragment,
-                                                        mBundle
-                                                    )
-                                            }
-                                            adapter.submitData(product.data)
+        }else{
+            apiViewModel.getSellerBanner().observe(viewLifecycleOwner) {
+                when (it.status) {
+                    SUCCESS -> {
+                        val data = it.data!!
+                        val list = ArrayList<SlideModel>()
 
-                                            binding.apply {
-                                                rvProduct.layoutManager =
-                                                    GridLayoutManager(requireContext(), 2)
-                                                rvProduct.adapter = adapter
-                                            }
-                                        }
-                                        ERROR -> {
+                        for (img in data) {
+                            list.add(SlideModel(img.imageUrl, ScaleTypes.FIT))
+                        }
 
-                                        }
-                                        LOADING -> {
-                                            binding.rvProduct.visibility = View.INVISIBLE
-                                            binding.progressCircular.visibility = View.VISIBLE
+                        binding.imgSlider.setImageList(list)
+                    }
+                    ERROR -> {
+
+                    }
+                    LOADING -> {
+
+                    }
+                }
+            }
+            apiViewModel.getAllCategory().observe(viewLifecycleOwner) {
+                when (it.status) {
+                    SUCCESS -> {
+                        val adapter = CategoryAdapter(requireContext()) { data ->
+                            category = data.id
+                            if (category == 0) {
+                                getData()
+                            } else {
+                                apiViewModel.getAllProduct(category_id = category, status = "available")
+                                    .observe(viewLifecycleOwner) { product ->
+                                        when (product.status) {
+                                            SUCCESS -> {
+                                                binding.rvProduct.visibility = View.VISIBLE
+                                                binding.progressCircular.visibility = View.GONE
+                                                val adapter = ProductAdapter { data ->
+                                                    val mBundle =
+                                                        bundleOf(DetailFragment.EXTRA_ID to data.id)
+                                                    Navigation.findNavController(requireView())
+                                                        .navigate(
+                                                            R.id.action_homeFragment_to_detailFragment,
+                                                            mBundle
+                                                        )
+                                                }
+                                                adapter.submitData(product.data)
+
+                                                binding.apply {
+                                                    rvProduct.layoutManager =
+                                                        GridLayoutManager(requireContext(), 2)
+                                                    rvProduct.adapter = adapter
+                                                }
+                                            }
+                                            ERROR -> {
+
+                                            }
+                                            LOADING -> {
+                                                binding.rvProduct.visibility = View.INVISIBLE
+                                                binding.progressCircular.visibility = View.VISIBLE
+                                            }
                                         }
                                     }
-                                }
+                            }
+                        }
+
+
+                        val listCat = mutableListOf(
+                            GetSellerCategoryResponseItem(
+                                "24-06-2022", 0, "Semua", "24-06-2022"
+                            )
+                        )
+                        val category = it.data!!
+                        for (cat in category) {
+                            listCat.add(cat)
+                        }
+                        adapter.submitData(listCat)
+
+
+                        binding.apply {
+                            rvKategory.layoutManager = LinearLayoutManager(
+                                requireContext(),
+                                LinearLayoutManager.HORIZONTAL,
+                                false
+                            )
+                            rvKategory.adapter = adapter
                         }
                     }
+                    ERROR -> {
 
-
-                    val listCat = mutableListOf(
-                        GetSellerCategoryResponseItem(
-                            "24-06-2022", 0, "Semua", "24-06-2022"
-                        )
-                    )
-                    val category = it.data!!
-                    for (cat in category) {
-                        listCat.add(cat)
                     }
-                    adapter.submitData(listCat)
+                    LOADING -> {
 
-
-                    binding.apply {
-                        rvKategory.layoutManager = LinearLayoutManager(
-                            requireContext(),
-                            LinearLayoutManager.HORIZONTAL,
-                            false
-                        )
-                        rvKategory.adapter = adapter
                     }
-                }
-                ERROR -> {
-
-                }
-                LOADING -> {
-
                 }
             }
-        }
-        getData()
+            getData()
 
-        binding.etSearch.setOnClickListener {
-            Navigation.findNavController(requireView())
-                .navigate(R.id.action_homeFragment_to_searchFragment)
+            binding.etSearch.setOnClickListener {
+                Navigation.findNavController(requireView())
+                    .navigate(R.id.action_homeFragment_to_searchFragment)
+            }
         }
     }
 
@@ -147,18 +173,71 @@ class HomeFragment : Fragment() {
         apiViewModel.getAllProduct(status = "available").observe(viewLifecycleOwner) { product ->
             when (product.status) {
                 SUCCESS -> {
+                    val dataProduct = product.data!!
                     binding.rvProduct.visibility = View.VISIBLE
                     binding.progressCircular.visibility = View.GONE
+
+                    val list = mutableListOf<GetProductResponseItem>()
+                    var j = 0
+                    for(data in dataProduct){
+                        if (j == 20) break
+                        else list.add(data)
+                        j++
+                    }
+
                     val adapter = ProductAdapter { data ->
                         val mBundle = bundleOf(DetailFragment.EXTRA_ID to data.id)
                         Navigation.findNavController(requireView())
                             .navigate(R.id.action_homeFragment_to_detailFragment, mBundle)
                     }
-                    adapter.submitData(product.data)
-
+                    adapter.submitData(list)
                     binding.apply {
-                        rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
+                        val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                        layoutManager.isMeasurementCacheEnabled = false
+                        rvProduct.layoutManager = layoutManager
                         rvProduct.adapter = adapter
+                        rvProduct.addOnScrollListener(object  : RecyclerView.OnScrollListener(){
+                            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                                super.onScrolled(recyclerView, dx, dy)
+                                layoutManager.requestLayout()
+                            }
+                        })
+                    }
+                    val listProduct = ArrayList<ProductEntity>()
+                    val appExecutors = AppExecutors()
+                    var i = 0
+                    appExecutors.diskIO.execute {
+                        for (dp in dataProduct) {
+                            if (i == 15) break
+                            else {
+                                var category = ""
+                                var j = 1
+                                for (cat in dp.categories){
+                                    category += if (j != dp.categories.size){
+                                        "${cat.name}, "
+                                    }else{
+                                        cat.name
+                                    }
+                                    j++
+                                }
+                                val productEntity = ProductEntity(
+                                    null,
+                                    dp.imageUrl,
+                                    dp.name,
+                                    category,
+                                    dp.basePrice.toString()
+                                )
+                                listProduct.add(productEntity)
+                            }
+                            i++
+                        }
+
+                        CoroutineScope(Dispatchers.Main).launch {
+                            apiViewModel.deleteAllProduct()
+                        }
+                        CoroutineScope(Dispatchers.Main).launch {
+                            apiViewModel.addProduct(listProduct)
+                        }
                     }
                 }
                 ERROR -> {
