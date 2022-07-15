@@ -7,6 +7,9 @@ import binar.lima.satu.secondhand.model.auth.register.PostRegisterResponse
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
 import binar.lima.satu.secondhand.model.buyer.order.PostOrderBody
 import binar.lima.satu.secondhand.model.buyer.order.PostOrderResponse
+import binar.lima.satu.secondhand.model.buyer.wishlist.GetWishlistResponseItem
+import binar.lima.satu.secondhand.model.buyer.wishlist.PostWishlistBody
+import binar.lima.satu.secondhand.model.buyer.wishlist.PostWishlistResponse
 import binar.lima.satu.secondhand.model.notification.GetNotificationResponseItem
 import binar.lima.satu.secondhand.model.product.GetDetailProductResponse
 import binar.lima.satu.secondhand.model.product.GetProductResponseItem
@@ -47,7 +50,7 @@ interface ApiService {
         @Part("email") email : RequestBody,
         @Part("phone_number") phoneNumber : RequestBody,
         @Part("city") city : RequestBody,
-        @Part image : MultipartBody.Part
+        @Part image : MultipartBody.Part?
     )
 
     //=======================Seller==============================
@@ -94,6 +97,11 @@ interface ApiService {
     @GET("/seller/category")
     suspend fun getAllCategory() : List<GetSellerCategoryResponseItem>
 
+    @GET("/seller/category/{id}")
+    suspend fun getDetailCategory(
+        @Path("id") id : Int
+    ) : GetSellerCategoryResponseItem
+
     //=======================Buyer==============================
     //--Product--
     @GET("/buyer/product")
@@ -126,6 +134,17 @@ interface ApiService {
         @Body order : PutOrderBody
     ) : PostOrderResponse
 
+    //--Wishlist--
+    @POST("/buyer/wishlist")
+    suspend fun postBuyerWishList(
+        @Header("access_token") token : String,
+        @Body postWishlistBody: PostWishlistBody,
+    ) : PostWishlistResponse
+
+    @GET("/buyer/wishlist")
+    suspend fun getBuyerWishList(
+        @Header("access_token") token : String,
+    ) : List<GetWishlistResponseItem>
 
     //====================Notification===========================
     //--Product--

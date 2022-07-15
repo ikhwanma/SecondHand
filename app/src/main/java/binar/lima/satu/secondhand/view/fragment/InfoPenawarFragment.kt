@@ -14,7 +14,7 @@ import androidx.core.os.bundleOf
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
 import binar.lima.satu.secondhand.R
-import binar.lima.satu.secondhand.data.utils.DateConverter
+import binar.lima.satu.secondhand.data.utils.Converter
 import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentInfoPenawarBinding
 import binar.lima.satu.secondhand.model.seller.order.PatchOrderBody
@@ -80,7 +80,7 @@ class InfoPenawarFragment : Fragment(), View.OnClickListener {
 
                             val txtPrice = "Rp ${product.basePrice}"
                             val txtBid = "Ditawar Rp ${data.price}"
-                            val txtDate = DateConverter.convertDate(data.updatedAt)
+                            val txtDate = Converter.convertDate(data.updatedAt)
 
                             tvBid.text = txtBid
                             tvPrice.text = txtPrice

@@ -1,50 +1,55 @@
 package binar.lima.satu.secondhand.view.adapter
 
-import android.graphics.Paint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import binar.lima.satu.secondhand.data.utils.DateConverter
-import binar.lima.satu.secondhand.databinding.ItemNotificationBinding
+import binar.lima.satu.secondhand.data.utils.Converter
+import binar.lima.satu.secondhand.databinding.ItemNotificationNewBinding
 import binar.lima.satu.secondhand.model.notification.GetNotificationResponseItem
 import com.bumptech.glide.Glide
 
 class NotificationAdapter(val onItemClick: (GetNotificationResponseItem) -> Unit) :
     RecyclerView.Adapter<NotificationAdapter.ViewHolder>() {
-    inner class ViewHolder(private val binding: ItemNotificationBinding) :
+    inner class ViewHolder(private val binding: ItemNotificationNewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
             data: GetNotificationResponseItem,
             position: Int
         ){
             binding.apply {
-                var txtBid = "Ditawar Rp ${data.bidPrice}"
-                var txtStatus = "Penawaran Produk"
+                val formattedBidPrice = Converter.converterMoney(data.bidPrice.toString())
+
+                var txtBid = "Ditawar Rp $formattedBidPrice"
+                var txtStatus = "Produk Ditawar"
                 root.setOnClickListener {
                     onItemClick(data)
                 }
                 when (data.status) {
                     "create" -> {
-                        txtStatus = "Membuat Produk"
+                        txtStatus = "Produk Dibuat"
                         tvBid.text = ""
                     }
                     "success" -> {
-                        txtStatus = "Tawaran diterima"
-                        txtBid = "Menawar Rp ${data.bidPrice}"
+                        txtStatus = "Tawaran Diterima"
+                        txtBid = "Menawar Rp $formattedBidPrice"
                         tvBid.text = txtBid
+                        cvStatus.setCardBackgroundColor(Color.parseColor("#7ED3FF"))
+                        tvStatus.setTextColor(Color.parseColor("#003346"))
                     }
                     "declined" -> {
                         txtStatus = "Tawaran Ditolak"
-                        txtBid = "Menawar Rp ${data.bidPrice}"
-                        tvBid.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                        txtBid = "Menawar Rp $formattedBidPrice"
                         tvBid.text = txtBid
+                        cvStatus.setCardBackgroundColor(Color.parseColor("#FF0061"))
+                        tvStatus.setTextColor(Color.parseColor("#3C0000"))
                     }
                     "accepted" -> {
-                        txtStatus = "Produk Terjual"
-                        txtBid = "Dibeli Rp ${data.bidPrice}"
+                        txtStatus = "Produk Dibeli"
+                        txtBid = "Dibeli Rp $formattedBidPrice"
                         tvBid.text = txtBid
                     }
                     else -> {
@@ -52,19 +57,16 @@ class NotificationAdapter(val onItemClick: (GetNotificationResponseItem) -> Unit
                     }
                 }
                 val product = data.product
-                val txtPrice = "Rp ${product.basePrice}"
+                val txtPrice = "Rp ${Converter.converterMoney(product.basePrice.toString())}"
                 tvStatus.text = txtStatus
                 tvProduct.text = product.name
                 tvPrice.text = txtPrice
                 if (data.transactionDate != null){
-                    tvDate.text = DateConverter.convertDate(data.transactionDate)
+                    tvDate.text = Converter.convertDate(data.transactionDate)
                 }else{
                     tvDate.text = ""
                 }
                 Glide.with(itemView).load(data.imageUrl).into(imgProduct)
-                if (position == differ.currentList.size-1){
-                    viewBorder.visibility = View.INVISIBLE
-                }
                 if (data.read){
                     imgAllert.visibility = View.GONE
                 }
@@ -94,7 +96,7 @@ class NotificationAdapter(val onItemClick: (GetNotificationResponseItem) -> Unit
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return ViewHolder(ItemNotificationBinding.inflate(inflater, parent, false))
+        return ViewHolder(ItemNotificationNewBinding.inflate(inflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

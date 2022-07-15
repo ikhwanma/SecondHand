@@ -83,14 +83,14 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:fontFamily="@font/poppins_regular"
-                android:text="@string/edit"
-                android:layout_alignEnd="@+id/btn_edit"
                 android:layout_alignStart="@+id/btn_edit"
                 android:layout_alignTop="@+id/btn_edit"
+                android:layout_alignEnd="@+id/btn_edit"
                 android:layout_alignBottom="@+id/btn_edit"
+                android:fontFamily="@font/poppins_regular"
+                android:gravity="center"
+                android:text="@string/edit"
+                android:textColor="@color/black"
                 android:textSize="13sp"
 
                 />

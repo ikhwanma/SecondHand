@@ -7,6 +7,7 @@ import binar.lima.satu.secondhand.data.local.room.ProductEntity
 import binar.lima.satu.secondhand.model.auth.login.LoginBody
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
 import binar.lima.satu.secondhand.model.buyer.order.PostOrderBody
+import binar.lima.satu.secondhand.model.buyer.wishlist.PostWishlistBody
 import binar.lima.satu.secondhand.model.seller.order.PatchOrderBody
 import binar.lima.satu.secondhand.model.seller.order.PutOrderBody
 import binar.lima.satu.secondhand.model.seller.product.ProductBody
@@ -14,7 +15,10 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import javax.inject.Inject
 
-class MainRepository @Inject constructor(private val apiHelper : ApiHelper, private val productDao: ProductDao) {
+class MainRepository @Inject constructor(
+    private val apiHelper: ApiHelper,
+    private val productDao: ProductDao
+) {
 
     //=================Auth=================
     suspend fun loginUser(loginBody: LoginBody) = apiHelper.loginUser(loginBody)
@@ -22,23 +26,30 @@ class MainRepository @Inject constructor(private val apiHelper : ApiHelper, priv
     suspend fun registerUser(registerBody: RegisterBody) = apiHelper.registerUser(registerBody)
 
     suspend fun updateUser(
-        token : String,
-        fullName : RequestBody,
-        address : RequestBody,
-        email : RequestBody,
-        phoneNumber : RequestBody,
-        city : RequestBody,
-        image : MultipartBody.Part,
+        token: String,
+        fullName: RequestBody,
+        address: RequestBody,
+        email: RequestBody,
+        phoneNumber: RequestBody,
+        city: RequestBody,
+        image: MultipartBody.Part?,
     ) = apiHelper.updateUser(
         token, fullName, address, email, phoneNumber, city, image
     )
 
     //================Seller================
     suspend fun getAllCategory() = apiHelper.getAllCategory()
-    suspend fun getSellerProduct(token : String) = apiHelper.getSellerProduct(token)
-    suspend fun getSellerOrder(token : String, status : String?) = apiHelper.getSellerOrder(token, status)
-    suspend fun getDetailSellerOrder(token : String, id: Int) = apiHelper.getDetailSellerOrder(token, id)
-    suspend fun patchSellerOrder(token : String,id : Int, body: PatchOrderBody) = apiHelper.patchSellerOrder(token, id, body)
+    suspend fun getDetailCategory(id: Int) = apiHelper.getDetailCategory(id)
+    suspend fun getSellerProduct(token: String) = apiHelper.getSellerProduct(token)
+    suspend fun getSellerOrder(token: String, status: String?) =
+        apiHelper.getSellerOrder(token, status)
+
+    suspend fun getDetailSellerOrder(token: String, id: Int) =
+        apiHelper.getDetailSellerOrder(token, id)
+
+    suspend fun patchSellerOrder(token: String, id: Int, body: PatchOrderBody) =
+        apiHelper.patchSellerOrder(token, id, body)
+
     suspend fun getSellerBanner() = apiHelper.getSellerBanner()
 
     suspend fun addSellerProduct(
@@ -60,12 +71,22 @@ class MainRepository @Inject constructor(private val apiHelper : ApiHelper, priv
     )
 
     //================Buyer================
-    suspend fun getAllProduct(status: String? = null, category_id: Int? = null, search: String? = null) =
+    suspend fun getAllProduct(
+        status: String? = null,
+        category_id: Int? = null,
+        search: String? = null
+    ) =
         apiHelper.getAllProduct(status = status, category_id = category_id, search = search)
+
     suspend fun getProduct(id: Int) = apiHelper.getProduct(id)
     suspend fun postOrder(header: String, order: PostOrderBody) = apiHelper.postOrder(header, order)
-    suspend fun getBuyerOrder(token : String) = apiHelper.getBuyerOrder(token)
-    suspend fun updateBuyerOrder(token: String, id: Int, order: PutOrderBody) = apiHelper.updateBuyerOrder(token, id, order)
+    suspend fun getBuyerOrder(token: String) = apiHelper.getBuyerOrder(token)
+    suspend fun updateBuyerOrder(token: String, id: Int, order: PutOrderBody) =
+        apiHelper.updateBuyerOrder(token, id, order)
+
+    suspend fun postBuyerWishList(token: String, postWishlistBody: PostWishlistBody) =
+        apiHelper.postBuyerWishList(token, postWishlistBody)
+    suspend fun getBuyerWishlist(token: String) = apiHelper.getBuyerWishlist(token)
 
     //=============Notification=============
     suspend fun getNotification(header: String) = apiHelper.getNotification(header)

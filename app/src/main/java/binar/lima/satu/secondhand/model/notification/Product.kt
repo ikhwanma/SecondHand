@@ -6,6 +6,10 @@ import com.google.gson.annotations.SerializedName
 data class Product(
     @SerializedName("base_price")
     val basePrice: Int,
+    @SerializedName("createdAt")
+    val createdAt: String,
+    @SerializedName("description")
+    val description: String,
     @SerializedName("id")
     val id: Int,
     @SerializedName("image_name")
@@ -18,6 +22,8 @@ data class Product(
     val name: String,
     @SerializedName("status")
     val status: String,
+    @SerializedName("updatedAt")
+    val updatedAt: String,
     @SerializedName("user_id")
     val userId: Int
 )

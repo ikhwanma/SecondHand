@@ -14,7 +14,11 @@ import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.databinding.ItemCategoryBinding
 import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponseItem
 
-class CategoryAdapter(val context : Context, val onItemClick: (GetSellerCategoryResponseItem) -> Unit) :
+class CategoryAdapter(
+    val context: Context,
+    val listImg: MutableList<Int>,
+    val onItemClick: (GetSellerCategoryResponseItem) -> Unit
+) :
     RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
     var index : Int = 0
@@ -26,18 +30,9 @@ class CategoryAdapter(val context : Context, val onItemClick: (GetSellerCategory
         fun bind(data: GetSellerCategoryResponseItem, position: Int) {
             binding.apply {
                 tvCategory.text = data.name
-
-                if (index == position){
-                    llKategori.setBackgroundResource(R.drawable.style_button)
-                    tvCategory.setTextColor(Color.WHITE)
-                    imgIcon.setImageResource(R.drawable.ic_white_search_24)
-                }else{
-                    llKategori.setBackgroundResource(R.drawable.style_btn_category_unselected)
-                    tvCategory.setTextColor(Color.BLACK)
-                    imgIcon.setImageResource(R.drawable.ic_baseline_search_24)
-                }
-
+                imgCategory.setImageResource(listImg[position])
                 val animation = AnimationUtils.loadAnimation(context, R.anim.bounce_anim)
+
                 root.setOnClickListener {
                     onItemClick(data)
                     btnCategory.startAnimation(animation)

@@ -16,6 +16,7 @@ import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentNotificationBinding
 import binar.lima.satu.secondhand.model.notification.GetNotificationResponseItem
 import binar.lima.satu.secondhand.model.product.GetDetailProductResponse
+import binar.lima.satu.secondhand.view.activity.MainActivity
 import binar.lima.satu.secondhand.view.adapter.NotificationAdapter
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
@@ -41,6 +42,7 @@ class NotificationFragment : Fragment() {
         if (!connected){
             Toast.makeText(requireContext(), "Anda tidak terhubung ke internet", Toast.LENGTH_SHORT).show()
         }
+        (activity as MainActivity).getBadge()
         return binding.root
     }
 
@@ -84,16 +86,26 @@ class NotificationFragment : Fragment() {
     private fun setList(data: List<GetNotificationResponseItem>) {
         binding.apply {
             val adapter = NotificationAdapter {
-                Toast.makeText(requireContext(), it.status, Toast.LENGTH_SHORT).show()
                 apiViewModel.patchNotification(token, it.id).observe(viewLifecycleOwner) { notif ->
                     when (notif.status) {
                         SUCCESS -> {
-                            Navigation.findNavController(requireView())
-                                .navigate(R.id.notificationFragment)
+                            val status = it.status
+                            if (status == "success"){
+
+                            }
+                            if (status == "create"){
+
+                            }
+                            if (status == "declined"){
+
+                            }
+                            if (status == "accepted"){
+
+                            }
+                            (activity as MainActivity).getBadge()
                         }
                         ERROR -> {
-                            Toast.makeText(requireContext(), notif.message, Toast.LENGTH_SHORT)
-                                .show()
+
                         }
                         LOADING -> {
 

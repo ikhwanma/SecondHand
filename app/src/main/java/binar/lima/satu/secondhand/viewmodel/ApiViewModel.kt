@@ -9,6 +9,7 @@ import binar.lima.satu.secondhand.data.utils.Resource
 import binar.lima.satu.secondhand.model.auth.login.LoginBody
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
 import binar.lima.satu.secondhand.model.buyer.order.PostOrderBody
+import binar.lima.satu.secondhand.model.buyer.wishlist.PostWishlistBody
 import binar.lima.satu.secondhand.model.seller.order.PatchOrderBody
 import binar.lima.satu.secondhand.model.seller.order.PutOrderBody
 import binar.lima.satu.secondhand.model.seller.product.ProductBody
@@ -56,7 +57,7 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
                        email : RequestBody,
                        phoneNumber : RequestBody,
                        city : RequestBody,
-                       image : MultipartBody.Part) = liveData(Dispatchers.IO){
+                       image : MultipartBody.Part?) = liveData(Dispatchers.IO){
         emit(Resource.loading(null))
         try {
             emit(Resource.success(mainRepository.updateUser(token, fullName, address, email, phoneNumber, city, image)))
@@ -121,6 +122,15 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
         }
     }
 
+    fun getDetailCategory(id : Int) = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(mainRepository.getDetailCategory(id)))
+        }catch (e : Exception){
+            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
+        }
+    }
+
     fun addSellerProduct(token : String,
                              name : RequestBody,
                              description : RequestBody,
@@ -178,6 +188,24 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
         emit(Resource.loading(null))
         try {
             emit(Resource.success(mainRepository.updateBuyerOrder(token, id, order)))
+        }catch (e : Exception){
+            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
+        }
+    }
+
+    fun postBuyerWishlist(token: String, postWishlistBody: PostWishlistBody) = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(mainRepository.postBuyerWishList(token, postWishlistBody)))
+        }catch (e : Exception){
+            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
+        }
+    }
+
+    fun getBuyerWishlist(token: String) = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(mainRepository.getBuyerWishlist(token)))
         }catch (e : Exception){
             emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
         }
