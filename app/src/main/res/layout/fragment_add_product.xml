@@ -146,12 +146,13 @@
                 android:layout_height="match_parent"
                 android:gravity="center_horizontal">
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_preview"
                     style="@style/ButtonStyle"
                     android:layout_width="160dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginEnd="20dp"
+                    android:background="@drawable/style_white_button"
                     android:fontFamily="@font/poppins_medium"
                     android:text="@string/preview" />
 
@@ -160,8 +161,8 @@
                     style="@style/ButtonStyle"
                     android:layout_width="160dp"
                     android:layout_alignParentBottom="true"
-                    android:fontFamily="@font/poppins_medium"
                     android:layout_toEndOf="@+id/btn_preview"
+                    android:fontFamily="@font/poppins_medium"
                     android:text="@string/terbitkan" />
             </RelativeLayout>
         </LinearLayout>

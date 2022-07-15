@@ -1,13 +1,15 @@
-package binar.lima.satu.secondhand.model.seller.product
+package binar.lima.satu.secondhand.model.buyer.wishlist
 
 
 import com.google.gson.annotations.SerializedName
 
-data class PostSellerProductResponse(
+data class Product(
     @SerializedName("base_price")
     val basePrice: Int,
     @SerializedName("created_at")
     val createdAt: String,
+    @SerializedName("description")
+    val description: String,
     @SerializedName("id")
     val id: Int,
     @SerializedName("image_name")

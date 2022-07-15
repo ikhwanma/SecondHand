@@ -15,16 +15,30 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_briefcase.xml" value="0.2835" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_category_0.xml" value="0.2835" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_category_1.xml" value="0.2835" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_category_10.xml" value="0.287" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_category_12.xml" value="0.287" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_category_14.xml" value="0.287" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_category_15.xml" value="0.287" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_category_16.xml" value="0.287" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_category_17.xml" value="0.287" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_category_18.xml" value="0.2835" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_category_19.xml" value="0.287" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_category_2.xml" value="0.2835" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_category_20.xml" value="0.287" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_category_21.xml" value="0.287" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_category_22.xml" value="0.287" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_category_23.xml" value="0.287" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_category_3.xml" value="0.2835" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_category_4.xml" value="0.2835" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_category_5.xml" value="0.2835" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_category_6.xml" value="0.2835" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_category_7.xml" value="0.2835" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_category_8.xml" value="0.287" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_category_9.xml" value="0.287" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_green_eye_24.xml" value="0.28" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_outline_person_24.xml" value="0.2835" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_outline_remove_green_eye_24.xml" value="0.28" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_outline_shopping_cart_24.xml" value="0.2515" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/ic_settings.xml" value="0.279" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/style_btn_category_unselected.xml" value="0.216" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/drawable/style_button.xml" value="0.114" />
@@ -40,12 +54,12 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/dropdown_item.xml" value="0.32065217391304346" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_add_product.xml" value="0.33" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_category.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_daftar_jual_saya.xml" value="0.67" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_detail.xml" value="0.25" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_daftar_jual_saya.xml" value="0.5" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_detail.xml" value="0.33" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_dialog.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_diminati_tab.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_edit_profile.xml" value="0.3555253623188406" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_home.xml" value="0.6766233766233766" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_home_product.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_info_penawar.xml" value="0.33" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_info_penawar_dua.xml" value="0.33" />
@@ -53,6 +67,8 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_login.xml" value="0.33" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_notification.xml" value="0.33" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_preview_product.xml" value="0.1828125" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_product.xml" value="0.33" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_product2.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_product_preview.xml" value="0.24583333333333332" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_product_tab.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
@@ -62,11 +78,12 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_sell_list_product.xml" value="0.24583333333333332" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/fragment_terjual_tab.xml" value="0.23177083333333334" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/info_penawar_bottom_sheet.xml" value="0.25" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/item_category.xml" value="1.25" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/item_category.xml" value="0.25" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/item_category_selected.xml" value="0.5" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/item_choose_category.xml" value="0.33" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/item_infopenawar.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/item_notification.xml" value="0.5" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/item_notification_new.xml" value="0.5" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/item_product.xml" value="0.5" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/item_status_penjualan.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/SecondHand/app/src/main/res/layout/product_item.xml" value="0.5" />

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import binar.lima.satu.secondhand.data.utils.DateConverter
+import binar.lima.satu.secondhand.data.utils.Converter
 import binar.lima.satu.secondhand.databinding.ItemNotificationBinding
 import binar.lima.satu.secondhand.model.seller.order.GetSellerOrderResponseItem
 import com.bumptech.glide.Glide
@@ -25,7 +25,7 @@ class TerjualAdapter (val onItemClick: (GetSellerOrderResponseItem) -> Unit) :
                 tvBid.text = txtBid
                 tvPrice.visibility = View.GONE
                 tvProduct.text = data.product.name
-                tvDate.text = DateConverter.convertDate(data.updatedAt)
+                tvDate.text = Converter.convertDate(data.updatedAt)
                 tvStatus.text = txtStatus
                 Glide.with(itemView).load(data.product.imageUrl).into(imgProduct)
                 if (position == differ.currentList.size - 1) {

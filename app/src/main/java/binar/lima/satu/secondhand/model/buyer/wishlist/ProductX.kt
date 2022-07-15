@@ -1,17 +1,15 @@
-package binar.lima.satu.secondhand.model.notification
+package binar.lima.satu.secondhand.model.buyer.wishlist
 
 
 import com.google.gson.annotations.SerializedName
 
-data class Product(
+data class ProductX(
     @SerializedName("base_price")
     val basePrice: Int,
-    @SerializedName("createdAt")
+    @SerializedName("created_at")
     val createdAt: String,
     @SerializedName("description")
     val description: String,
-    @SerializedName("id")
-    val id: Int,
     @SerializedName("image_name")
     val imageName: String,
     @SerializedName("image_url")
@@ -20,9 +18,7 @@ data class Product(
     val location: String,
     @SerializedName("name")
     val name: String,
-    @SerializedName("status")
-    val status: String,
-    @SerializedName("updatedAt")
+    @SerializedName("updated_at")
     val updatedAt: String,
     @SerializedName("user_id")
     val userId: Int

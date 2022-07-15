@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".view.fragment.HomeFragment">
+    tools:context=".view.fragment.ProductFragment">
 
     <RelativeLayout
         android:padding="16dp"
@@ -45,11 +45,9 @@
                         android:contentDescription="@string/image" />
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/cv_badge"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginStart="-15dp"
-                        android:visibility="gone"
                         android:layout_marginTop="2dp"
                         android:layout_toEndOf="@id/ic_cart"
                         app:cardBackgroundColor="@color/red"
@@ -60,7 +58,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="@string/_13"
+                            android:text="13"
                             android:textColor="@color/white"
                             android:textSize="12sp" />
                     </androidx.cardview.widget.CardView>
@@ -92,85 +90,46 @@
             android:src="@drawable/ic_gray_search_24" />
     </RelativeLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        >
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_kategory"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                android:layout_gravity="center"
-                app:spanCount="4"
-                tools:listitem="@layout/item_category"
-                tools:itemCount="8"
-                android:paddingVertical="10dp"
-                android:overScrollMode="never" />
-
+            android:layout_marginVertical="10dp"
+            app:cardCornerRadius="20dp"
+            android:elevation="8dp"
+            android:translationZ="8dp">
             <TextView
+                android:id="@+id/tv_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/promo_spesial_di_secondhand"
-                android:textSize="20sp"
-                android:layout_marginStart="10dp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/poppins_medium"
-                android:textStyle="bold"
-                />
-            <com.denzcoskun.imageslider.ImageSlider
-                android:id="@+id/img_slider"
-                android:layout_width="match_parent"
-                android:layout_height="220dp"
-                app:iss_auto_cycle="true"
                 android:layout_marginHorizontal="10dp"
-                app:iss_corner_radius="15"
-                app:iss_delay="0"
-                app:iss_period="3000" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yuk_belanja"
-                android:textSize="20sp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/black"
+                android:layout_marginVertical="5dp"
                 android:fontFamily="@font/poppins_medium"
-                android:textStyle="bold"
-                />
+                android:text="@string/kategori"
+                android:textColor="@color/blue_primary_variant"
+                android:textSize="16sp" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        </androidx.cardview.widget.CardView>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_product"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_product" />
-
-                <ProgressBar
-                    android:id="@+id/progress_circular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="100dp"
-                    android:visibility="gone" />
-            </RelativeLayout>
+    </RelativeLayout>
 
 
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
 
 
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_product"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_product"
+        android:paddingHorizontal="5dp"
+        android:paddingVertical="10dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"/>
 
 </LinearLayout>

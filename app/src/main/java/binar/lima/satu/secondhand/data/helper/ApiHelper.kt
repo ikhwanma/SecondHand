@@ -4,6 +4,7 @@ import binar.lima.satu.secondhand.data.remote.ApiService
 import binar.lima.satu.secondhand.model.auth.login.LoginBody
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
 import binar.lima.satu.secondhand.model.buyer.order.PostOrderBody
+import binar.lima.satu.secondhand.model.buyer.wishlist.PostWishlistBody
 import binar.lima.satu.secondhand.model.seller.order.PatchOrderBody
 import binar.lima.satu.secondhand.model.seller.order.PutOrderBody
 import binar.lima.satu.secondhand.model.seller.product.ProductBody
@@ -29,7 +30,7 @@ class ApiHelper @Inject constructor(private val apiService: ApiService) {
         email: RequestBody,
         phoneNumber: RequestBody,
         city: RequestBody,
-        image: MultipartBody.Part,
+        image: MultipartBody.Part?,
     ) = apiService.updateUser(
         token, fullName, address, email, phoneNumber, city, image
     )
@@ -48,6 +49,7 @@ class ApiHelper @Inject constructor(private val apiService: ApiService) {
     suspend fun getSellerBanner() = apiService.getSellerBanner()
 
     suspend fun getAllCategory() = apiService.getAllCategory()
+    suspend fun getDetailCategory(id : Int) = apiService.getDetailCategory(id)
 
     suspend fun addSellerProduct(
         token: String,
@@ -81,6 +83,9 @@ class ApiHelper @Inject constructor(private val apiService: ApiService) {
 
     suspend fun getBuyerOrder(token: String) = apiService.getBuyerOrder(token)
     suspend fun updateBuyerOrder(token: String, id: Int, order: PutOrderBody) = apiService.updateBuyerOrder(token, id, order)
+
+    suspend fun postBuyerWishList(token : String, postWishlistBody: PostWishlistBody) = apiService.postBuyerWishList(token, postWishlistBody)
+    suspend fun getBuyerWishlist(token : String) = apiService.getBuyerWishList(token)
 
     //=============Notification=============
     suspend fun getNotification(header: String) = apiService.getNotification(header)

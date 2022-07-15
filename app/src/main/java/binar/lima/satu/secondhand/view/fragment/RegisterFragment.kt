@@ -25,8 +25,8 @@ import java.util.regex.Pattern
 
 class RegisterFragment : Fragment(), View.OnClickListener {
 
-    private var _bindingr: FragmentRegisterBinding? = null
-    private val binding get() = _bindingr!!
+    private var _binding: FragmentRegisterBinding? = null
+    private val binding get() = _binding!!
 
     private var viewPass: Boolean = false
     private var cekData: Boolean = false
@@ -39,7 +39,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _bindingr = FragmentRegisterBinding.inflate(inflater, container, false)
+        _binding = FragmentRegisterBinding.inflate(inflater, container, false)
         return binding.root
     }
 

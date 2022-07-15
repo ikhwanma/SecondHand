@@ -18,6 +18,7 @@ import binar.lima.satu.secondhand.model.auth.login.GetLoginResponse
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
+import com.bumptech.glide.Glide
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -38,7 +39,7 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
     private lateinit var token: String
     private lateinit var user: GetLoginResponse
 
-    private lateinit var image: Uri
+    private var image: Uri? = null
 
     private val galleryResult =
         registerForActivityResult(ActivityResultContracts.GetContent()) { result ->
@@ -67,13 +68,14 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
                         binding.apply {
                             val data = user.data!!
 
-                            if(data.address == "temp"){
+                            if(data.address == ""){
                                 etNamaEditProfile.setText(data.fullName)
                             }else{
                                 etNamaEditProfile.setText(data.fullName)
                                 etAlamatEditProfile.setText(data.address)
                                 etNoHandphoneEditProfile.setText(data.phoneNumber)
                                 etPilihKotaEditProfile.setText(data.city)
+                                Glide.with(requireView()).load(data.imageUrl).into(imgUser)
                             }
 
                             setUser(data)
@@ -127,17 +129,22 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
     private fun updateProfile(nama: String, kota: String, alamat: String, handphone: Long) {
         val contentResolver = requireActivity().applicationContext.contentResolver
 
-        val type = contentResolver.getType(image)
-        val tempFile = File.createTempFile("temp-", null, null)
-        val inputStream = contentResolver.openInputStream(image)
+        var imageUpload : MultipartBody.Part? = null
+        imageUpload = if (image != null){
+            val type = contentResolver.getType(image!!)
+            val tempFile = File.createTempFile("temp-", null, null)
+            val inputStream = contentResolver.openInputStream(image!!)
 
-        tempFile.outputStream().use {
-            inputStream?.copyTo(it)
-        }
-        val requestBody: RequestBody = tempFile.asRequestBody(type?.toMediaType())
+            tempFile.outputStream().use {
+                inputStream?.copyTo(it)
+            }
+            val requestBody: RequestBody = tempFile.asRequestBody(type?.toMediaType())
 
-        val imageUpload =
             MultipartBody.Part.createFormData("image", tempFile.name, requestBody)
+        }else{
+            null
+        }
+
         val nameUpload = nama.toRequestBody("multipart/form-data".toMediaTypeOrNull())
         val kotaUpload = kota.toRequestBody("multipart/form-data".toMediaTypeOrNull())
         val alamatUpload = alamat.toRequestBody("multipart/form-data".toMediaTypeOrNull())

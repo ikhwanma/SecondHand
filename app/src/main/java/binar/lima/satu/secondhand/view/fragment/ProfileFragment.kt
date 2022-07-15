@@ -12,6 +12,7 @@ import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.OnlineChecker
 import binar.lima.satu.secondhand.data.utils.Status
 import binar.lima.satu.secondhand.databinding.FragmentProfileBinding
+import binar.lima.satu.secondhand.view.activity.MainActivity
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
 import com.bumptech.glide.Glide
@@ -33,6 +34,7 @@ class ProfileFragment : Fragment() {
         if (!connected){
             Toast.makeText(requireContext(), "Anda tidak terhubung ke internet", Toast.LENGTH_SHORT).show()
         }
+        (activity as MainActivity).getBadge()
         return binding.root
     }
 
