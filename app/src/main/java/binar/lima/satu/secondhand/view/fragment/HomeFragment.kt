@@ -10,6 +10,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -173,6 +174,10 @@ class HomeFragment : Fragment() {
             binding.etSearch.setOnClickListener {
                 Navigation.findNavController(requireView())
                     .navigate(R.id.action_homeFragment_to_searchFragment)
+            }
+
+            binding.btnWishlist.setOnClickListener {
+                it.findNavController().navigate(R.id.action_homeFragment_to_wishlistFragment)
             }
         }
     }

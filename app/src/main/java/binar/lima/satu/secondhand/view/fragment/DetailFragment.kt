@@ -110,8 +110,6 @@ class DetailFragment : Fragment() , View.OnClickListener{
                                     val listData = mutableListOf<GetProductResponseItem>()
                                     var listDataProduct = mutableListOf<GetProductResponseItem>()
 
-
-
                                     for (dp in dataProduct){
                                         if (dp.id == idProduct)continue
                                         else listData.add(dp)
@@ -255,8 +253,24 @@ class DetailFragment : Fragment() , View.OnClickListener{
                         if (wish.productId == idProduct){
                             binding.apply {
                                 btnWishlist.setCardBackgroundColor(Color.parseColor("#D0D0D0"))
+                                tvStatusWishlist.text = "-"
+
                                 btnWishlist.setOnClickListener {
-                                    Toast.makeText(requireContext(), "Anda sudah menambahkan ke wishlist", Toast.LENGTH_SHORT).show()
+                                    apiViewModel.deleteBuyerWishlist(token, wish.id).observe(viewLifecycleOwner){ it1 ->
+                                        when(it1.status){
+                                            SUCCESS -> {
+                                                Toast.makeText(requireContext(), "Dihapus dari wishlist", Toast.LENGTH_SHORT).show()
+                                                btnWishlist.setCardBackgroundColor(Color.parseColor("#061957"))
+                                                tvStatusWishlist.text = "+"
+                                            }
+                                            ERROR -> {
+
+                                            }
+                                            LOADING -> {
+
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }

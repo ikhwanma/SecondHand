@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.fragment.WishlistFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/daftar_wishlist"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_wishlist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_wishlist" />
+    </LinearLayout>
+
+
+
+</RelativeLayout>

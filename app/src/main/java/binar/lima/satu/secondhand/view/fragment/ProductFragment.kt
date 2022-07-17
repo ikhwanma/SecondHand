@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.Status
@@ -46,7 +47,7 @@ class ProductFragment : Fragment() {
             when(it.status){
                 SUCCESS -> {
                     val data = it.data!!
-                    binding.tvCategory.text = data.name
+                    binding.tvKategori.text = data.name
                 }
                 ERROR -> {
 
@@ -75,13 +76,32 @@ class ProductFragment : Fragment() {
                         rvProduct.adapter = adapter
                         rvProduct.layoutManager = layoutManager
                     }
+
+                    binding.apply {
+                        rvProduct.visibility = View.VISIBLE
+                        tvKategori.visibility = View.VISIBLE
+                        progressCircular.visibility = View.GONE
+                    }
                 }
                 ERROR -> {
-
+                    binding.apply {
+                        rvProduct.visibility = View.VISIBLE
+                        tvKategori.visibility = View.VISIBLE
+                        progressCircular.visibility = View.GONE
+                    }
                 }
                 LOADING -> {
-
+                    binding.apply {
+                        rvProduct.visibility = View.GONE
+                        tvKategori.visibility = View.GONE
+                    }
                 }
+            }
+        }
+
+        binding.apply {
+            etSearch.setOnClickListener{
+                it.findNavController().navigate(R.id.action_productFragment_to_searchFragment)
             }
         }
     }

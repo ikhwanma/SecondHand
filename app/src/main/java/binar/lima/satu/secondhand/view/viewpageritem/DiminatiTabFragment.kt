@@ -11,12 +11,9 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.Status
-import binar.lima.satu.secondhand.databinding.FragmentDetailBinding
 import binar.lima.satu.secondhand.databinding.FragmentDiminatiTabBinding
-import binar.lima.satu.secondhand.databinding.FragmentProductTabBinding
 import binar.lima.satu.secondhand.model.seller.order.GetSellerOrderResponseItem
 import binar.lima.satu.secondhand.view.adapter.SellerOrderAdapter
-import binar.lima.satu.secondhand.view.fragment.DetailFragment
 import binar.lima.satu.secondhand.view.fragment.InfoPenawarFragment
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel

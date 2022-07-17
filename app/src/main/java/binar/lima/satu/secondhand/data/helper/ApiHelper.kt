@@ -7,13 +7,8 @@ import binar.lima.satu.secondhand.model.buyer.order.PostOrderBody
 import binar.lima.satu.secondhand.model.buyer.wishlist.PostWishlistBody
 import binar.lima.satu.secondhand.model.seller.order.PatchOrderBody
 import binar.lima.satu.secondhand.model.seller.order.PutOrderBody
-import binar.lima.satu.secondhand.model.seller.product.ProductBody
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.http.Body
-import retrofit2.http.Header
-import retrofit2.http.Part
-import retrofit2.http.Path
 import javax.inject.Inject
 
 class ApiHelper @Inject constructor(private val apiService: ApiService) {
@@ -86,6 +81,7 @@ class ApiHelper @Inject constructor(private val apiService: ApiService) {
 
     suspend fun postBuyerWishList(token : String, postWishlistBody: PostWishlistBody) = apiService.postBuyerWishList(token, postWishlistBody)
     suspend fun getBuyerWishlist(token : String) = apiService.getBuyerWishList(token)
+    suspend fun deleteBuyerWishList(token : String, id : Int) = apiService.deleteBuyerWishList(token, id)
 
     //=============Notification=============
     suspend fun getNotification(header: String) = apiService.getNotification(header)
