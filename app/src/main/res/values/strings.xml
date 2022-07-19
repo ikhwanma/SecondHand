@@ -111,4 +111,7 @@
     <string name="_13">13</string>
     <string name="belanja">Belanja</string>
     <string name="produk_serupa">Produk Serupa</string>
+    <string name="plus">+</string>
+    <string name="hapus_dari_wishlist">Hapus Dari Wishlist</string>
+    <string name="daftar_wishlist">Daftar Wishlist</string>
 </resources>

@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".view.fragment.ProductFragment">
 
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+
     <RelativeLayout
-        android:padding="16dp"
-        android:background="@color/blue_primary_variant"
+        android:id="@+id/rl_search"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/blue_primary_variant"
+        android:padding="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/et_search"
                 style="@style/EditTextStyle"
@@ -27,10 +35,10 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="55dp"
                 android:layout_height="48dp"
-                android:layout_weight="1"
-                app:cardCornerRadius="12dp"
+                android:layout_gravity="center_vertical"
                 android:layout_marginStart="5dp"
-                android:layout_gravity="center_vertical">
+                android:layout_weight="1"
+                app:cardCornerRadius="12dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -40,9 +48,9 @@
                         android:id="@+id/ic_cart"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/ic_outline_shopping_cart_24"
                         android:layout_centerInParent="true"
-                        android:contentDescription="@string/image" />
+                        android:contentDescription="@string/image"
+                        android:src="@drawable/ic_outline_shopping_cart_24" />
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="20dp"
@@ -68,7 +76,6 @@
         </LinearLayout>
 
 
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -90,46 +97,43 @@
             android:src="@drawable/ic_gray_search_24" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        >
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            app:cardCornerRadius="20dp"
-            android:elevation="8dp"
-            android:translationZ="8dp">
-            <TextView
-                android:id="@+id/tv_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="5dp"
-                android:fontFamily="@font/poppins_medium"
-                android:text="@string/kategori"
-                android:textColor="@color/blue_primary_variant"
-                android:textSize="16sp" />
-
-        </androidx.cardview.widget.CardView>
-
-    </RelativeLayout>
-
-
-
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_product"
+    <LinearLayout
+        android:id="@+id/ll_page"
+        android:layout_below="@+id/rl_search"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_product"
-        android:paddingHorizontal="5dp"
-        android:paddingVertical="10dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="2"/>
+        android:orientation="vertical">
 
-</LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/tv_kategori"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginVertical="10dp"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/style_button_primary_variant"
+            android:clickable="false"
+            android:elevation="8dp"
+            android:enabled="false"
+            android:paddingBottom="3dp"
+            android:text="@string/kategori"
+            android:textAllCaps="false"
+            android:textColor="@color/blue_primary_variant"
+            android:translationZ="8dp"
+            app:cardCornerRadius="20dp" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_product"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="10dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            tools:listitem="@layout/item_product" />
+    </LinearLayout>
+
+
+
+</RelativeLayout>

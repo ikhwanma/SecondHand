@@ -145,6 +145,12 @@ interface ApiService {
     suspend fun getBuyerWishList(
         @Header("access_token") token : String,
     ) : List<GetWishlistResponseItem>
+    
+    @DELETE("/buyer/wishlist/{id}")
+    suspend fun deleteBuyerWishList(
+        @Header("access_token") token : String,
+        @Path("id") id : Int
+    )
 
     //====================Notification===========================
     //--Product--

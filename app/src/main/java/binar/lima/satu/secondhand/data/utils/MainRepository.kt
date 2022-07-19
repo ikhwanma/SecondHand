@@ -87,6 +87,7 @@ class MainRepository @Inject constructor(
     suspend fun postBuyerWishList(token: String, postWishlistBody: PostWishlistBody) =
         apiHelper.postBuyerWishList(token, postWishlistBody)
     suspend fun getBuyerWishlist(token: String) = apiHelper.getBuyerWishlist(token)
+    suspend fun deleteBuyerWishList(token : String, id : Int) = apiHelper.deleteBuyerWishList(token, id)
 
     //=============Notification=============
     suspend fun getNotification(header: String) = apiHelper.getNotification(header)
