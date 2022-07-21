@@ -19,7 +19,6 @@ import binar.lima.satu.secondhand.data.utils.Status
 import binar.lima.satu.secondhand.databinding.FragmentRegisterBinding
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
-import binar.lima.satu.secondhand.viewmodel.UserViewModel
 import java.util.regex.Pattern
 
 
