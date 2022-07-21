@@ -67,12 +67,28 @@
     </RelativeLayout>
 
 
-    <Button
-        android:id="@+id/btn_login"
-        style="@style/ButtonStyle"
-        android:fontFamily="@font/poppins_medium"
-        android:layout_marginTop="48dp"
-        android:text="@string/masuk" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp">
+        <Button
+            android:id="@+id/btn_login"
+            style="@style/ButtonStyle"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/masuk"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="1.5"/>
+
+        <ImageButton
+            android:id="@+id/btn_biometric"
+            style="@style/ButtonStyle"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/masuk"
+            android:src="@drawable/ic_baseline_fingerprint_24"
+            android:layout_weight="9"
+            android:contentDescription="@string/icon" />
+    </LinearLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"

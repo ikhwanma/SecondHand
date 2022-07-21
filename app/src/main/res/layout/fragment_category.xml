@@ -20,11 +20,11 @@
         android:id="@+id/tv_dipilih"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/kategori_dipilih"
+        android:layout_below="@+id/tv_first"
         android:layout_marginStart="5dp"
-        android:textColor="@color/black"
         android:fontFamily="@font/poppins_bold"
-        android:layout_below="@+id/tv_first"/>
+        android:text="@string/kategori_dipilih"
+        android:textColor="@color/black" />
     <TextView
         android:id="@+id/tv_choosed"
         android:layout_width="wrap_content"

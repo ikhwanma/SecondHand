@@ -15,19 +15,37 @@ class DataStoreManager(private val context : Context) {
         }
     }
 
+    suspend fun setBiometric(token : String){
+        context.biometricDataStore.edit {
+            it[BIOMETRIC_KEY] = token
+        }
+    }
+
     fun getToken() : Flow<String>{
         return context.tokenDataStore.data.map {
             it[TOKEN_KEY] ?: ""
         }
     }
 
+    fun getBiometric() : Flow<String>{
+        return context.biometricDataStore.data.map {
+            it[BIOMETRIC_KEY] ?: ""
+        }
+    }
+
     companion object{
         private const val TOKENDATA_NAME = "token_preferences"
+        private const val BIOMETRICDATA_NAME = "biometric_preferences"
 
         private val TOKEN_KEY = stringPreferencesKey("token_key")
+        private val BIOMETRIC_KEY = stringPreferencesKey("biometric_key")
 
         private val Context.tokenDataStore by preferencesDataStore(
             name = TOKENDATA_NAME
+        )
+
+        private val Context.biometricDataStore by preferencesDataStore(
+            name = BIOMETRICDATA_NAME
         )
     }
 }

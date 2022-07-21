@@ -27,7 +27,7 @@ class ChooseCategoryAdapter(val onItemClick: (GetSellerCategoryResponseItem) -> 
                     tvCategory.setTextColor(Color.WHITE)
                 } else {
                     root.setBackgroundResource(R.drawable.style_btn_category_unselected)
-                    tvCategory.setTextColor(Color.BLACK)
+                    tvCategory.setTextColor(Color.WHITE)
                 }
 
                 root.setOnClickListener {
@@ -36,7 +36,7 @@ class ChooseCategoryAdapter(val onItemClick: (GetSellerCategoryResponseItem) -> 
                     if (listIndex.contains(position)) {
                         listIndex.remove(position)
                         root.setBackgroundResource(R.drawable.style_btn_category_unselected)
-                        tvCategory.setTextColor(Color.BLACK)
+                        tvCategory.setTextColor(Color.WHITE)
                     } else {
                         if (listIndex.size < 3) {
                             listIndex.add(position)

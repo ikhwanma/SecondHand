@@ -1,5 +1,6 @@
 package binar.lima.satu.secondhand.view.fragment
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import binar.lima.satu.secondhand.view.activity.MainActivity
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 
 class ProfileFragment : Fragment() {
 
@@ -71,8 +73,29 @@ class ProfileFragment : Fragment() {
         }
 
         binding.btnLogout.setOnClickListener {
-            userViewModel.setToken("")
-            Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_loginFragment)
+            AlertDialog.Builder(requireContext()).setTitle("Logout")
+                .setMessage("Apakah Anda Yakin?")
+                .setIcon(R.mipmap.ic_launcher_round)
+                .setPositiveButton("Iya") { _, _ ->
+                    AlertDialog.Builder(requireContext()).setTitle("Simpan data login")
+                        .setMessage("Apakah Anda Ingin Menyimpan Data Login Anda?")
+                        .setIcon(R.mipmap.ic_launcher_round)
+                        .setPositiveButton("Iya") { _, _ ->
+                            userViewModel.getToken().observe(viewLifecycleOwner){
+                                userViewModel.setBiometric(it)
+                            }
+                            userViewModel.setToken("")
+                            Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_loginFragment)
+                        }.setNegativeButton("Tidak") { _, _ ->
+                            userViewModel.setToken("")
+                            userViewModel.setBiometric("")
+                            Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_loginFragment)
+                        }
+                        .show()
+                }.setNegativeButton("Tidak") { _, _ ->
+
+                }
+                .show()
         }
 
         binding.btnUbahPassword.setOnClickListener {

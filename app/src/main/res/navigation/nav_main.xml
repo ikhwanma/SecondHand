@@ -224,6 +224,9 @@
         <action
             android:id="@+id/action_productFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_productFragment_to_wishlistFragment"
+            app:destination="@id/wishlistFragment" />
     </fragment>
     <fragment
         android:id="@+id/wishlistFragment"

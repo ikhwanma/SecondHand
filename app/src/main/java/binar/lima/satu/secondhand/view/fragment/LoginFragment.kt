@@ -1,5 +1,6 @@
 package binar.lima.satu.secondhand.view.fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
@@ -9,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
@@ -18,6 +21,7 @@ import binar.lima.satu.secondhand.databinding.FragmentLoginBinding
 import binar.lima.satu.secondhand.model.auth.login.LoginBody
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
+import java.util.concurrent.Executor
 
 class LoginFragment : Fragment(), View.OnClickListener {
 
@@ -25,6 +29,10 @@ class LoginFragment : Fragment(), View.OnClickListener {
     private val binding get() = _binding!!
 
     private var viewPass: Boolean = false
+
+    private lateinit var executor: Executor
+    private lateinit var biometricPrompt: BiometricPrompt
+    private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
     //Define viewModel
     private val apiViewModel: ApiViewModel by hiltNavGraphViewModels(R.id.nav_main)
@@ -50,12 +58,21 @@ class LoginFragment : Fragment(), View.OnClickListener {
 
         requireActivity().onBackPressedDispatcher.addCallback(callback)
 
+        userViewModel.getBiometric().observe(viewLifecycleOwner){
+            if (it == ""){
+                binding.btnBiometric.isEnabled = false
+                binding.btnBiometric.setBackgroundResource(R.drawable.style_button_order)
+            }
+        }
+        showBioMetric()
+
         binding.btnLogin.setOnClickListener(this)
         binding.btnBack.setOnClickListener{
             it.findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
         }
         binding.tvRegister.setOnClickListener(this)
         binding.btnViewPass.setOnClickListener(this)
+        binding.btnBiometric.setOnClickListener(this)
     }
 
     override fun onClick(p0: View?) {
@@ -91,7 +108,44 @@ class LoginFragment : Fragment(), View.OnClickListener {
                     viewPass = false
                 }
             }
+            R.id.btn_biometric -> {
+                biometricPrompt.authenticate(promptInfo)
+            }
         }
+    }
+
+    private fun showBioMetric() {
+        executor = ContextCompat.getMainExecutor(requireContext())
+
+        biometricPrompt = BiometricPrompt(
+            requireActivity(),
+            executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                }
+
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    userViewModel.getBiometric().observe(viewLifecycleOwner){
+                        userViewModel.setToken(it)
+                        Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_homeFragment)
+                        Toast.makeText(requireContext(), "Login Berhasil", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            })
+
+        promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Autentikasi Biometrik")
+            .setSubtitle("Masuk menggunakan sidik jari atau wajah")
+            .setNegativeButtonText("Batalkan")
+            .build()
+
+
     }
 
     private fun login(loginBody: LoginBody) {

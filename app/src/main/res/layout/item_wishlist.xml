@@ -21,9 +21,10 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_image"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_margin="5dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
             app:cardCornerRadius="10dp">
 
             <ImageView

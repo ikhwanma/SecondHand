@@ -16,7 +16,7 @@ class ProductAdapter(val onItemClick: (GetProductResponseItem) -> Unit) :
     RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
     inner class ViewHolder(private val binding: ItemProductBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: GetProductResponseItem) {
+        fun bind(data: GetProductResponseItem, position: Int) {
             binding.apply {
                 val dataName = data.name
                 var txtCategory = ""
@@ -73,7 +73,7 @@ class ProductAdapter(val onItemClick: (GetProductResponseItem) -> Unit) :
                     imgAdd.visibility = View.VISIBLE
                 }
 
-                if (data.id == -2) {
+                if (data.id  == -2) {
                     root.setBackgroundResource(R.drawable.style_item_add_product)
                     icLocation.visibility = View.GONE
                     tvCity.visibility = View.GONE
@@ -116,7 +116,7 @@ class ProductAdapter(val onItemClick: (GetProductResponseItem) -> Unit) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = differ.currentList[position]
         data.let {
-            holder.bind(data)
+            holder.bind(data, position)
         }
     }
 

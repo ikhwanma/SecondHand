@@ -103,7 +103,7 @@
     <string name="edit">Edit</string>
     <string name="_plus">+</string>
     <string name="tambah_produk">Tambah Produk</string>
-    <string name="kategori_dipilih">Kategori dipilih:</string>
+    <string name="kategori_dipilih">Kategori dipilih (maks 3):</string>
     <string name="anda_belum_memilih_kategori">Anda belum memilih kategori</string>
     <string name="promo">Promo</string>
     <string name="promo_spesial_di_secondhand">Promo spesial di SecondHand</string>
@@ -135,4 +135,6 @@
     <string name="preview_produk">Preview Produk</string>
     <string name="lihat_semua">Lihat Semua</string>
     <string name="icon">icon</string>
+    <string name="_0">0</string>
+    <string name="anda_belum_memiliki_notifikasi">Anda Belum Memiliki Notifikasi</string>
 </resources>
