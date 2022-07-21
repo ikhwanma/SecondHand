@@ -1,8 +1,11 @@
 package binar.lima.satu.secondhand.model.product
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class User(
     @SerializedName("address")
     val address: String,
@@ -18,4 +21,4 @@ data class User(
     val imageUrl: String,
     @SerializedName("phone_number")
     val phoneNumber: String
-)
+) : Parcelable

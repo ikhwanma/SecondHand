@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_margin="20dp"
+    android:layout_marginTop="20dp"
     tools:context=".view.fragment.DaftarJualSayaFragment">
 
     <TextView
@@ -13,13 +13,15 @@
         android:layout_height="wrap_content"
         android:text="@string/daftar_jual_saya"
         android:textSize="24sp"
+        android:layout_marginHorizontal="20dp"
         android:textColor="@color/black"
         android:fontFamily="@font/poppins_bold" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="20dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="75dp"
@@ -103,18 +105,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         app:tabIndicator="@drawable/style_button"
-        app:tabPaddingStart="20dp"
-        app:tabPaddingEnd="20dp"
+        app:tabIndicatorColor="@color/blue_primary_variant"
+        android:layout_marginStart="20dp"
+        android:paddingEnd="13dp"
         app:tabInlineLabel="true"
-        app:tabTextColor="@color/black"
-        app:tabIconTint="@color/color_selector_tab"
+        app:tabTextColor="@color/white"
+        app:tabIconTint="@color/white"
         app:tabMaxWidth="0dp"
         app:tabGravity="fill"
         app:tabMode="scrollable"
         app:tabBackground="@drawable/style_btn_category_unselected"
         app:tabIndicatorAnimationMode="elastic"
         app:tabIndicatorGravity="stretch"
-        app:tabSelectedTextColor="@color/white">
+        app:tabSelectedTextColor="@color/white"
+        tools:ignore="RtlSymmetry">
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -130,6 +134,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginEnd="20dp"
             android:text="@string/terjual"
             />
     </com.google.android.material.tabs.TabLayout>
@@ -138,6 +143,7 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
+        android:layout_marginHorizontal="10dp"
         android:layout_height="match_parent" />
 
 </LinearLayout>

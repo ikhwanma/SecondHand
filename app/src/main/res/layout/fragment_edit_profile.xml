@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_margin="20dp"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:orientation="vertical"
     tools:context=".view.fragment.EditProfileFragment">
 
     <RelativeLayout
@@ -25,8 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="@string/lengkapi_info_akun"
             android:fontFamily="@font/poppins_medium"
+            android:text="@string/lengkapi_info_akun"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -35,6 +34,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,18 +55,34 @@
                     android:layout_width="125dp"
                     android:layout_height="125dp"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_photo_profile"
-                    android:contentDescription="@string/image" />
+                    android:contentDescription="@string/image"
+                    android:src="@drawable/ic_photo_profile" />
+
             </androidx.cardview.widget.CardView>
 
 
-            <TextView
-                style="@style/TextViewStyle"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="@string/nama"
-                android:textSize="15sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:gravity="center_vertical"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_person_24"
+                    app:tint="@color/blue_primary_variant"
+                    android:contentDescription="@string/image" />
+
+                <TextView
+                    style="@style/TextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nama"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
 
             <EditText
                 android:id="@+id/et_nama_edit_profile"
@@ -76,58 +92,82 @@
                 android:hint="@string/nama"
                 android:inputType="textEmailAddress" />
 
-            <TextView
-                style="@style/TextViewStyle"
-                android:layout_marginTop="20dp"
-                android:text="@string/kota"
-                android:textSize="15sp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <EditText
-                android:id="@+id/et_pilih_kota_edit_profile"
-                style="@style/EditTextStyle"
-                android:layout_marginTop="4dp"
-                android:autofillHints="pilihKota"
-                android:hint="@string/pilih_kota"
-                android:inputType="textEmailAddress" />
-
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_blue_location_on_24"
+                app:tint="@color/blue_primary_variant"
+                android:contentDescription="@string/image" />
             <TextView
                 style="@style/TextViewStyle"
-                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/alamat"
-                android:textSize="15sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textSize="15sp" />
+        </LinearLayout>
 
-            <EditText
-                android:id="@+id/et_alamat_edit_profile"
-                style="@style/EditTextStyle"
-                android:layout_marginTop="4dp"
-                android:autofillHints="alamat"
-                android:hint="@string/contoh_jalan_ikan_hiu_33"
-                android:inputType="textEmailAddress" />
+
 
             <TextView
-                style="@style/TextViewStyle"
-                android:layout_marginTop="20dp"
-                android:text="@string/no_handphone"
-                android:textSize="15sp"
+                android:id="@+id/tv_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/style_et"
+                android:fontFamily="@font/poppins_light"
+                android:gravity="center_vertical"
+                android:paddingVertical="10dp"
+                android:paddingStart="18dp"
+                android:text="@string/masukkan_alamat"
+                android:textColor="@color/light_grey"
+                android:textSize="14sp"
+                tools:ignore="RtlSymmetry" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            tools:ignore="UseCompoundDrawables">
+            <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_category_2"
+                app:tint="@color/blue_primary_variant"
+                android:contentDescription="@string/image" />
+            <TextView
+                style="@style/TextViewStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_handphone"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+
+
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <EditText
                     android:id="@+id/et_no_handphone_edit_profile"
                     style="@style/EditTextStyle"
                     android:layout_marginTop="4dp"
                     android:autofillHints="alamat"
                     android:hint="@string/_8123456789"
-                    android:paddingStart="46dp"
                     android:inputType="textEmailAddress"
+                    android:paddingStart="46dp"
                     tools:ignore="RtlSymmetry" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -139,16 +179,14 @@
             </RelativeLayout>
 
 
-
             <Button
                 android:id="@+id/btn_simpan"
                 style="@style/ButtonStyle"
-                android:fontFamily="@font/poppins_medium"
                 android:layout_marginTop="20dp"
+                android:fontFamily="@font/poppins_medium"
                 android:text="@string/simpan" />
         </LinearLayout>
     </ScrollView>
-
 
 
 </LinearLayout>

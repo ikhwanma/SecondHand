@@ -6,11 +6,11 @@ import binar.lima.satu.secondhand.data.local.room.ProductDao
 import binar.lima.satu.secondhand.data.local.room.ProductEntity
 import binar.lima.satu.secondhand.model.auth.login.LoginBody
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
+import binar.lima.satu.secondhand.model.auth.update.UpdatePasswordBody
 import binar.lima.satu.secondhand.model.buyer.order.PostOrderBody
 import binar.lima.satu.secondhand.model.buyer.wishlist.PostWishlistBody
 import binar.lima.satu.secondhand.model.seller.order.PatchOrderBody
 import binar.lima.satu.secondhand.model.seller.order.PutOrderBody
-import binar.lima.satu.secondhand.model.seller.product.ProductBody
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import javax.inject.Inject
@@ -36,6 +36,11 @@ class MainRepository @Inject constructor(
     ) = apiHelper.updateUser(
         token, fullName, address, email, phoneNumber, city, image
     )
+
+    suspend fun updatePassword(
+        token: String,
+        user: UpdatePasswordBody
+    ) = apiHelper.updatePassword(token, user)
 
     //================Seller================
     suspend fun getAllCategory() = apiHelper.getAllCategory()
@@ -70,13 +75,40 @@ class MainRepository @Inject constructor(
         image
     )
 
+    suspend fun updateSellerProduct(
+        token: String,
+        id: Int,
+        name: RequestBody,
+        description: RequestBody,
+        base_price: RequestBody,
+        category_ids: RequestBody,
+        location: RequestBody,
+        image: MultipartBody.Part?,
+    ) = apiHelper.updateSellerProduct(
+        token,
+        id,
+        name,
+        description,
+        base_price,
+        category_ids,
+        location,
+        image
+    )
+
+    suspend fun deleteSellerProduct(
+        token : String,
+        id : Int,
+    ) = apiHelper.deleteSellerProduct(token, id)
+
     //================Buyer================
     suspend fun getAllProduct(
         status: String? = null,
         category_id: Int? = null,
-        search: String? = null
+        search: String? = null,
+        page : Int? = null,
+        perPage : Int? = null,
     ) =
-        apiHelper.getAllProduct(status = status, category_id = category_id, search = search)
+        apiHelper.getAllProduct(status = status, category_id = category_id, search = search, page = page, perPage = perPage)
 
     suspend fun getProduct(id: Int) = apiHelper.getProduct(id)
     suspend fun postOrder(header: String, order: PostOrderBody) = apiHelper.postOrder(header, order)
@@ -92,6 +124,9 @@ class MainRepository @Inject constructor(
     //=============Notification=============
     suspend fun getNotification(header: String) = apiHelper.getNotification(header)
     suspend fun patchNotification(header: String, id: Int) = apiHelper.patchNotification(header, id)
+
+    //===============History===============
+    suspend fun getHistory(token : String) = apiHelper.getHistory(token)
 
     //=============DatabaseRoom=============
     fun addProduct(productEntity: List<ProductEntity>) = productDao.addProduct(productEntity)

@@ -177,18 +177,22 @@
                 <LinearLayout
                     android:id="@+id/ll_button"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:layout_below="@id/ll_item"
                     android:layout_marginTop="18dp"
+                    android:layout_marginBottom="5dp"
                     android:gravity="center_horizontal">
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btn_tolak"
                         style="@style/ButtonStyle"
                         android:layout_width="160dp"
-                        android:layout_marginEnd="16dp"
-                        android:backgroundTint="@color/white"
-                        android:text="@string/tolak" />
+                        android:layout_marginEnd="10dp"
+                        android:paddingBottom="2dp"
+                        android:background="@drawable/style_white_button"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/tolak"
+                        android:textColor="@color/blue_primary_variant"/>
 
                     <Button
                         android:id="@+id/btn_terima"
@@ -200,19 +204,22 @@
                 <LinearLayout
                     android:id="@+id/ll_button_success"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:layout_below="@id/ll_item"
                     android:layout_marginTop="18dp"
+                    android:padding="3dp"
                     android:gravity="center_horizontal"
                     android:visibility="gone">
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btn_status"
                         style="@style/ButtonStyle"
                         android:layout_width="160dp"
-                        android:layout_marginEnd="16dp"
-                        android:backgroundTint="@color/white"
-                        android:text="@string/status" />
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/style_white_button"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/status"
+                        android:textColor="@color/blue_primary_variant"/>
 
                     <Button
                         android:id="@+id/btn_hubungi"

@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "494858537563",
+    "project_id": "secondhand-7301a",
+    "storage_bucket": "secondhand-7301a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494858537563:android:f85bb46d30e908d103cd7e",
+        "android_client_info": {
+          "package_name": "binar.lima.satu.secondhand"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "494858537563-jhq9h8qbi2c7fc513vqt3miaq83o8itb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFiI4LaCkNcgqDhG4U-oBMIhunyaGR35o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "494858537563-jhq9h8qbi2c7fc513vqt3miaq83o8itb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494858537563:android:c5d2eda17b8e5abc03cd7e",
+        "android_client_info": {
+          "package_name": "binar.lima.satu.secondhand.view.fragment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "494858537563-jhq9h8qbi2c7fc513vqt3miaq83o8itb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFiI4LaCkNcgqDhG4U-oBMIhunyaGR35o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "494858537563-jhq9h8qbi2c7fc513vqt3miaq83o8itb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

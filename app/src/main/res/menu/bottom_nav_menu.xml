@@ -3,19 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/homeFragment"
-        android:icon="@drawable/ic_outline_home_24"
+        android:icon="@drawable/selector_home"
         android:title="@string/home"
-        app:showAsAction="ifRoom"/>
+        />
 
     <item
         android:id="@+id/notificationFragment"
-        android:icon="@drawable/ic_baseline_notifications_none_24"
+        android:icon="@drawable/selector_notification"
         android:title="@string/notifikasi"
         />
 
     <item
         android:id="@+id/addProductFragment"
-        android:icon="@drawable/ic_baseline_add_circle_outline_24"
+        android:icon="@drawable/ic_baseline_add_circle_24"
         android:title="@string/jual" />
 
     <item
@@ -25,7 +25,7 @@
 
     <item
         android:id="@+id/profileFragment"
-        android:icon="@drawable/ic_outline_person_24"
+        android:icon="@drawable/selector_profile"
         android:title="@string/profile" />
 
 </menu>

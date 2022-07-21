@@ -19,6 +19,7 @@ class ProductDbAdapter : RecyclerView.Adapter<ProductDbAdapter.ViewHolder>(){
                 tvCategory.text = data.category
                 val txtPrice = "Rp ${data.price}"
                 tvPrice.text = txtPrice
+                tvCity.text = data.city
             }
         }
     }

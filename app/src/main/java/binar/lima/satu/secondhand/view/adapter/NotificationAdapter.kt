@@ -19,7 +19,7 @@ class NotificationAdapter(val onItemClick: (GetNotificationResponseItem) -> Unit
         fun bind(
             data: GetNotificationResponseItem,
             position: Int
-        ){
+        ) {
             binding.apply {
                 val formattedBidPrice = Converter.converterMoney(data.bidPrice.toString())
 
@@ -40,8 +40,15 @@ class NotificationAdapter(val onItemClick: (GetNotificationResponseItem) -> Unit
                         cvStatus.setCardBackgroundColor(Color.parseColor("#7ED3FF"))
                         tvStatus.setTextColor(Color.parseColor("#003346"))
                     }
-                    "declined" -> {
+                    "tolak" -> {
                         txtStatus = "Tawaran Ditolak"
+                        txtBid = "Menawar Rp $formattedBidPrice"
+                        tvBid.text = txtBid
+                        cvStatus.setCardBackgroundColor(Color.parseColor("#FF0061"))
+                        tvStatus.setTextColor(Color.parseColor("#3C0000"))
+                    }
+                    "declined" -> {
+                        txtStatus = "Tawaran Dibatalkan"
                         txtBid = "Menawar Rp $formattedBidPrice"
                         tvBid.text = txtBid
                         cvStatus.setCardBackgroundColor(Color.parseColor("#FF0061"))
@@ -57,17 +64,14 @@ class NotificationAdapter(val onItemClick: (GetNotificationResponseItem) -> Unit
                     }
                 }
                 val product = data.product
-                val txtPrice = "Rp ${Converter.converterMoney(product.basePrice.toString())}"
+                val txtPrice = "Rp ${Converter.converterMoney(data.basePrice)}"
+
                 tvStatus.text = txtStatus
-                tvProduct.text = product.name
+                tvProduct.text = data.productName
                 tvPrice.text = txtPrice
-                if (data.transactionDate != null){
-                    tvDate.text = Converter.convertDate(data.transactionDate)
-                }else{
-                    tvDate.text = ""
-                }
+                tvDate.text = Converter.convertDate(data.createdAt)
                 Glide.with(itemView).load(data.imageUrl).into(imgProduct)
-                if (data.read){
+                if (data.read) {
                     imgAllert.visibility = View.GONE
                 }
             }
@@ -92,7 +96,7 @@ class NotificationAdapter(val onItemClick: (GetNotificationResponseItem) -> Unit
 
     private val differ = AsyncListDiffer(this, diffCallback)
 
-    fun submitData(value : List<GetNotificationResponseItem>?) = differ.submitList(value)
+    fun submitData(value: List<GetNotificationResponseItem>?) = differ.submitList(value)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)

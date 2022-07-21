@@ -1,20 +1,30 @@
 package binar.lima.satu.secondhand.view.adapter
 
-import android.graphics.Color
+import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import binar.lima.satu.secondhand.data.utils.Converter
+import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.ItemWishlistBinding
 import binar.lima.satu.secondhand.model.buyer.wishlist.GetWishlistResponseItem
+import binar.lima.satu.secondhand.view.fragment.WishlistFragment
+import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import com.bumptech.glide.Glide
 
 
-class WishlistAdapter() : RecyclerView.Adapter<WishlistAdapter.ViewHolder>() {
+class WishlistAdapter(
+    val apiViewModel: ApiViewModel,
+    val token: String,
+    val viewLifecycleOwner: LifecycleOwner,
+    val dataWl: MutableList<GetWishlistResponseItem>?
+) : RecyclerView.Adapter<WishlistAdapter.ViewHolder>() {
     inner class ViewHolder(private val binding: ItemWishlistBinding) : RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("NotifyDataSetChanged")
         fun bind(
             data: GetWishlistResponseItem,
             position: Int
@@ -24,6 +34,28 @@ class WishlistAdapter() : RecyclerView.Adapter<WishlistAdapter.ViewHolder>() {
                 tvProduct.text = data.product.name
                 val txtPrice = "Rp ${Converter.converterMoney(data.product.basePrice.toString())}"
                 tvPrice.text = txtPrice
+
+                btnDelete.setOnClickListener {
+                    apiViewModel.deleteBuyerWishlist(token, data.id).observe(viewLifecycleOwner){
+                        when(it.status){
+                            SUCCESS -> {
+                                Log.d("sukses", "sukses")
+                                val wishlistFragment = WishlistFragment()
+                                notifyDataSetChanged()
+                                dataWl!!.remove(data)
+                                wishlistFragment.getData(dataWl, token)
+                            }
+                            ERROR -> {
+
+                            }
+                            LOADING -> {
+
+                            }
+                        }
+                    }
+
+
+                }
             }
         }
     }

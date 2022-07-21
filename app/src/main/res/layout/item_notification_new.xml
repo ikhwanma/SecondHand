@@ -30,15 +30,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:ignore="UselessParent">
+
             <ImageView
                 android:id="@+id/ic_notif"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="5dp"
-                android:src="@drawable/ic_baseline_notifications_24"
-                app:tint="@color/blue_primary"
-                android:contentDescription="@string/image" />
+                android:contentDescription="@string/image"
+                android:src="@drawable/ic_baseline_notifications_24" />
 
             <TextView
                 android:id="@+id/tv_belanja"
@@ -54,11 +54,11 @@
                 android:id="@+id/tv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_belanja"
+                android:layout_toEndOf="@+id/ic_notif"
                 android:fontFamily="@font/poppins_regular"
                 android:text="@string/_20_apr_14_04"
-                android:textSize="12sp"
-                android:layout_below="@+id/tv_belanja"
-                android:layout_toEndOf="@+id/ic_notif"/>
+                android:textSize="12sp" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_status"

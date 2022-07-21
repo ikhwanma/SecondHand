@@ -141,7 +141,7 @@
                 style="@style/TextViewStyle"
                 android:layout_marginStart="6dp"
                 android:text="@string/masuk_di_sini"
-                android:textColor="@color/purple"
+                android:textColor="@color/blue_primary_variant"
                 android:textStyle="bold" />
         </LinearLayout>
 

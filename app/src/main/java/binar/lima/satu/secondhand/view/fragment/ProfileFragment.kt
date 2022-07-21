@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.OnlineChecker
 import binar.lima.satu.secondhand.data.utils.Status
@@ -72,6 +73,10 @@ class ProfileFragment : Fragment() {
         binding.btnLogout.setOnClickListener {
             userViewModel.setToken("")
             Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_loginFragment)
+        }
+
+        binding.btnUbahPassword.setOnClickListener {
+            it.findNavController().navigate(R.id.action_profileFragment_to_ubahPasswordFragment)
         }
     }
 }

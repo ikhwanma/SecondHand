@@ -5,18 +5,19 @@ import binar.lima.satu.secondhand.model.auth.login.LoginBody
 import binar.lima.satu.secondhand.model.auth.login.PostLoginResponse
 import binar.lima.satu.secondhand.model.auth.register.PostRegisterResponse
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
+import binar.lima.satu.secondhand.model.auth.update.UpdatePasswordBody
 import binar.lima.satu.secondhand.model.buyer.order.PostOrderBody
 import binar.lima.satu.secondhand.model.buyer.order.PostOrderResponse
 import binar.lima.satu.secondhand.model.buyer.wishlist.GetWishlistResponseItem
 import binar.lima.satu.secondhand.model.buyer.wishlist.PostWishlistBody
 import binar.lima.satu.secondhand.model.buyer.wishlist.PostWishlistResponse
+import binar.lima.satu.secondhand.model.history.GetHistoryResponseItem
 import binar.lima.satu.secondhand.model.notification.GetNotificationResponseItem
 import binar.lima.satu.secondhand.model.product.GetDetailProductResponse
 import binar.lima.satu.secondhand.model.product.GetProductResponseItem
 import binar.lima.satu.secondhand.model.seller.banner.GetSellerBannerResponseItem
 import binar.lima.satu.secondhand.model.seller.order.*
 import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponseItem
-import binar.lima.satu.secondhand.model.seller.product.ProductBody
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -53,6 +54,12 @@ interface ApiService {
         @Part image : MultipartBody.Part?
     )
 
+    @PUT("/auth/change-password")
+    suspend fun updatePassword(
+        @Header("access_token") token : String,
+        @Body user: UpdatePasswordBody
+    )
+
     //=======================Seller==============================
     //--Product--
     @GET("/seller/product")
@@ -73,7 +80,7 @@ interface ApiService {
     suspend fun getDetailSellerOrder(
         @Header("access_token") token : String,
         @Path("id") id : Int
-    ) : GetSellerOrderResponseItem
+    ) : GetDetailSellerOrder
 
     @PATCH("/seller/order/{id}")
     suspend fun patchSellerOrder(
@@ -93,6 +100,26 @@ interface ApiService {
         @Part("location") location : RequestBody,
         @Part image : MultipartBody.Part,
     )
+
+    @Multipart
+    @PUT("/seller/product/{id}")
+    suspend fun updateSellerProduct(
+        @Header("access_token") token : String,
+        @Path("id") id : Int,
+        @Part("name") name : RequestBody,
+        @Part("description") description : RequestBody,
+        @Part("base_price") base_price : RequestBody,
+        @Part("category_ids") category_ids : RequestBody,
+        @Part("location") location : RequestBody,
+        @Part image : MultipartBody.Part?,
+    )
+
+
+    @DELETE("/seller/product/{id}")
+    suspend fun deleteSellerProduct(
+        @Header("access_token") token : String,
+        @Path("id") id : Int,
+    )
     //--Category--
     @GET("/seller/category")
     suspend fun getAllCategory() : List<GetSellerCategoryResponseItem>
@@ -108,7 +135,9 @@ interface ApiService {
     suspend fun getAllProduct(
         @Query("status") status : String?,
         @Query("category_id") category_id : Int?,
-        @Query("search") search : String?
+        @Query("search") search : String?,
+        @Query("page") page : Int?,
+        @Query("per_page") perPage : Int?,
     ) : List<GetProductResponseItem>
 
     @GET("/buyer/product/{id}")
@@ -150,7 +179,7 @@ interface ApiService {
     suspend fun deleteBuyerWishList(
         @Header("access_token") token : String,
         @Path("id") id : Int
-    )
+    ) : GetWishlistResponseItem
 
     //====================Notification===========================
     //--Product--
@@ -164,4 +193,10 @@ interface ApiService {
         @Header("access_token") token : String,
         @Path("id") id : Int
     ) : GetNotificationResponseItem
+
+    //======================History=============================
+    @GET("/history")
+    suspend fun getHistory(
+        @Header("access_token") token : String
+    ) : List<GetHistoryResponseItem>
 }
