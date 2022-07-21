@@ -47,9 +47,6 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
                         txtStatus = "Produk Dibeli"
                         txtPrice = "Menawar Rp ${Converter.converterMoney(data.price.toString())}"
                     }
-                    else -> {
-
-                    }
                 }
 
                 tvDate.text = Converter.convertDate(data.transactionDate)

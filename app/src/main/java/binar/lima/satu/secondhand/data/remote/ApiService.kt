@@ -15,6 +15,7 @@ import binar.lima.satu.secondhand.model.history.GetHistoryResponseItem
 import binar.lima.satu.secondhand.model.notification.GetNotificationResponseItem
 import binar.lima.satu.secondhand.model.product.GetDetailProductResponse
 import binar.lima.satu.secondhand.model.product.GetProductResponseItem
+import binar.lima.satu.secondhand.model.response.Response
 import binar.lima.satu.secondhand.model.seller.banner.GetSellerBannerResponseItem
 import binar.lima.satu.secondhand.model.seller.order.*
 import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponseItem
@@ -58,7 +59,7 @@ interface ApiService {
     suspend fun updatePassword(
         @Header("access_token") token : String,
         @Body user: UpdatePasswordBody
-    )
+    ) : Response
 
     //=======================Seller==============================
     //--Product--
@@ -119,7 +120,7 @@ interface ApiService {
     suspend fun deleteSellerProduct(
         @Header("access_token") token : String,
         @Path("id") id : Int,
-    )
+    ) : Response
     //--Category--
     @GET("/seller/category")
     suspend fun getAllCategory() : List<GetSellerCategoryResponseItem>
