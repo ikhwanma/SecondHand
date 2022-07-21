@@ -21,4 +21,14 @@ class UserViewModel @Inject constructor(private val pref : DataStoreManager) : V
     fun getToken() : LiveData<String>{
         return pref.getToken().asLiveData()
     }
+
+    fun setBiometric(token : String){
+        viewModelScope.launch {
+            pref.setBiometric(token)
+        }
+    }
+
+    fun getBiometric() : LiveData<String>{
+        return pref.getBiometric().asLiveData()
+    }
 }

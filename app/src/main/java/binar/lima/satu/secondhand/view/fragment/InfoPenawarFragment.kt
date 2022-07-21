@@ -98,6 +98,7 @@ class InfoPenawarFragment : Fragment(), View.OnClickListener {
                             Glide.with(requireView()).load(product.imageUrl).into(productMatchProductImg)
 
                             Glide.with(requireView()).load(data.user.imageUrl).into(imgBuyer)
+                            Glide.with(requireView()).load(data.user.imageUrl).into(productMatchBuyerImg)
                         }
                     }
                     ERROR -> {
@@ -191,7 +192,7 @@ class InfoPenawarFragment : Fragment(), View.OnClickListener {
                 apiViewModel.patchSellerOrder(token,idOrder, PatchOrderBody("tolak")).observe(viewLifecycleOwner){
                     when(it.status){
                         SUCCESS -> {
-                            Navigation.findNavController(requireView()).navigate(R.id.action_infoPenawarFragment_to_daftarJualSayaFragment)
+                            binding.llButton.visibility = View.GONE
                             Snackbar.make(requireView(), "Penawaran ditolak", Snackbar.LENGTH_SHORT).show()
                         }
                         ERROR -> {
@@ -212,8 +213,8 @@ class InfoPenawarFragment : Fragment(), View.OnClickListener {
                 apiViewModel.patchSellerOrder(token, idOrder, PatchOrderBody("success")).observe(viewLifecycleOwner){
                     when(it.status){
                         SUCCESS -> {
-                            val mBundle = bundleOf(EXTRA_ORDER_ID to id)
-                            Navigation.findNavController(requireView()).navigate(R.id.infoPenawarFragment, mBundle)
+                            binding.llButton.visibility = View.GONE
+                            binding.llButtonSuccess.visibility = View.VISIBLE
                             Snackbar.make(requireView(), "Penawaran diterima", Snackbar.LENGTH_SHORT).show()
                         }
                         ERROR -> {

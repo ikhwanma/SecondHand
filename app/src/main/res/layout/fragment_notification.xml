@@ -11,20 +11,21 @@
         android:id="@+id/ic_notif"
         android:layout_width="33dp"
         android:layout_height="33dp"
-        android:src="@drawable/ic_baseline_notifications_24"
         android:layout_marginStart="16dp"
         android:layout_marginTop="17dp"
         android:layout_marginBottom="20dp"
         android:contentDescription="@string/icon"
+        android:src="@drawable/ic_baseline_notifications_24"
         app:tint="@color/blue_primary_variant" />
+
     <TextView
         android:id="@+id/tv_title"
         style="@style/TextViewStyle"
         android:layout_marginStart="7dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="15dp"
-        android:text="@string/notifikasi"
         android:layout_toEndOf="@+id/ic_notif"
+        android:text="@string/notifikasi"
         android:textSize="25sp"
         android:textStyle="bold" />
 
@@ -40,5 +41,33 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/tv_title"
         tools:listitem="@layout/item_notification" />
+
+    <LinearLayout
+        android:id="@+id/ll_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:id="@+id/ic_notif_status"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:contentDescription="@string/icon"
+            android:src="@drawable/ic_baseline_notifications_off_24"
+            app:tint="@color/blue_primary_variant" />
+
+        <TextView
+            android:id="@+id/tv_notif_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/anda_belum_memiliki_notifikasi"
+            android:textColor="@color/blue_primary_variant"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 </RelativeLayout>

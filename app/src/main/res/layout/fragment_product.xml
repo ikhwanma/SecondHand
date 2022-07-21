@@ -33,6 +33,7 @@
                 android:inputType="none" />
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/btn_wishlist"
                 android:layout_width="55dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center_vertical"
@@ -53,6 +54,7 @@
                         android:src="@drawable/ic_outline_shopping_cart_24" />
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/cv_badge"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginStart="-15dp"
@@ -66,7 +68,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="13"
+                            android:text="@string/_0"
                             android:textColor="@color/white"
                             android:textSize="12sp" />
                     </androidx.cardview.widget.CardView>

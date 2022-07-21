@@ -26,6 +26,7 @@ class ProductFragment : Fragment() {
 
     //Define viewModel
     private val apiViewModel: ApiViewModel by hiltNavGraphViewModels(R.id.nav_main)
+    private val userViewModel: UserViewModel by hiltNavGraphViewModels(R.id.nav_main)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -142,9 +143,40 @@ class ProductFragment : Fragment() {
             }
         }
 
+        userViewModel.getToken().observe(viewLifecycleOwner) { token ->
+
+            apiViewModel.getBuyerWishlist(token).observe(viewLifecycleOwner) {
+                when (it.status) {
+                    SUCCESS -> {
+                        val data = it.data!!
+
+                        binding.apply {
+                            if (data.isEmpty()) {
+                                cvBadge.visibility = View.VISIBLE
+                                tvWishlist.text = 0.toString()
+                            } else {
+                                cvBadge.visibility = View.VISIBLE
+                                tvWishlist.text = data.size.toString()
+                            }
+                        }
+                    }
+                    ERROR -> {
+
+                    }
+                    LOADING -> {
+
+                    }
+                }
+            }
+
+        }
+
         binding.apply {
             etSearch.setOnClickListener{
                 it.findNavController().navigate(R.id.action_productFragment_to_searchFragment)
+            }
+            btnWishlist.setOnClickListener {
+                it.findNavController().navigate(R.id.action_productFragment_to_wishlistFragment)
             }
         }
     }

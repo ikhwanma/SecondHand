@@ -1,6 +1,7 @@
 package binar.lima.satu.secondhand.view.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,10 +48,6 @@ class HomeFragment : Fragment() {
     //Define viewModel
     private val apiViewModel: ApiViewModel by hiltNavGraphViewModels(R.id.nav_main)
     private val userViewModel: UserViewModel by hiltNavGraphViewModels(R.id.nav_main)
-
-    private lateinit var executor: Executor
-    private lateinit var biometricPrompt: BiometricPrompt
-    private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CardView>
 
@@ -257,38 +254,9 @@ class HomeFragment : Fragment() {
             }
         }
 
-//        showBioMetric()
     }
 
-    private fun showBioMetric() {
-        executor = ContextCompat.getMainExecutor(requireContext())
 
-        biometricPrompt = BiometricPrompt(
-            requireActivity(),
-            executor,
-            object : BiometricPrompt.AuthenticationCallback() {
-                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                    super.onAuthenticationError(errorCode, errString)
-
-                }
-
-                override fun onAuthenticationFailed() {
-                    super.onAuthenticationFailed()
-                }
-
-                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                    super.onAuthenticationSucceeded(result)
-                }
-            })
-
-        promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Autentikasi Biometrik")
-            .setSubtitle("Masuk menggunakan sidik jari atau wajah")
-            .setNegativeButtonText("Batalkan")
-            .build()
-
-
-    }
 
 
     private fun getData() {
@@ -335,25 +303,11 @@ class HomeFragment : Fragment() {
                         )
                     )
                     adapter.submitData(list)
-                    binding.apply {
-                        val layoutManager = LinearLayoutManager(
-                            requireContext(),
-                            LinearLayoutManager.HORIZONTAL,
-                            false
-                        )
-                        layoutManager.isMeasurementCacheEnabled = false
-                        rvProduct.layoutManager = layoutManager
-                        rvProduct.adapter = adapter
-                        rvProduct.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                                super.onScrolled(recyclerView, dx, dy)
-                                layoutManager.requestLayout()
-                            }
-                        })
-                    }
+
+                    Log.d("ini data", list.toString())
+
                     val listProduct = mutableListOf<ProductEntity>()
                     val appExecutors = AppExecutors()
-
 
                     appExecutors.diskIO.execute {
                         for (dp in list) {
@@ -385,6 +339,18 @@ class HomeFragment : Fragment() {
                             apiViewModel.addProduct(listProduct)
                         }
                     }
+
+                    binding.apply {
+                        val layoutManager = LinearLayoutManager(
+                            requireContext(),
+                            LinearLayoutManager.HORIZONTAL,
+                            false
+                        )
+                        rvProduct.layoutManager = layoutManager
+                        rvProduct.adapter = adapter
+                        rvProduct.setItemViewCacheSize(list.size)
+                    }
+
 
                 }
                 ERROR -> {

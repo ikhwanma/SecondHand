@@ -69,9 +69,10 @@ class NotificationFragment : Fragment() {
                                 for(i in x downTo 0){
                                     if (notif[i].read) listNotif.add(notif[i])
                                 }
-                                Log.d("ini list", listNotif.toString())
                                 setList(listNotif)
                                 binding.progressCircular.visibility = View.GONE
+                            }else{
+                                binding.llStatus.visibility = View.VISIBLE
                             }
                         }
                         ERROR -> {

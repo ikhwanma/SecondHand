@@ -153,7 +153,6 @@ class DetailFragment : Fragment() , View.OnClickListener{
 
                                     binding.apply {
                                         detailItem.visibility = View.VISIBLE
-                                        llBtnTertarik.visibility = View.VISIBLE
                                         progressCircular.visibility = View.GONE
                                     }
 
@@ -465,8 +464,8 @@ class DetailFragment : Fragment() , View.OnClickListener{
                                 .setMessage("Apakah Anda Yakin?")
                                 .setIcon(R.mipmap.ic_launcher_round)
                                 .setPositiveButton("Yes") { _, _ ->
-                                    Navigation.findNavController(requireView()).navigate(R.id.action_detailFragment_to_homeFragment2)
                                     Snackbar.make(requireView(), "Produk berhasil dihapus", Snackbar.LENGTH_LONG).show()
+                                    Navigation.findNavController(requireView()).navigate(R.id.action_detailFragment_to_homeFragment2)
                                 }.setNegativeButton("No") { _, _ ->
 
                                 }
