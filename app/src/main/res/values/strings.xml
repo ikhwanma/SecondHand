@@ -114,4 +114,22 @@
     <string name="plus">+</string>
     <string name="hapus_dari_wishlist">Hapus Dari Wishlist</string>
     <string name="daftar_wishlist">Daftar Wishlist</string>
+    <string name="masukkan_alamat">Masukkan Alamat</string>
+    <string name="ubah_kata_sandi">Ubah Kata Sandi</string>
+    <string name="ubah_password">Ubah Password</string>
+    <string name="password_sekarang">Password Sekarang</string>
+    <string name="password_baru">Password Baru</string>
+    <string name="konfirmasi_password_baru">Konfirmasi Password Baru</string>
+    <string name="hapus_produk">Hapus Produk</string>
+    <string name="edit_produk">Edit Produk</string>
+
+    <string name="leku_title_activity_location_picker">Location Picker</string>
+    <string name="leku_load_location_error">Ada yang salah. Coba kembali nanti</string>
+    <string name="leku_no_search_results">Alamat yang dicari tidak ada</string>
+    <string name="leku_unknown_location">Lokasi tidak diketahui</string>
+    <string name="leku_voice_search_promp">Search by voice…</string>
+    <string name="leku_voice_search_extra_language">en-EN</string>
+    <string name="leku_toolbar_action_voice_title">Voice</string>
+    <string name="leku_search_hint">Cari alamat</string>
+    <string name="history">History</string>
 </resources>

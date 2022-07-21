@@ -7,6 +7,10 @@ object Converter {
 
         var j = 0
 
+        if(money.length <= 3){
+            moneyFormatted = money
+        }
+
         if (money.length==4){
             for (i in 0..4){
                 if (i == 1){
@@ -43,6 +47,39 @@ object Converter {
         if (money.length==7){
             for (i in 0..8){
                 if (i == 1 || i == 5){
+                    moneyFormatted += "."
+                }else{
+                    moneyFormatted += money[j]
+                    j++
+                }
+            }
+        }
+
+        if (money.length==8){
+            for (i in 0..9){
+                if (i == 2 || i == 6){
+                    moneyFormatted += "."
+                }else{
+                    moneyFormatted += money[j]
+                    j++
+                }
+            }
+        }
+
+        if (money.length==9){
+            for (i in 0..10){
+                if (i == 3 || i == 7){
+                    moneyFormatted += "."
+                }else{
+                    moneyFormatted += money[j]
+                    j++
+                }
+            }
+        }
+
+        if (money.length==10){
+            for (i in 0..11){
+                if (i == 1 || i == 5 || i == 9){
                     moneyFormatted += "."
                 }else{
                     moneyFormatted += money[j]

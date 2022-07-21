@@ -1,26 +1,27 @@
 package binar.lima.satu.secondhand.view.fragment
 
-import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.navigation.Navigation
 import binar.lima.satu.secondhand.R
-import binar.lima.satu.secondhand.data.utils.Status
 import binar.lima.satu.secondhand.data.utils.Status.*
-import binar.lima.satu.secondhand.databinding.FragmentAddProductBinding
-import binar.lima.satu.secondhand.databinding.FragmentHomeBinding
 import binar.lima.satu.secondhand.databinding.FragmentProductPreviewBinding
 import binar.lima.satu.secondhand.model.auth.login.GetLoginResponse
-import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponseItem
 import binar.lima.satu.secondhand.model.seller.product.ProductBody
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
 import com.bumptech.glide.Glide
-import pl.aprilapps.easyphotopicker.EasyImage
+import com.google.android.material.snackbar.Snackbar
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 
 
@@ -51,7 +52,7 @@ class ProductPreviewFragment : Fragment() {
             tvPrice.text = product.basePrice.toString()
             tvDescription.text = product.description
             imgProduct.setImageURI(product.image)
-            tvSellerCity.text = product.location
+            tvLocation.text = product.location
         }
 
         userViewModel.getToken().observe(viewLifecycleOwner){
@@ -70,13 +71,63 @@ class ProductPreviewFragment : Fragment() {
                 }
             }
         }
+
+        binding.btnTerbitkan.setOnClickListener {
+            addProduct(product)
+        }
+    }
+
+    private fun addProduct(product: ProductBody) {
+        val contentResolver = requireActivity().applicationContext.contentResolver
+
+        val type = contentResolver.getType(product.image)
+        val tempFile = File.createTempFile("temp-", null, null)
+        val inputStream = contentResolver.openInputStream(product.image)
+
+        tempFile.outputStream().use {
+            inputStream?.copyTo(it)
+        }
+
+        val requestBody: RequestBody = tempFile.asRequestBody(type?.toMediaType())
+
+        val imageUpload =
+            MultipartBody.Part.createFormData("image", tempFile.name, requestBody)
+        val nameUpload =
+            product.name.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+        val priceUpload =
+            product.basePrice.toString().toRequestBody("multipart/form-data".toMediaTypeOrNull())
+        val categoryUpload =
+            product.category_ids.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+        val descriptionUpload =
+            product.description.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+        val addressUpload =
+            user.city.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+
+        apiViewModel.addSellerProduct(token, nameUpload, descriptionUpload, priceUpload, categoryUpload, addressUpload, imageUpload).observe(viewLifecycleOwner){
+            when(it.status){
+                SUCCESS -> {
+                    Snackbar.make(
+                        requireView(),
+                        "Produk Berhasil Ditambahkan",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                    Navigation.findNavController(requireView()).navigate(R.id.action_productPreviewFragment_to_daftarJualSayaFragment)
+                }
+                ERROR -> {
+
+                }
+                LOADING -> {
+
+                }
+            }
+        }
     }
 
     private fun setUser(data: GetLoginResponse?) {
         user = data!!
         binding.apply {
-            tvSellerName.text = user.fullName
-            tvSellerCity.text = user.city
+            tvSeller.text = user.fullName
+            tvLocation.text = user.city
             Glide.with(requireView()).load(user.imageUrl).into(imgSeller)
         }
     }

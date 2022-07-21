@@ -1,23 +1,27 @@
 package binar.lima.satu.secondhand.view.fragment
 
+import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.cardview.widget.CardView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import binar.lima.satu.secondhand.R
+import binar.lima.satu.secondhand.data.utils.Converter
 import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentDetailBinding
 import binar.lima.satu.secondhand.model.buyer.order.PostOrderBody
 import binar.lima.satu.secondhand.model.buyer.wishlist.PostWishlistBody
+import binar.lima.satu.secondhand.model.product.GetDetailProductResponse
 import binar.lima.satu.secondhand.model.product.GetProductResponseItem
 import binar.lima.satu.secondhand.model.seller.order.PutOrderBody
 import binar.lima.satu.secondhand.view.adapter.ProductAdapter
@@ -25,7 +29,7 @@ import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
+import com.google.android.material.snackbar.Snackbar
 
 
 class DetailFragment : Fragment() , View.OnClickListener{
@@ -41,6 +45,7 @@ class DetailFragment : Fragment() , View.OnClickListener{
     private var idProduct : Int = 0
 
     private var token = ""
+    private var detailProductResponse: GetDetailProductResponse? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,14 +60,14 @@ class DetailFragment : Fragment() , View.OnClickListener{
 
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet)
 
-        val callback = object : OnBackPressedCallback(true){
+        /*val callback = object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
                 Navigation.findNavController(requireView()).navigate(R.id.action_detailFragment_to_homeFragment)
             }
 
         }
 
-        requireActivity().onBackPressedDispatcher.addCallback(callback)
+        requireActivity().onBackPressedDispatcher.addCallback(callback)*/
 
         idProduct = arguments?.getInt(EXTRA_ID) as Int
 
@@ -70,7 +75,6 @@ class DetailFragment : Fragment() , View.OnClickListener{
             setToken(token)
             getWishList(token)
             getOrder(token)
-
         }
 
         apiViewModel.getProduct(idProduct).observe(viewLifecycleOwner){
@@ -78,7 +82,9 @@ class DetailFragment : Fragment() , View.OnClickListener{
                 SUCCESS -> {
                     val data = it.data!!
 
-                    val txtPrice = "Rp ${data.basePrice}"
+                    setDetail(data)
+
+                    val txtPrice = "Rp ${Converter.converterMoney(data.basePrice.toString())}"
 
                     val category = data.categories
 
@@ -99,6 +105,43 @@ class DetailFragment : Fragment() , View.OnClickListener{
                         tvSellerBottomsheet.text = data.user.fullName
                         Glide.with(requireView()).load(data.user.imageUrl).into(imgSeller)
                         Glide.with(requireView()).load(data.user.imageUrl).into(imgSellerBottomsheet)
+
+                        if (data.status == "sold"){
+                            val txtButton = "Produk sudah terjual"
+                            btnTertarik.isEnabled = false
+                            btnTertarik.setBackgroundResource(R.drawable.style_button_order)
+                            btnTertarik.text = txtButton
+                            btnWishlist.visibility = View.GONE
+                        }
+
+                        userViewModel.getToken().observe(viewLifecycleOwner){token ->
+                            if (token != ""){
+                                apiViewModel.getLoginUser(token).observe(viewLifecycleOwner){ user ->
+                                    when(user.status){
+                                        SUCCESS -> {
+                                            if (data.user.id == user.data!!.id) {
+                                                if (data.status == "sold"){
+                                                    val txtButton = "Produk sudah terjual"
+                                                    btnTertarik.isEnabled = false
+                                                    btnTertarik.setBackgroundResource(R.drawable.style_button_order)
+                                                    btnTertarik.text = txtButton
+                                                    btnWishlist.visibility = View.GONE
+                                                }else{
+                                                    llBtnTertarik.visibility = View.GONE
+                                                    llBtnEdit.visibility = View.VISIBLE
+                                                }
+                                            }
+                                        }
+                                        ERROR -> {
+
+                                        }
+                                        LOADING -> {
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     if (category.isNotEmpty()){
@@ -186,7 +229,13 @@ class DetailFragment : Fragment() , View.OnClickListener{
             btnKirim.setOnClickListener(this@DetailFragment)
             btnWishlist.setOnClickListener(this@DetailFragment)
             btnBack.setOnClickListener(this@DetailFragment)
+            btnEditProduk.setOnClickListener(this@DetailFragment)
+            btnDeleteProduk.setOnClickListener(this@DetailFragment)
         }
+    }
+
+    private fun setDetail(data: GetDetailProductResponse) {
+        this.detailProductResponse = data
     }
 
     private fun getOrder(token: String) {
@@ -205,7 +254,7 @@ class DetailFragment : Fragment() , View.OnClickListener{
                             }
                             break
                         }
-                        if (order.productId == idProduct && order.status == "declined"){
+                        if (order.productId == idProduct && order.status == "declined" || order.status == "tolak"){
                             val txtButton = "Berikan tawaran baru"
                             binding.apply {
                                 btnTertarik.text = txtButton
@@ -214,7 +263,7 @@ class DetailFragment : Fragment() , View.OnClickListener{
                                     apiViewModel.updateBuyerOrder(token, order.id, PutOrderBody(bid)).observe(viewLifecycleOwner){ order->
                                         when(order.status){
                                             SUCCESS -> {
-                                                Toast.makeText(requireContext(), "Penawaran dikirim", Toast.LENGTH_SHORT).show()
+                                                Snackbar.make(requireView(), "Berhasil memberikan penawaran, Tunggu respon penjual", Snackbar.LENGTH_LONG).show()
                                                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                                                 Navigation.findNavController(requireView()).navigate(R.id.action_detailFragment_to_homeFragment)
                                             }
@@ -252,16 +301,19 @@ class DetailFragment : Fragment() , View.OnClickListener{
                     for(wish in data){
                         if (wish.productId == idProduct){
                             binding.apply {
-                                btnWishlist.setCardBackgroundColor(Color.parseColor("#D0D0D0"))
                                 tvStatusWishlist.text = "-"
 
                                 btnWishlist.setOnClickListener {
+                                    val animation = AnimationUtils.loadAnimation(context, R.anim.bounce_anim)
+                                    btnWishlist.startAnimation(animation)
                                     apiViewModel.deleteBuyerWishlist(token, wish.id).observe(viewLifecycleOwner){ it1 ->
                                         when(it1.status){
                                             SUCCESS -> {
                                                 Toast.makeText(requireContext(), "Dihapus dari wishlist", Toast.LENGTH_SHORT).show()
                                                 btnWishlist.setCardBackgroundColor(Color.parseColor("#061957"))
                                                 tvStatusWishlist.text = "+"
+                                                getWishList(token)
+                                                btnWishlist.setOnClickListener(this@DetailFragment)
                                             }
                                             ERROR -> {
 
@@ -306,7 +358,9 @@ class DetailFragment : Fragment() , View.OnClickListener{
                         apiViewModel.postOrder(it, order).observe(viewLifecycleOwner){ order ->
                             when(order.status){
                                 SUCCESS -> {
-                                    Toast.makeText(requireContext(), "Sukses", Toast.LENGTH_SHORT).show()
+                                    Snackbar.make(requireView(), "Berhasil memberikan penawaran, Tunggu respon penjual", Snackbar.LENGTH_LONG).show()
+                                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                                    Navigation.findNavController(requireView()).navigate(R.id.action_detailFragment_to_homeFragment)
                                     getOrder(token)
                                 }
                                 ERROR -> {
@@ -350,10 +404,14 @@ class DetailFragment : Fragment() , View.OnClickListener{
                 }
             }
             R.id.btn_wishlist -> {
+                val animation = AnimationUtils.loadAnimation(context, R.anim.bounce_anim)
+                binding.btnWishlist.startAnimation(animation)
+                binding.tvStatusWishlist.text = "-"
                 apiViewModel.postBuyerWishlist(token, PostWishlistBody(idProduct)).observe(viewLifecycleOwner){
                     when(it.status){
                         SUCCESS -> {
                             Toast.makeText(requireContext(), "Ditambahkan ke wishlist", Toast.LENGTH_SHORT).show()
+
                             getWishList(token)
                         }
                         ERROR -> {
@@ -367,6 +425,34 @@ class DetailFragment : Fragment() , View.OnClickListener{
             }
             R.id.btn_back -> {
                 Navigation.findNavController(requireView()).navigate(R.id.action_detailFragment_to_homeFragment)
+            }
+            R.id.btn_edit_produk -> {
+                val mBundle = bundleOf(EditProdukFragment.EXTRA_DETAIL to detailProductResponse)
+                Navigation.findNavController(requireView()).navigate(R.id.action_detailFragment_to_editProdukFragment, mBundle)
+            }
+            R.id.btn_delete_produk -> {
+                apiViewModel.deleteSellerProduct(token, detailProductResponse!!.id).observe(viewLifecycleOwner){
+                    when(it.status){
+                        SUCCESS -> {
+                            AlertDialog.Builder(requireContext()).setTitle("Hapus Produk")
+                                .setMessage("Apakah Anda Yakin?")
+                                .setIcon(R.mipmap.ic_launcher_round)
+                                .setPositiveButton("Yes") { _, _ ->
+                                    Navigation.findNavController(requireView()).navigate(R.id.action_detailFragment_to_homeFragment2)
+                                    Snackbar.make(requireView(), "Produk berhasil dihapus", Snackbar.LENGTH_LONG).show()
+                                }.setNegativeButton("No") { _, _ ->
+
+                                }
+                                .show()
+                        }
+                        ERROR -> {
+
+                        }
+                        LOADING -> {
+
+                        }
+                    }
+                }
             }
         }
     }

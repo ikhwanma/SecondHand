@@ -11,4 +11,5 @@ class ProductEntity(
     @ColumnInfo(name = "name")var name: String?,
     @ColumnInfo(name = "category")var category: String?,
     @ColumnInfo(name = "price")var price: String?,
+    @ColumnInfo(name = "city")var city: String?,
 )

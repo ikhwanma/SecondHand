@@ -3,7 +3,6 @@ package binar.lima.satu.secondhand.view.fragment
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,14 +23,13 @@ import binar.lima.satu.secondhand.model.seller.product.ProductBody
 import binar.lima.satu.secondhand.view.dialogfragment.CategoryFragment
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
+import com.google.android.material.snackbar.Snackbar
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import pl.aprilapps.easyphotopicker.EasyImage
-import java.io.ByteArrayOutputStream
 import java.io.File
 
 
@@ -62,8 +60,9 @@ class AddProductFragment : Fragment(), View.OnClickListener {
         // Inflate the layout for this fragment
         _binding = FragmentAddProductBinding.inflate(inflater, container, false)
         val connected = OnlineChecker.isOnline(requireContext())
-        if (!connected){
-            Toast.makeText(requireContext(), "Anda tidak terhubung ke internet", Toast.LENGTH_SHORT).show()
+        if (!connected) {
+            Toast.makeText(requireContext(), "Anda tidak terhubung ke internet", Toast.LENGTH_SHORT)
+                .show()
         }
         return binding.root
     }
@@ -75,16 +74,16 @@ class AddProductFragment : Fragment(), View.OnClickListener {
             openGallery()
         }
 
-        userViewModel.listCategorySelected.observe(viewLifecycleOwner){
-            if (it.isNotEmpty()){
+        userViewModel.listCategorySelected.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
                 setCategory(it)
                 var txtCategory = ""
 
                 var i = 1
-                for (cat in it){
-                    txtCategory += if(i != it.size){
+                for (cat in it) {
+                    txtCategory += if (i != it.size) {
                         "${cat.name}, "
-                    }else{
+                    } else {
                         cat.name
                     }
                     i++
@@ -95,20 +94,26 @@ class AddProductFragment : Fragment(), View.OnClickListener {
         }
 
         userViewModel.getToken().observe(viewLifecycleOwner) {
-            if (it == ""){
+            if (it == "") {
                 Toast.makeText(requireContext(), "Login terlebih dahulu", Toast.LENGTH_SHORT).show()
-                Navigation.findNavController(requireView()).navigate(R.id.action_addProductFragment_to_loginFragment)
-            }else{
+                Navigation.findNavController(requireView())
+                    .navigate(R.id.action_addProductFragment_to_loginFragment)
+            } else {
                 setToken(it)
                 apiViewModel.getLoginUser(it).observe(viewLifecycleOwner) { it1 ->
                     when (it1.status) {
                         SUCCESS -> {
                             val data = it1.data!!
 
-                            if (data.address == ""){
-                                Toast.makeText(requireContext(), "Lengkapi profile terlebih dahulu", Toast.LENGTH_SHORT).show()
-                                Navigation.findNavController(requireView()).navigate(R.id.action_addProductFragment_to_editProfileFragment)
-                            }else{
+                            if (data.address == "") {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Lengkapi profile terlebih dahulu",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                Navigation.findNavController(requireView())
+                                    .navigate(R.id.action_addProductFragment_to_editProfileFragment)
+                            } else {
                                 setUser(data)
                             }
                         }
@@ -159,7 +164,7 @@ class AddProductFragment : Fragment(), View.OnClickListener {
                     val price = etPrice.text.toString()
                     val description = etDescription.text.toString()
 
-                    addProduct(name, price , description)
+                    addProduct(name, price, description)
                 }
             }
         }
@@ -178,16 +183,14 @@ class AddProductFragment : Fragment(), View.OnClickListener {
 
         var listCat = ""
 
-        for (i in listCategory.indices){
-            listCat += if(i == listCategory.size-1){
+        for (i in listCategory.indices) {
+            listCat += if (i == listCategory.size - 1) {
                 "${listCategory[i].id}"
-            }else{
+            } else {
                 "${listCategory[i].id},"
             }
 
         }
-
-        Toast.makeText(requireContext(), listCat, Toast.LENGTH_SHORT).show()
 
         val requestBody: RequestBody = tempFile.asRequestBody(type?.toMediaType())
 
@@ -202,14 +205,27 @@ class AddProductFragment : Fragment(), View.OnClickListener {
         val descriptionUpload =
             description.toRequestBody("multipart/form-data".toMediaTypeOrNull())
         val addressUpload =
-            user.address.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+            user.city.toRequestBody("multipart/form-data".toMediaTypeOrNull())
 
-        apiViewModel.addSellerProduct(token, nameUpload, descriptionUpload, priceUpload, categoryUpload, addressUpload, imageUpload).observe(viewLifecycleOwner){
-            when(it.status){
+        apiViewModel.addSellerProduct(
+            token,
+            nameUpload,
+            descriptionUpload,
+            priceUpload,
+            categoryUpload,
+            addressUpload,
+            imageUpload
+        ).observe(viewLifecycleOwner) {
+            when (it.status) {
                 SUCCESS -> {
-                    Toast.makeText(requireContext(), "Sukses", Toast.LENGTH_SHORT).show()
+                    Snackbar.make(
+                        requireView(),
+                        "Produk Berhasil Ditambahkan",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
                     userViewModel.listCategorySelected.postValue(mutableListOf())
-                    Navigation.findNavController(requireView()).navigate(R.id.action_addProductFragment_to_daftarJualSayaFragment)
+                    Navigation.findNavController(requireView())
+                        .navigate(R.id.action_addProductFragment_to_daftarJualSayaFragment)
                 }
                 ERROR -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
@@ -226,11 +242,24 @@ class AddProductFragment : Fragment(), View.OnClickListener {
         binding.apply {
             val name = etProduct.text.toString()
             val price = etPrice.text.toString().toInt()
-
             val description = etDescription.text.toString()
 
-            val product = ProductBody(name, description, price, listOf("1".toInt()), user.city, image)
-            val mBundle = bundleOf(ProductPreviewFragment.EXTRA_PRODUCT to product)
+            var listCat = ""
+
+            for (i in listCategory.indices) {
+                listCat += if (i == listCategory.size - 1) {
+                    "${listCategory[i].id}"
+                } else {
+                    "${listCategory[i].id},"
+                }
+
+            }
+
+            val product =
+                ProductBody(name, description, price, listCat, user.city, image)
+            val mBundle = bundleOf(
+                ProductPreviewFragment.EXTRA_PRODUCT to product
+            )
             Navigation.findNavController(requireView())
                 .navigate(R.id.action_addProductFragment_to_productPreviewFragment, mBundle)
         }

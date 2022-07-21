@@ -1,13 +1,17 @@
 package binar.lima.satu.secondhand.view.fragment
 
+import android.content.Intent
+import android.graphics.Color
+import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
@@ -15,9 +19,11 @@ import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentEditProfileBinding
 import binar.lima.satu.secondhand.model.auth.login.GetLoginResponse
-import binar.lima.satu.secondhand.model.auth.register.RegisterBody
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
+import com.adevinta.leku.LATITUDE
+import com.adevinta.leku.LONGITUDE
+import com.adevinta.leku.LocationPickerActivity
 import com.bumptech.glide.Glide
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -26,6 +32,7 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+import java.util.*
 
 class EditProfileFragment : Fragment(), View.OnClickListener {
 
@@ -40,12 +47,15 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
     private lateinit var user: GetLoginResponse
 
     private var image: Uri? = null
+    private var address = ""
+    private var city = ""
 
     private val galleryResult =
         registerForActivityResult(ActivityResultContracts.GetContent()) { result ->
             binding.imgUser.setImageURI(result)
             image = result!!
         }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,13 +78,19 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
                         binding.apply {
                             val data = user.data!!
 
-                            if(data.address == ""){
+                            if (data.address == "") {
                                 etNamaEditProfile.setText(data.fullName)
-                            }else{
+                            } else {
                                 etNamaEditProfile.setText(data.fullName)
-                                etAlamatEditProfile.setText(data.address)
                                 etNoHandphoneEditProfile.setText(data.phoneNumber)
-                                etPilihKotaEditProfile.setText(data.city)
+                                if (this@EditProfileFragment.address == ""){
+                                    tvAddress.text = data.address
+                                    tvAddress.setTextColor(Color.BLACK)
+                                    this@EditProfileFragment.address = data.address
+                                    this@EditProfileFragment.city = splitCity(data.address.split(",").toTypedArray())
+                                }else{
+                                    tvAddress.text = address
+                                }
                                 Glide.with(requireView()).load(data.imageUrl).into(imgUser)
                             }
 
@@ -99,7 +115,71 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
         binding.imgUser.setOnClickListener {
             galleryResult.launch("image/*")
         }
+
+        binding.tvAddress.setOnClickListener {
+            val intent = LocationPickerActivity.Builder()
+                .withSearchZone("id_ID")
+                .withSatelliteViewHidden()
+                .withGoogleTimeZoneEnabled()
+                .withLegacyLayout()
+                .withGooglePlacesApiKey("AIzaSyBZdgmI20l3ZRll31z0Nb2mA7gTOzwU8jw")
+                .withVoiceSearchHidden()
+                .withUnnamedRoadHidden()
+                .build(requireContext())
+            startActivityForResult(intent, 1)
+        }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
+            if (requestCode == 1) {
+                val latitude = data.getDoubleExtra(LATITUDE, 0.0)
+                val longitude = data.getDoubleExtra(LONGITUDE, 0.0)
+                val geocoder = Geocoder(requireContext(), Locale.getDefault())
+                val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+                val address = addresses[0].getAddressLine(0)
+
+                val splitAddress = address.split(",").toTypedArray()
+
+                val city = splitCity(splitAddress)
+
+                this.city = city
+                this.address = address
+
+                binding.tvAddress.text = address
+                binding.tvAddress.setTextColor(Color.BLACK)
+                Log.d("Address", city)
+            }
+        }
+    }
+
+    private fun splitCity(splitAddress: Array<String>) : String{
+        var city = ""
+
+        when (splitAddress.size) {
+            8 -> {
+                city = splitAddress[5]
+            }
+            7 -> {
+                city = splitAddress[4]
+            }
+            6 -> {
+                city = splitAddress[3]
+            }
+            5 -> {
+                city = splitAddress[2]
+            }
+            4 -> {
+                city = splitAddress[1]
+            }
+            3 -> {
+                city = splitAddress[0]
+            }
+        }
+        return city
+    }
+
 
     private fun setUser(data: GetLoginResponse) {
         user = data
@@ -114,11 +194,11 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
             R.id.btn_simpan -> {
                 binding.apply {
                     val nama = etNamaEditProfile.text.toString()
-                    val kota = etPilihKotaEditProfile.text.toString()
-                    val alamat = etAlamatEditProfile.text.toString()
+                    val kota = this@EditProfileFragment.city
+                    val alamat = this@EditProfileFragment.address
                     val handphone = etNoHandphoneEditProfile.text.toString().toLong()
 
-                    if (nama != "" && kota != "" && alamat != "" && etNoHandphoneEditProfile.text.toString() != ""){
+                    if (nama != "" && kota != "" && alamat != "" && etNoHandphoneEditProfile.text.toString() != "" && handphone.toString().length >= 10) {
                         updateProfile(nama, kota, alamat, handphone)
                     }
                 }
@@ -129,8 +209,8 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
     private fun updateProfile(nama: String, kota: String, alamat: String, handphone: Long) {
         val contentResolver = requireActivity().applicationContext.contentResolver
 
-        var imageUpload : MultipartBody.Part? = null
-        imageUpload = if (image != null){
+        var imageUpload: MultipartBody.Part? = null
+        imageUpload = if (image != null) {
             val type = contentResolver.getType(image!!)
             val tempFile = File.createTempFile("temp-", null, null)
             val inputStream = contentResolver.openInputStream(image!!)
@@ -141,7 +221,7 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
             val requestBody: RequestBody = tempFile.asRequestBody(type?.toMediaType())
 
             MultipartBody.Part.createFormData("image", tempFile.name, requestBody)
-        }else{
+        } else {
             null
         }
 
@@ -160,8 +240,8 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
             handphoneUpload,
             kotaUpload,
             imageUpload
-        ).observe(viewLifecycleOwner){
-            when(it.status){
+        ).observe(viewLifecycleOwner) {
+            when (it.status) {
                 SUCCESS -> {
                     Toast.makeText(requireContext(), "Sukses", Toast.LENGTH_SHORT).show()
                 }

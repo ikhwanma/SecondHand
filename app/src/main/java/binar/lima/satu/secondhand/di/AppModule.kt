@@ -52,7 +52,7 @@ object AppModule {
     @Provides
     @Singleton
     fun providesAppDatabase(@ApplicationContext appContext: Context): ProductDatabase{
-        return Room.databaseBuilder(appContext, ProductDatabase::class.java, "product.db").build()
+        return Room.databaseBuilder(appContext, ProductDatabase::class.java, "product.db").fallbackToDestructiveMigration().build()
     }
 
     @Provides

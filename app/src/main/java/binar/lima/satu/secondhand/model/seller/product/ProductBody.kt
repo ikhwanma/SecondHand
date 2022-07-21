@@ -14,7 +14,7 @@ data class ProductBody(
     @SerializedName("base_price")
     val basePrice: Int,
     @SerializedName("category_ids")
-    val category_ids: List<Int>,
+    val category_ids: String,
     @SerializedName("location")
     val location: String,
     @SerializedName("image")

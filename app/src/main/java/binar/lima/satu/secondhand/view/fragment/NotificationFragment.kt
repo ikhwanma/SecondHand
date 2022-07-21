@@ -1,11 +1,11 @@
 package binar.lima.satu.secondhand.view.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
@@ -15,7 +15,6 @@ import binar.lima.satu.secondhand.data.utils.OnlineChecker
 import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentNotificationBinding
 import binar.lima.satu.secondhand.model.notification.GetNotificationResponseItem
-import binar.lima.satu.secondhand.model.product.GetDetailProductResponse
 import binar.lima.satu.secondhand.view.activity.MainActivity
 import binar.lima.satu.secondhand.view.adapter.NotificationAdapter
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
@@ -58,12 +57,23 @@ class NotificationFragment : Fragment() {
                             if (data.data!!.isNotEmpty()) {
                                 val notif = data.data
 
-                                setList(notif)
+                                val x = notif.size - 1
+
+                                val listNotif = mutableListOf<GetNotificationResponseItem>()
+
+                                for(i in x downTo 0){
+                                    if (!notif[i].read) listNotif.add(notif[i])
+                                }
+                                for(i in x downTo 0){
+                                    if (notif[i].read) listNotif.add(notif[i])
+                                }
+                                Log.d("ini list", listNotif.toString())
+                                setList(listNotif)
                                 binding.progressCircular.visibility = View.GONE
                             }
                         }
                         ERROR -> {
-
+                            binding.progressCircular.visibility = View.GONE
                         }
                         LOADING -> {
 

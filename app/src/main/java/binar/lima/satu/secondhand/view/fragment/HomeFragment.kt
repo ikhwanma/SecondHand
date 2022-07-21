@@ -2,10 +2,14 @@ package binar.lima.satu.secondhand.view.fragment
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.biometric.BiometricPrompt
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
@@ -30,9 +34,11 @@ import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.concurrent.Executor
 
 class HomeFragment : Fragment() {
 
@@ -43,7 +49,11 @@ class HomeFragment : Fragment() {
     private val apiViewModel: ApiViewModel by hiltNavGraphViewModels(R.id.nav_main)
     private val userViewModel: UserViewModel by hiltNavGraphViewModels(R.id.nav_main)
 
-    private var category = 0
+    private lateinit var executor: Executor
+    private lateinit var biometricPrompt: BiometricPrompt
+    private lateinit var promptInfo: BiometricPrompt.PromptInfo
+
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<CardView>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,21 +68,27 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val connected = OnlineChecker.isOnline(requireContext())
+
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheetCategory)
+
         if (!connected) {
-            Toast.makeText(requireContext(), "Anda tidak terhubung ke internet", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Anda tidak terhubung ke internet", Toast.LENGTH_LONG)
+                .show()
             binding.apply {
                 rvProduct.visibility = View.VISIBLE
                 progressCircular.visibility = View.GONE
             }
-            apiViewModel.getProductDb().observe(viewLifecycleOwner){
+            apiViewModel.getProductDb().observe(viewLifecycleOwner) {
                 val adapter = ProductDbAdapter()
                 adapter.submitData(it)
                 binding.apply {
                     rvProduct.adapter = adapter
-                    rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
+                    rvProduct.layoutManager =
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
                 }
             }
-        }else{
+        } else {
+
             apiViewModel.getSellerBanner().observe(viewLifecycleOwner) {
                 when (it.status) {
                     SUCCESS -> {
@@ -96,6 +112,7 @@ class HomeFragment : Fragment() {
             apiViewModel.getAllCategory().observe(viewLifecycleOwner) {
                 when (it.status) {
                     SUCCESS -> {
+                        val category = it.data!!
                         val listImg = mutableListOf<Int>()
                         listImg.add(R.drawable.ic_category_18)
                         listImg.add(R.drawable.ic_category_1)
@@ -105,18 +122,58 @@ class HomeFragment : Fragment() {
                         listImg.add(R.drawable.ic_category_5)
                         listImg.add(R.drawable.ic_category_6)
                         listImg.add(R.drawable.ic_category_lainnya)
-                        val adapter = CategoryAdapter(requireContext(), listImg) { data ->
-                            category = data.id
-                            val mBundle = bundleOf(ProductFragment.EXTRA_ID_CATEGORY to category)
-                            Navigation.findNavController(requireView())
-                                .navigate(R.id.action_homeFragment_to_productFragment, mBundle)
-                            if (category != -1){
 
+                        val listFullImg = mutableListOf<Int>()
+                        listFullImg.add(R.drawable.ic_category_0)
+                        listFullImg.add(R.drawable.ic_category_1)
+                        listFullImg.add(R.drawable.ic_category_2)
+                        listFullImg.add(R.drawable.ic_category_3)
+                        listFullImg.add(R.drawable.ic_category_4)
+                        listFullImg.add(R.drawable.ic_category_5)
+                        listFullImg.add(R.drawable.ic_category_6)
+                        listFullImg.add(R.drawable.ic_category_7)
+                        listFullImg.add(R.drawable.ic_category_8)
+                        listFullImg.add(R.drawable.ic_category_9)
+                        listFullImg.add(R.drawable.ic_category_10)
+                        listFullImg.add(R.drawable.ic_category_10)
+                        listFullImg.add(R.drawable.ic_category_12)
+                        listFullImg.add(R.drawable.ic_category_12)
+                        listFullImg.add(R.drawable.ic_category_14)
+                        listFullImg.add(R.drawable.ic_category_15)
+                        listFullImg.add(R.drawable.ic_category_16)
+                        listFullImg.add(R.drawable.ic_category_17)
+                        listFullImg.add(R.drawable.ic_category_18)
+                        listFullImg.add(R.drawable.ic_category_19)
+                        listFullImg.add(R.drawable.ic_category_20)
+                        listFullImg.add(R.drawable.ic_category_21)
+                        listFullImg.add(R.drawable.ic_category_22)
+                        listFullImg.add(R.drawable.ic_category_23)
+
+                        val adapterCategory =
+                            CategoryAdapter(requireContext(), listFullImg) { it1 ->
+                                val mBundle = bundleOf(ProductFragment.EXTRA_ID_CATEGORY to it1.id)
+                                Navigation.findNavController(requireView())
+                                    .navigate(R.id.action_homeFragment_to_productFragment, mBundle)
+                            }.apply {
+                                submitData(category)
+                            }
+
+
+                        val adapter = CategoryAdapter(requireContext(), listImg) { data ->
+                            val categoryId = data.id
+                            if (categoryId == -1) {
+                                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+
+                            } else {
+                                val mBundle =
+                                    bundleOf(ProductFragment.EXTRA_ID_CATEGORY to category)
+                                Navigation.findNavController(requireView())
+                                    .navigate(R.id.action_homeFragment_to_productFragment, mBundle)
                             }
                         }
                         val listCat = mutableListOf<GetSellerCategoryResponseItem>()
 
-                        val category = it.data!!
+
                         listCat.add(category[18])
 
                         for (i in 1..6) {
@@ -127,10 +184,11 @@ class HomeFragment : Fragment() {
 
                         adapter.submitData(listCat)
 
-
                         binding.apply {
                             rvKategory.layoutManager = GridLayoutManager(requireContext(), 4)
+                            rvKategoryFull.layoutManager = GridLayoutManager(requireContext(), 4)
                             rvKategory.adapter = adapter
+                            rvKategoryFull.adapter = adapterCategory
                         }
                     }
                     ERROR -> {
@@ -142,16 +200,36 @@ class HomeFragment : Fragment() {
                 }
             }
 
-            userViewModel.getToken().observe(viewLifecycleOwner){ token ->
-                apiViewModel.getBuyerWishlist(token).observe(viewLifecycleOwner){
-                    when(it.status){
+            bottomSheetBehavior.addBottomSheetCallback(object :
+                BottomSheetBehavior.BottomSheetCallback() {
+                override fun onStateChanged(bottomSheet: View, newState: Int) {
+                    if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                        binding.apply {
+                            bg.visibility = View.GONE
+                        }
+                    } else binding.bg.setOnClickListener {
+                        binding.bg.visibility = View.GONE
+                        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                    }
+                }
+
+                override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                    binding.bg.visibility = View.VISIBLE
+                }
+
+            })
+
+            userViewModel.getToken().observe(viewLifecycleOwner) { token ->
+
+                apiViewModel.getBuyerWishlist(token).observe(viewLifecycleOwner) {
+                    when (it.status) {
                         SUCCESS -> {
                             val data = it.data!!
 
                             binding.apply {
-                                if (data.isEmpty()){
+                                if (data.isEmpty()) {
                                     cvBadge.visibility = View.GONE
-                                }else{
+                                } else {
                                     cvBadge.visibility = View.VISIBLE
                                     tvWishlist.text = data.size.toString()
                                 }
@@ -180,6 +258,38 @@ class HomeFragment : Fragment() {
                 it.findNavController().navigate(R.id.action_homeFragment_to_wishlistFragment)
             }
         }
+
+//        showBioMetric()
+    }
+
+    private fun showBioMetric() {
+        executor = ContextCompat.getMainExecutor(requireContext())
+
+        biometricPrompt = BiometricPrompt(
+            requireActivity(),
+            executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                }
+
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                }
+            })
+
+        promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Autentikasi Biometrik")
+            .setSubtitle("Masuk menggunakan sidik jari atau wajah")
+            .setNegativeButtonText("Batalkan")
+            .build()
+
+
     }
 
 
@@ -193,7 +303,7 @@ class HomeFragment : Fragment() {
 
                     val list = mutableListOf<GetProductResponseItem>()
                     var j = 0
-                    for(data in dataProduct){
+                    for (data in dataProduct) {
                         if (j == 20) break
                         else list.add(data)
                         j++
@@ -206,53 +316,55 @@ class HomeFragment : Fragment() {
                     }
                     adapter.submitData(list)
                     binding.apply {
-                        val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                        val layoutManager = LinearLayoutManager(
+                            requireContext(),
+                            LinearLayoutManager.HORIZONTAL,
+                            false
+                        )
                         layoutManager.isMeasurementCacheEnabled = false
                         rvProduct.layoutManager = layoutManager
                         rvProduct.adapter = adapter
-                        rvProduct.addOnScrollListener(object  : RecyclerView.OnScrollListener(){
+                        rvProduct.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                                 super.onScrolled(recyclerView, dx, dy)
                                 layoutManager.requestLayout()
                             }
                         })
                     }
-                    val listProduct = ArrayList<ProductEntity>()
+                    val listProduct = mutableListOf<ProductEntity>()
                     val appExecutors = AppExecutors()
-                    var i = 0
+
+
                     appExecutors.diskIO.execute {
-                        for (dp in dataProduct) {
-                            if (i == 15) break
-                            else {
-                                var category = ""
-                                var k = 1
-                                for (cat in dp.categories){
-                                    category += if (j != dp.categories.size){
-                                        "${cat.name}, "
-                                    }else{
-                                        cat.name
-                                    }
-                                    k++
+                        for (dp in list) {
+
+                            var category = ""
+                            var k = 1
+                            for (cat in dp.categories) {
+                                category += if (j != dp.categories.size) {
+                                    "${cat.name}, "
+                                } else {
+                                    cat.name
                                 }
-                                val productEntity = ProductEntity(
-                                    null,
-                                    dp.imageUrl,
-                                    dp.name,
-                                    category,
-                                    dp.basePrice.toString()
-                                )
-                                listProduct.add(productEntity)
+                                k++
                             }
-                            i++
+                            val productEntity = ProductEntity(
+                                null,
+                                dp.imageUrl,
+                                dp.name,
+                                category,
+                                dp.basePrice.toString(),
+                                dp.location
+                            )
+                            listProduct.add(productEntity)
                         }
 
                         CoroutineScope(Dispatchers.Main).launch {
                             apiViewModel.deleteAllProduct()
-                        }
-                        CoroutineScope(Dispatchers.Main).launch {
                             apiViewModel.addProduct(listProduct)
                         }
                     }
+
                 }
                 ERROR -> {
 

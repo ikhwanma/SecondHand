@@ -1,22 +1,22 @@
 package binar.lima.satu.secondhand.view.viewpageritem
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.Status
-import binar.lima.satu.secondhand.databinding.FragmentDaftarJualSayaBinding
 import binar.lima.satu.secondhand.databinding.FragmentProductTabBinding
 import binar.lima.satu.secondhand.model.product.GetProductResponseItem
 import binar.lima.satu.secondhand.view.adapter.ProductAdapter
+import binar.lima.satu.secondhand.view.fragment.DetailFragment
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
-import com.bumptech.glide.Glide
 
 
 class ProductTabFragment : Fragment() {
@@ -67,6 +67,10 @@ class ProductTabFragment : Fragment() {
                             val adapter = ProductAdapter { productData ->
                                 if (productData.id == -1){
                                     Navigation.findNavController(requireView()).navigate(R.id.action_daftarJualSayaFragment_to_addProductFragment)
+                                }else{
+                                    val mBundle = bundleOf(DetailFragment.EXTRA_ID to productData.id)
+                                    Navigation.findNavController(requireView())
+                                        .navigate(R.id.action_daftarJualSayaFragment_to_detailFragment, mBundle)
                                 }
                             }
                             adapter.submitData(listProduct)

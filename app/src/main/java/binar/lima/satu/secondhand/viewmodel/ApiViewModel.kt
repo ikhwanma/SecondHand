@@ -8,11 +8,11 @@ import binar.lima.satu.secondhand.data.utils.MainRepository
 import binar.lima.satu.secondhand.data.utils.Resource
 import binar.lima.satu.secondhand.model.auth.login.LoginBody
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
+import binar.lima.satu.secondhand.model.auth.update.UpdatePasswordBody
 import binar.lima.satu.secondhand.model.buyer.order.PostOrderBody
 import binar.lima.satu.secondhand.model.buyer.wishlist.PostWishlistBody
 import binar.lima.satu.secondhand.model.seller.order.PatchOrderBody
 import binar.lima.satu.secondhand.model.seller.order.PutOrderBody
-import binar.lima.satu.secondhand.model.seller.product.ProductBody
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -61,6 +61,15 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
         emit(Resource.loading(null))
         try {
             emit(Resource.success(mainRepository.updateUser(token, fullName, address, email, phoneNumber, city, image)))
+        }catch (e : Exception){
+            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
+        }
+    }
+
+    fun updatePassword(token: String, user: UpdatePasswordBody) = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(mainRepository.updatePassword(token, user)))
         }catch (e : Exception){
             emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
         }
@@ -146,12 +155,38 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
         }
     }
 
-    //==================================Buyer
-
-    fun getAllProduct(status: String? = null, category_id: Int? = null, search:String? = null) = liveData(Dispatchers.IO){
+    fun updateSellerProduct(token : String,
+                            id: Int,
+                         name : RequestBody,
+                         description : RequestBody,
+                         base_price : RequestBody,
+                         category_ids : RequestBody,
+                         location : RequestBody,
+                         image :  MultipartBody.Part?) = liveData(Dispatchers.IO){
         emit(Resource.loading(null))
         try {
-            emit(Resource.success(mainRepository.getAllProduct(status, category_id, search)))
+            emit(Resource.success(mainRepository.updateSellerProduct(token, id, name, description, base_price, category_ids, location, image)))
+        }catch (e : Exception){
+            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
+        }
+    }
+
+    fun deleteSellerProduct(token : String,
+                            id: Int ) = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(mainRepository.deleteSellerProduct(token, id)))
+        }catch (e : Exception){
+            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
+        }
+    }
+
+    //==================================Buyer
+
+    fun getAllProduct(status: String? = null, category_id: Int? = null, search:String? = null, page:Int? = null, perPage:Int? = null) = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(mainRepository.getAllProduct(status, category_id, search, page, perPage)))
         }catch (e : Exception){
             emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
         }
@@ -234,6 +269,16 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
         emit(Resource.loading(null))
         try {
             emit(Resource.success(mainRepository.patchNotification(header, id)))
+        }catch (e : Exception){
+            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
+        }
+    }
+
+    //==================================History
+    fun getHistory(token: String) = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(mainRepository.getHistory(token)))
         }catch (e : Exception){
             emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
         }

@@ -8,14 +8,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentCategoryBinding
 import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponseItem
 import binar.lima.satu.secondhand.view.adapter.ChooseCategoryAdapter
-import binar.lima.satu.secondhand.view.adapter.SelectedCategoryAdapter
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
 
@@ -27,8 +25,6 @@ class CategoryFragment : DialogFragment() {
 
     private val apiViewModel: ApiViewModel by hiltNavGraphViewModels(R.id.nav_main)
     private val userViewModel: UserViewModel by hiltNavGraphViewModels(R.id.nav_main)
-
-    val listCategory: MutableList<GetSellerCategoryResponseItem> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,7 +53,7 @@ class CategoryFragment : DialogFragment() {
                 SUCCESS -> {
                     val data = it.data
 
-                    val adapter = ChooseCategoryAdapter() { category ->
+                    val adapter = ChooseCategoryAdapter { category ->
                         if (list.contains(category)) {
                             list.remove(category)
                         } else {
@@ -78,7 +74,7 @@ class CategoryFragment : DialogFragment() {
                     adapter.submitData(data)
                     adapter.notifyDataSetChanged()
                     binding.rvChooseKategori.adapter = adapter
-                    binding.rvChooseKategori.layoutManager = GridLayoutManager(requireContext(), 2)
+                    binding.rvChooseKategori.layoutManager = LinearLayoutManager(requireContext())
                 }
                 ERROR -> {
 

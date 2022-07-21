@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,171 +7,209 @@
     android:orientation="vertical"
     tools:context=".view.fragment.HomeFragment">
 
-    <RelativeLayout
-        android:padding="16dp"
-        android:background="@color/blue_primary_variant"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/et_search"
-                style="@style/EditTextStyle"
-                android:layout_weight="9"
-                android:autofillHints="search"
-                android:contentDescription="@string/image_search"
-                android:inputType="none" />
+            android:layout_height="wrap_content"
+            android:background="@color/blue_primary_variant"
+            android:padding="16dp">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/btn_wishlist"
-                android:layout_width="55dp"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                app:cardCornerRadius="12dp"
-                android:layout_marginStart="5dp"
-                android:layout_gravity="center_vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/et_search"
+                    style="@style/EditTextStyle"
+                    android:layout_weight="9"
+                    android:autofillHints="search"
+                    android:contentDescription="@string/image_search"
+                    android:inputType="none" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_wishlist"
+                    android:layout_width="55dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="12dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/ic_cart"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_centerInParent="true"
+                            android:contentDescription="@string/image"
+                            android:src="@drawable/ic_outline_shopping_cart_24" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cv_badge"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="-15dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_toEndOf="@id/ic_cart"
+                            android:visibility="gone"
+                            app:cardBackgroundColor="@color/red"
+                            app:cardCornerRadius="10dp">
+
+                            <TextView
+                                android:id="@+id/tv_wishlist"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="@string/_13"
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
+                        </androidx.cardview.widget.CardView>
+
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="14dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/cari_di_second_chance"
+                android:textColor="#BABABA"
+                android:textSize="16sp"
+                tools:ignore="RelativeOverlap" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="60dp"
+                android:contentDescription="@string/image_search"
+                android:src="@drawable/ic_gray_search_24" />
+        </RelativeLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_kategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:overScrollMode="never"
+                    android:paddingVertical="10dp"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="4"
+                    tools:itemCount="8"
+                    tools:listitem="@layout/item_category" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="@string/promo_spesial_di_secondhand"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <com.denzcoskun.imageslider.ImageSlider
+                    android:id="@+id/img_slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:layout_marginHorizontal="10dp"
+                    app:iss_auto_cycle="true"
+                    app:iss_corner_radius="15"
+                    app:iss_delay="0"
+                    app:iss_period="3000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="@string/yuk_belanja"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <ImageView
-                        android:id="@+id/ic_cart"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_centerInParent="true"
-                        android:contentDescription="@string/image"
-                        android:src="@drawable/ic_outline_shopping_cart_24" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_product"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_product" />
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cv_badge"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginStart="-15dp"
-                        android:visibility="gone"
-                        android:layout_marginTop="2dp"
-                        android:layout_toEndOf="@id/ic_cart"
-                        app:cardBackgroundColor="@color/red"
-                        app:cardCornerRadius="10dp">
-
-                        <TextView
-                            android:id="@+id/tv_wishlist"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="@string/_13"
-                            android:textColor="@color/white"
-                            android:textSize="12sp" />
-                    </androidx.cardview.widget.CardView>
-
+                    <ProgressBar
+                        android:id="@+id/progress_circular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="100dp"
+                        android:visibility="gone" />
                 </RelativeLayout>
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
 
 
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="14dp"
-            android:fontFamily="@font/poppins_regular"
-            android:text="@string/cari_di_second_chance"
-            android:textColor="#BABABA"
-            android:textSize="16sp"
-            tools:ignore="RelativeOverlap" />
+    </LinearLayout>
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="60dp"
-            android:contentDescription="@string/image_search"
-            android:src="@drawable/ic_gray_search_24" />
-    </RelativeLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.cardview.widget.CardView
+        android:id="@+id/bottom_sheet_category"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="0dp"
+        app:cardCornerRadius="16dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_kategory"
+                android:id="@+id/rv_kategory_full"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                android:layout_gravity="center"
-                app:spanCount="4"
-                tools:listitem="@layout/item_category"
-                tools:itemCount="8"
-                android:paddingVertical="10dp"
-                android:overScrollMode="never" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/promo_spesial_di_secondhand"
-                android:textSize="20sp"
-                android:layout_marginStart="10dp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/poppins_medium"
-                android:textStyle="bold"
-                />
-            <com.denzcoskun.imageslider.ImageSlider
-                android:id="@+id/img_slider"
-                android:layout_width="match_parent"
-                android:layout_height="220dp"
-                app:iss_auto_cycle="true"
-                android:layout_marginHorizontal="10dp"
-                app:iss_corner_radius="15"
-                app:iss_delay="0"
-                app:iss_period="3000" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yuk_belanja"
-                android:textSize="20sp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/poppins_medium"
-                android:textStyle="bold"
-                />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_product"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_product" />
-
-                <ProgressBar
-                    android:id="@+id/progress_circular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="100dp"
-                    android:visibility="gone" />
-            </RelativeLayout>
-
+                android:layout_height="match_parent"
+                tools:itemCount="12"/>
 
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
 
 
+    </androidx.cardview.widget.CardView>
 
-</LinearLayout>
+    <View
+        android:id="@+id/bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#99000000"
+        android:visibility="gone" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,8 +1,12 @@
 package binar.lima.satu.secondhand.model.product
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+
+@Parcelize
 data class GetDetailProductResponse(
     @SerializedName("base_price")
     val basePrice: Int,
@@ -30,4 +34,4 @@ data class GetDetailProductResponse(
     val user: User,
     @SerializedName("user_id")
     val userId: Int
-)
+) : Parcelable

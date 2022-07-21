@@ -8,10 +8,9 @@ import android.view.ViewGroup
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import binar.lima.satu.secondhand.R
-import binar.lima.satu.secondhand.data.utils.Status
 import binar.lima.satu.secondhand.data.utils.Status.*
-import binar.lima.satu.secondhand.databinding.FragmentDetailBinding
 import binar.lima.satu.secondhand.databinding.FragmentWishlistBinding
+import binar.lima.satu.secondhand.model.buyer.wishlist.GetWishlistResponseItem
 import binar.lima.satu.secondhand.view.adapter.WishlistAdapter
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
@@ -42,14 +41,7 @@ class WishlistFragment : Fragment() {
                     SUCCESS -> {
                         val data = it.data
 
-                        val adapter = WishlistAdapter().apply {
-                            submitData(data)
-                        }
-
-                        binding.apply {
-                            rvWishlist.adapter = adapter
-                            rvWishlist.layoutManager = LinearLayoutManager(requireContext())
-                        }
+                        getData(data, token)
                     }
                     ERROR -> {
 
@@ -62,6 +54,19 @@ class WishlistFragment : Fragment() {
         }
 
 
+    }
+
+    fun getData(data: List<GetWishlistResponseItem>?, token: String) {
+        val adapter = WishlistAdapter(apiViewModel, token, viewLifecycleOwner,
+            data as MutableList<GetWishlistResponseItem>?
+        ).apply {
+            submitData(data)
+        }
+
+        binding.apply {
+            rvWishlist.adapter = adapter
+            rvWishlist.layoutManager = LinearLayoutManager(requireContext())
+        }
     }
 
 

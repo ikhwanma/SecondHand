@@ -22,6 +22,7 @@ import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.snackbar.Snackbar
 
 class InfoPenawarFragment : Fragment(), View.OnClickListener {
 
@@ -96,6 +97,8 @@ class InfoPenawarFragment : Fragment(), View.OnClickListener {
                             tvProductMatchName.text = product.name
                             tvProductMatchPrice.text = txtBid
                             Glide.with(requireView()).load(product.imageUrl).into(productMatchProductImg)
+
+                            Glide.with(requireView()).load(data.user.imageUrl).into(imgBuyer)
                         }
                     }
                     ERROR -> {
@@ -186,14 +189,19 @@ class InfoPenawarFragment : Fragment(), View.OnClickListener {
     override fun onClick(p0: View?) {
         when(p0?.id){
             R.id.btn_tolak ->{
-                apiViewModel.patchSellerOrder(token,idOrder, PatchOrderBody("declined")).observe(viewLifecycleOwner){
+                apiViewModel.patchSellerOrder(token,idOrder, PatchOrderBody("tolak")).observe(viewLifecycleOwner){
                     when(it.status){
                         SUCCESS -> {
                             Navigation.findNavController(requireView()).navigate(R.id.action_infoPenawarFragment_to_daftarJualSayaFragment)
-                            Toast.makeText(requireContext(), "Sukses", Toast.LENGTH_SHORT).show()
+                            Snackbar.make(requireView(), "Penawaran ditolak", Snackbar.LENGTH_SHORT).show()
                         }
                         ERROR -> {
-                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                            if (it.message!!.contains("400")){
+                                Snackbar.make(requireView(), "Penawaran ditolak", Snackbar.LENGTH_SHORT).show()
+                                Navigation.findNavController(requireView()).navigate(R.id.action_infoPenawarFragment_to_daftarJualSayaFragment)
+                            }else{
+                                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                            }
                         }
                         LOADING -> {
                             Toast.makeText(requireContext(), "Load", Toast.LENGTH_SHORT).show()
@@ -207,10 +215,16 @@ class InfoPenawarFragment : Fragment(), View.OnClickListener {
                         SUCCESS -> {
                             val mBundle = bundleOf(EXTRA_ORDER_ID to id)
                             Navigation.findNavController(requireView()).navigate(R.id.infoPenawarFragment, mBundle)
-                            Toast.makeText(requireContext(), "Sukses", Toast.LENGTH_SHORT).show()
+                            Snackbar.make(requireView(), "Penawaran diterima", Snackbar.LENGTH_SHORT).show()
                         }
                         ERROR -> {
-                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                            if (it.message!!.contains("400")){
+                                Snackbar.make(requireView(), "Penawaran diterima", Snackbar.LENGTH_SHORT).show()
+                                val mBundle = bundleOf(EXTRA_ORDER_ID to id)
+                                Navigation.findNavController(requireView()).navigate(R.id.infoPenawarFragment, mBundle)
+                            }else{
+                                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                            }
                         }
                         LOADING -> {
                             Toast.makeText(requireContext(), "Load", Toast.LENGTH_SHORT).show()
@@ -239,7 +253,12 @@ class InfoPenawarFragment : Fragment(), View.OnClickListener {
                                 Toast.makeText(requireContext(), "Penawaran berhasil dibatalkan", Toast.LENGTH_SHORT).show()
                             }
                             ERROR -> {
-                                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                                if (it.message!!.contains("400")){
+                                    Snackbar.make(requireView(), "Penawaran dibatalkan", Snackbar.LENGTH_SHORT).show()
+                                    Navigation.findNavController(requireView()).navigate(R.id.action_infoPenawarFragment_to_daftarJualSayaFragment)
+                                }else{
+                                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                                }
                             }
                             LOADING -> {
                                 Toast.makeText(requireContext(), "Load", Toast.LENGTH_SHORT).show()
