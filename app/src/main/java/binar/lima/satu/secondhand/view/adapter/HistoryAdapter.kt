@@ -13,7 +13,7 @@ import binar.lima.satu.secondhand.databinding.ItemHistoryBinding
 import binar.lima.satu.secondhand.model.history.GetHistoryResponseItem
 import com.bumptech.glide.Glide
 
-class HistoryAdapter() : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
+class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
     inner class ViewHolder(private val binding: ItemHistoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: GetHistoryResponseItem) {
@@ -21,33 +21,42 @@ class HistoryAdapter() : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
                 icNotif.setBackgroundResource(R.drawable.ic_baseline_history_24)
                 icNotif.visibility = View.VISIBLE
                 val txtBelanja = "History"
-
+                var txtPrice = ""
                 var txtStatus = ""
 
                 when (data.status) {
                     "success" -> {
                         txtStatus = "Tawaran Diterima"
-
+                        txtPrice = "Menawar Rp ${Converter.converterMoney(data.price.toString())}"
                         cvStatus.setCardBackgroundColor(Color.parseColor("#7ED3FF"))
                         tvStatus.setTextColor(Color.parseColor("#003346"))
                     }
                     "declined" -> {
+                        txtStatus = "Penawaran Dibatalkan"
+                        txtPrice = "Menawar Rp ${Converter.converterMoney(data.price.toString())}"
+                        cvStatus.setCardBackgroundColor(Color.parseColor("#FF0061"))
+                        tvStatus.setTextColor(Color.parseColor("#3C0000"))
+                    }
+                    "tolak" -> {
                         txtStatus = "Tawaran Ditolak"
+                        txtPrice = "Menawar Rp ${Converter.converterMoney(data.price.toString())}"
                         cvStatus.setCardBackgroundColor(Color.parseColor("#FF0061"))
                         tvStatus.setTextColor(Color.parseColor("#3C0000"))
                     }
                     "accepted" -> {
                         txtStatus = "Produk Dibeli"
-
+                        txtPrice = "Menawar Rp ${Converter.converterMoney(data.price.toString())}"
                     }
                     else -> {
 
                     }
                 }
 
+                tvDate.text = Converter.convertDate(data.transactionDate)
                 tvBelanja.text = txtBelanja
                 tvStatus.text = txtStatus
-                tvPrice.text = Converter.converterMoney(data.price.toString())
+                tvPrice.text = Converter.converterMoney(data.product.basePrice.toString())
+                tvBid.text = txtPrice
                 tvProduct.text = data.productName
                 Glide.with(itemView).load(data.imageUrl).into(imgProduct)
             }
@@ -81,7 +90,7 @@ class HistoryAdapter() : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val data = differ.currentList[position]
+        val data = differ.currentList[itemCount - 1 - position]
         data.let {
             holder.bind(data)
         }

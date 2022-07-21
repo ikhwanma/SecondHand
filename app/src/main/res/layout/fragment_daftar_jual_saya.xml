@@ -34,6 +34,7 @@
                 android:id="@+id/img_seller"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:scaleType="fitXY"
                 android:contentDescription="@string/image"
                 android:src="@drawable/ic_photo_profile" />
         </androidx.cardview.widget.CardView>
@@ -69,7 +70,9 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingEnd="10dp"
+            tools:ignore="RtlSymmetry">
 
             <ImageView
                 android:id="@+id/btn_edit"

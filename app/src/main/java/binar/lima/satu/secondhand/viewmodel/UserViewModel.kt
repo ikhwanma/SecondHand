@@ -12,8 +12,6 @@ class UserViewModel @Inject constructor(private val pref : DataStoreManager) : V
 
     val listCategorySelected = MutableLiveData<List<GetSellerCategoryResponseItem>>()
 
-    val booleanBiometric = MutableLiveData(false)
-
     fun setToken(token : String){
         viewModelScope.launch {
             pref.setToken(token)

@@ -5,29 +5,32 @@
     android:layout_height="match_parent"
     tools:context=".view.fragment.WishlistFragment">
 
-    <LinearLayout
-        android:orientation="vertical"
+
+    <ImageView
+        android:id="@+id/ic_notif"
+        android:layout_width="33dp"
+        android:layout_height="33dp"
+        android:src="@drawable/ic_outline_shopping_cart_24"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginBottom="15dp"
+        android:contentDescription="@string/icon" />
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/TextViewStyle"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/daftar_wishlist"
+        android:layout_toEndOf="@+id/ic_notif"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_wishlist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:ignore="UselessParent">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/daftar_wishlist"
-            android:fontFamily="@font/poppins_medium"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-            />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_wishlist"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/item_wishlist" />
-    </LinearLayout>
-
-
+        android:layout_below="@id/tv_title"
+        tools:listitem="@layout/item_wishlist" />
 
 </RelativeLayout>

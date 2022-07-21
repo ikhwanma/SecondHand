@@ -55,6 +55,7 @@
                     android:layout_width="125dp"
                     android:layout_height="125dp"
                     android:layout_gravity="center_horizontal"
+                    android:scaleType="fitXY"
                     android:contentDescription="@string/image"
                     android:src="@drawable/ic_photo_profile" />
 

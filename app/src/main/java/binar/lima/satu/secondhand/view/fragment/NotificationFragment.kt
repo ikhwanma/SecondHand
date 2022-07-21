@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
@@ -54,6 +55,7 @@ class NotificationFragment : Fragment() {
                 apiViewModel.getNotification(it).observe(viewLifecycleOwner) { data ->
                     when (data.status) {
                         SUCCESS -> {
+                            binding.progressCircular.visibility = View.GONE
                             if (data.data!!.isNotEmpty()) {
                                 val notif = data.data
 
@@ -101,16 +103,28 @@ class NotificationFragment : Fragment() {
                         SUCCESS -> {
                             val status = it.status
                             if (status == "success"){
-
+                                val mBundle = bundleOf(DetailFragment.EXTRA_ID to it.productId)
+                                Navigation.findNavController(requireView()).navigate(R.id.action_notificationFragment_to_detailFragment, mBundle)
                             }
                             if (status == "create"){
-
+                                val mBundle = bundleOf(DetailFragment.EXTRA_ID to it.productId)
+                                Navigation.findNavController(requireView()).navigate(R.id.action_notificationFragment_to_detailFragment, mBundle)
                             }
                             if (status == "declined"){
-
+                                val mBundle = bundleOf(DetailFragment.EXTRA_ID to it.productId)
+                                Navigation.findNavController(requireView()).navigate(R.id.action_notificationFragment_to_detailFragment, mBundle)
                             }
                             if (status == "accepted"){
-
+                                val mBundle = bundleOf(DetailFragment.EXTRA_ID to it.productId)
+                                Navigation.findNavController(requireView()).navigate(R.id.action_notificationFragment_to_detailFragment, mBundle)
+                            }
+                            if (status == "tolak"){
+                                val mBundle = bundleOf(DetailFragment.EXTRA_ID to it.productId)
+                                Navigation.findNavController(requireView()).navigate(R.id.action_notificationFragment_to_detailFragment, mBundle)
+                            }
+                            if (status == "bid"){
+                                val mBundle = bundleOf(InfoPenawarFragment.EXTRA_ORDER_ID to it.orderId)
+                                Navigation.findNavController(requireView()).navigate(R.id.action_notificationFragment_to_infoPenawarFragment2, mBundle)
                             }
                             (activity as MainActivity).getBadge()
                         }

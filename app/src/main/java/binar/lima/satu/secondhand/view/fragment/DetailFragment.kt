@@ -14,6 +14,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.Converter
@@ -73,11 +74,11 @@ class DetailFragment : Fragment() , View.OnClickListener{
 
         userViewModel.getToken().observe(viewLifecycleOwner){token ->
             setToken(token)
-            getWishList(token)
             getOrder(token)
         }
+        getWishList()
 
-        apiViewModel.getProduct(idProduct).observe(viewLifecycleOwner){
+        apiViewModel.getProduct(idProduct).observe(viewLifecycleOwner){ it ->
             when(it.status){
                 SUCCESS -> {
                     val data = it.data!!
@@ -150,6 +151,12 @@ class DetailFragment : Fragment() , View.OnClickListener{
                                 SUCCESS -> {
                                     val dataProduct = product.data!!
 
+                                    binding.apply {
+                                        detailItem.visibility = View.VISIBLE
+                                        llBtnTertarik.visibility = View.VISIBLE
+                                        progressCircular.visibility = View.GONE
+                                    }
+
                                     val listData = mutableListOf<GetProductResponseItem>()
                                     var listDataProduct = mutableListOf<GetProductResponseItem>()
 
@@ -168,7 +175,9 @@ class DetailFragment : Fragment() , View.OnClickListener{
 
 
                                     val adapter = ProductAdapter{
-
+                                        val mBundle = bundleOf(EXTRA_ID to it.id)
+                                        Navigation.findNavController(requireView())
+                                            .navigate(R.id.detailFragment, mBundle)
                                     }.apply {
                                         submitData(listDataProduct)
                                     }
@@ -193,7 +202,9 @@ class DetailFragment : Fragment() , View.OnClickListener{
 
                 }
                 LOADING -> {
-
+                    binding.apply {
+                        detailItem.visibility = View.GONE
+                    }
                 }
             }
         }
@@ -232,6 +243,7 @@ class DetailFragment : Fragment() , View.OnClickListener{
             btnEditProduk.setOnClickListener(this@DetailFragment)
             btnDeleteProduk.setOnClickListener(this@DetailFragment)
         }
+
     }
 
     private fun setDetail(data: GetDetailProductResponse) {
@@ -245,7 +257,7 @@ class DetailFragment : Fragment() , View.OnClickListener{
                     val data = it.data!!
 
                     for (order in data){
-                        if (order.productId == idProduct && order.status == "pending"){
+                        if (order.productId == idProduct && order.status == "pending" || order.status == "success"){
                             val txtButton = "Menunggu respon penjual"
                             binding.apply {
                                 btnTertarik.setBackgroundResource(R.drawable.style_button_order)
@@ -292,34 +304,46 @@ class DetailFragment : Fragment() , View.OnClickListener{
         }
     }
 
-    private fun getWishList(token: String) {
-        apiViewModel.getBuyerWishlist(token).observe(viewLifecycleOwner){
-            when(it.status){
-                SUCCESS -> {
-                    val data = it.data!!
+    private fun getWishList() {
+        userViewModel.getToken().observe(viewLifecycleOwner) { token ->
+            apiViewModel.getBuyerWishlist(token).observe(viewLifecycleOwner){
+                when(it.status){
+                    SUCCESS -> {
+                        val data = it.data!!
 
-                    for(wish in data){
-                        if (wish.productId == idProduct){
-                            binding.apply {
-                                tvStatusWishlist.text = "-"
+                        binding.apply {
+                            if (data.isEmpty()) {
+                                cvBadge.visibility = View.VISIBLE
+                                tvWishlist.text = 0.toString()
+                            } else {
+                                cvBadge.visibility = View.VISIBLE
+                                tvWishlist.text = data.size.toString()
+                            }
+                        }
 
-                                btnWishlist.setOnClickListener {
-                                    val animation = AnimationUtils.loadAnimation(context, R.anim.bounce_anim)
-                                    btnWishlist.startAnimation(animation)
-                                    apiViewModel.deleteBuyerWishlist(token, wish.id).observe(viewLifecycleOwner){ it1 ->
-                                        when(it1.status){
-                                            SUCCESS -> {
-                                                Toast.makeText(requireContext(), "Dihapus dari wishlist", Toast.LENGTH_SHORT).show()
-                                                btnWishlist.setCardBackgroundColor(Color.parseColor("#061957"))
-                                                tvStatusWishlist.text = "+"
-                                                getWishList(token)
-                                                btnWishlist.setOnClickListener(this@DetailFragment)
-                                            }
-                                            ERROR -> {
+                        for(wish in data){
+                            if (wish.productId == idProduct){
+                                binding.apply {
+                                    tvStatusWishlist.text = "-"
 
-                                            }
-                                            LOADING -> {
+                                    btnWishlist.setOnClickListener {
+                                        val animation = AnimationUtils.loadAnimation(context, R.anim.bounce_anim)
+                                        btnWishlist.startAnimation(animation)
+                                        Toast.makeText(requireContext(), "Dihapus dari wishlist", Toast.LENGTH_SHORT).show()
+                                        btnWishlist.setCardBackgroundColor(Color.parseColor("#061957"))
+                                        tvStatusWishlist.text = "+"
+                                        apiViewModel.deleteBuyerWishlist(token, wish.id).observe(viewLifecycleOwner){ it1 ->
+                                            when(it1.status){
+                                                SUCCESS -> {
+                                                    getWishList()
+                                                    btnWishlist.setOnClickListener(this@DetailFragment)
+                                                }
+                                                ERROR -> {
 
+                                                }
+                                                LOADING -> {
+
+                                                }
                                             }
                                         }
                                     }
@@ -327,14 +351,18 @@ class DetailFragment : Fragment() , View.OnClickListener{
                             }
                         }
                     }
-                }
-                ERROR -> {
+                    ERROR -> {
 
-                }
-                LOADING -> {
+                    }
+                    LOADING -> {
 
+                    }
                 }
             }
+        }
+
+        binding.btnToWishlist.setOnClickListener {
+            it.findNavController().navigate(R.id.action_detailFragment_to_wishlistFragment)
         }
     }
 
@@ -407,18 +435,17 @@ class DetailFragment : Fragment() , View.OnClickListener{
                 val animation = AnimationUtils.loadAnimation(context, R.anim.bounce_anim)
                 binding.btnWishlist.startAnimation(animation)
                 binding.tvStatusWishlist.text = "-"
+                Toast.makeText(requireContext(), "Ditambahkan ke wishlist", Toast.LENGTH_SHORT).show()
                 apiViewModel.postBuyerWishlist(token, PostWishlistBody(idProduct)).observe(viewLifecycleOwner){
                     when(it.status){
                         SUCCESS -> {
-                            Toast.makeText(requireContext(), "Ditambahkan ke wishlist", Toast.LENGTH_SHORT).show()
-
-                            getWishList(token)
+                            getWishList()
                         }
                         ERROR -> {
                             Log.d("ERR MSG", it.message.toString())
                         }
                         LOADING -> {
-                            Toast.makeText(requireContext(), "Load", Toast.LENGTH_SHORT).show()
+
                         }
                     }
                 }

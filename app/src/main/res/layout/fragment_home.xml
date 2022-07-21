@@ -160,8 +160,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
+                        android:paddingEnd="10dp"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/item_product" />
+                        tools:listitem="@layout/item_product"
+                        tools:ignore="RtlSymmetry" />
 
                     <ProgressBar
                         android:id="@+id/progress_circular"

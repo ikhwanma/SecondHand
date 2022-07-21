@@ -29,6 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/image"
+            android:scaleType="fitXY"
             android:src="@drawable/ic_photo_profile" />
     </androidx.cardview.widget.CardView>
 

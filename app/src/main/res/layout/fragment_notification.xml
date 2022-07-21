@@ -1,17 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.fragment.NotificationFragment">
 
+
+    <ImageView
+        android:id="@+id/ic_notif"
+        android:layout_width="33dp"
+        android:layout_height="33dp"
+        android:src="@drawable/ic_baseline_notifications_24"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginBottom="20dp"
+        android:contentDescription="@string/icon"
+        app:tint="@color/blue_primary_variant" />
     <TextView
         android:id="@+id/tv_title"
         style="@style/TextViewStyle"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="7dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="15dp"
         android:text="@string/notifikasi"
+        android:layout_toEndOf="@+id/ic_notif"
         android:textSize="25sp"
         android:textStyle="bold" />
 

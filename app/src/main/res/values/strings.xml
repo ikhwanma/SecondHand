@@ -132,4 +132,7 @@
     <string name="leku_toolbar_action_voice_title">Voice</string>
     <string name="leku_search_hint">Cari alamat</string>
     <string name="history">History</string>
+    <string name="preview_produk">Preview Produk</string>
+    <string name="lihat_semua">Lihat Semua</string>
+    <string name="icon">icon</string>
 </resources>

@@ -33,7 +33,6 @@ class RegisterFragment : Fragment(), View.OnClickListener {
 
     //Define viewModel
     private val apiViewModel: ApiViewModel by hiltNavGraphViewModels(R.id.nav_main)
-    private val userViewModel: UserViewModel by hiltNavGraphViewModels(R.id.nav_main)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

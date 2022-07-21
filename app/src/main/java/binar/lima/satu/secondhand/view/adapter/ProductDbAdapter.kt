@@ -6,19 +6,41 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import binar.lima.satu.secondhand.data.local.room.ProductEntity
+import binar.lima.satu.secondhand.data.utils.Converter
 import binar.lima.satu.secondhand.databinding.ItemProductBinding
-import com.bumptech.glide.Glide
 
 class ProductDbAdapter : RecyclerView.Adapter<ProductDbAdapter.ViewHolder>(){
     inner class ViewHolder(private val binding: ItemProductBinding):
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: ProductEntity) {
             binding.apply {
-                tvProduct.text = data.name
-                Glide.with(itemView).load(data.imageUrl).into(imgProduct)
-                tvCategory.text = data.category
-                val txtPrice = "Rp ${data.price}"
+                val dataName = data.name!!
+                val txtCategory = data.category!!
+                var txtProduct = ""
+                var txtCategoryFix = ""
+
+                if (dataName.length >= 32){
+                    for (i in 0..32){
+                        txtProduct += dataName[i]
+                    }
+                    txtProduct += "..."
+                }else{
+                    txtProduct = dataName
+                }
+
+                if (txtCategory.length >= 32){
+                    for (i in 0..32){
+                        txtCategoryFix += txtCategory[i]
+                    }
+                    txtCategoryFix += "..."
+                }else{
+                    txtCategoryFix = txtCategory
+                }
+
+                val txtPrice = "Rp ${Converter.converterMoney(data.price.toString())}"
+                tvCategory.text = txtCategoryFix
                 tvPrice.text = txtPrice
+                tvProduct.text = txtProduct
                 tvCity.text = data.city
             }
         }

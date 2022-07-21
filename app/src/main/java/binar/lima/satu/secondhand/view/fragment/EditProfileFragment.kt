@@ -25,6 +25,7 @@ import com.adevinta.leku.LATITUDE
 import com.adevinta.leku.LONGITUDE
 import com.adevinta.leku.LocationPickerActivity
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -243,7 +244,8 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
         ).observe(viewLifecycleOwner) {
             when (it.status) {
                 SUCCESS -> {
-                    Toast.makeText(requireContext(), "Sukses", Toast.LENGTH_SHORT).show()
+                    Snackbar.make(requireView(), "Profile diupdate", Snackbar.LENGTH_SHORT).show()
+                    Navigation.findNavController(requireView()).navigate(R.id.action_editProfileFragment_to_profileFragment)
                 }
                 ERROR -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()

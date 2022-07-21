@@ -66,6 +66,16 @@
             android:contentDescription="@string/image"
             android:src="@drawable/ic_baseline_add_24" />
 
+        <ImageView
+            android:id="@+id/img_all"
+            android:visibility="gone"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="120dp"
+            android:contentDescription="@string/image"
+            android:src="@drawable/ic_baseline_arrow_forward_ios_24" />
+
         <TextView
             android:id="@+id/tv_add"
             android:visibility="gone"
@@ -77,6 +87,18 @@
             android:textColor="@color/blue_primary_variant"
             android:fontFamily="@font/poppins_regular"
             android:text="@string/tambah_produk" />
+
+        <TextView
+            android:id="@+id/tv_all"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_below="@id/img_all"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/blue_primary_variant"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/lihat_semua" />
 
         <ImageView
             android:id="@+id/ic_location"
@@ -91,11 +113,11 @@
             android:id="@+id/tv_city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/ic_location"
             android:layout_below="@+id/tv_price"
-            android:text="@string/kota"
+            android:layout_toEndOf="@+id/ic_location"
             android:fontFamily="@font/poppins_regular"
-            />
+            android:text="@string/kota" />
+
 
 
     </RelativeLayout>
