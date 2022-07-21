@@ -116,6 +116,7 @@
             android:elevation="8dp"
             android:enabled="false"
             android:paddingBottom="3dp"
+            android:paddingHorizontal="4dp"
             android:text="@string/kategori"
             android:textAllCaps="false"
             android:textColor="@color/blue_primary_variant"

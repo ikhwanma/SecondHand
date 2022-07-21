@@ -3,14 +3,13 @@ package binar.lima.satu.secondhand.view.fragment
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.cardview.widget.CardView
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
 import binar.lima.satu.secondhand.R
@@ -52,13 +51,13 @@ class InfoPenawarFragment : Fragment(), View.OnClickListener {
 
         idOrder = arguments?.getInt(EXTRA_ORDER_ID) as Int
 
-        val callback = object : OnBackPressedCallback(true){
+        /*val callback = object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
                 Navigation.findNavController(requireView()).navigate(R.id.action_infoPenawarFragment_to_daftarJualSayaFragment)
             }
         }
 
-        requireActivity().onBackPressedDispatcher.addCallback(callback)
+        requireActivity().onBackPressedDispatcher.addCallback(callback)*/
 
         bottomSheetHubungiBehavior = BottomSheetBehavior.from(binding.bottomSheetHubungi)
         bottomSheetStatusBehavior = BottomSheetBehavior.from(binding.bottomSheetStatus)

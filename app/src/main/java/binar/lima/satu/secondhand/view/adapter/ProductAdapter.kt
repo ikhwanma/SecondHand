@@ -72,6 +72,18 @@ class ProductAdapter(val onItemClick: (GetProductResponseItem) -> Unit) :
                     tvAdd.visibility = View.VISIBLE
                     imgAdd.visibility = View.VISIBLE
                 }
+
+                if (data.id == -2) {
+                    root.setBackgroundResource(R.drawable.style_item_add_product)
+                    icLocation.visibility = View.GONE
+                    tvCity.visibility = View.GONE
+                    tvProduct.visibility = View.GONE
+                    imgProduct.visibility = View.GONE
+                    tvCategory.visibility = View.GONE
+                    tvPrice.visibility = View.GONE
+                    tvAll.visibility = View.VISIBLE
+                    imgAll.visibility = View.VISIBLE
+                }
             }
         }
     }

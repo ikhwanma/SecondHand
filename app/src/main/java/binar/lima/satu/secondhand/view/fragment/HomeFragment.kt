@@ -1,8 +1,6 @@
 package binar.lima.satu.secondhand.view.fragment
 
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +22,7 @@ import binar.lima.satu.secondhand.data.utils.AppExecutors
 import binar.lima.satu.secondhand.data.utils.OnlineChecker
 import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentHomeBinding
+import binar.lima.satu.secondhand.model.product.Category
 import binar.lima.satu.secondhand.model.product.GetProductResponseItem
 import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponseItem
 import binar.lima.satu.secondhand.view.activity.MainActivity
@@ -166,7 +165,7 @@ class HomeFragment : Fragment() {
 
                             } else {
                                 val mBundle =
-                                    bundleOf(ProductFragment.EXTRA_ID_CATEGORY to category)
+                                    bundleOf(ProductFragment.EXTRA_ID_CATEGORY to categoryId)
                                 Navigation.findNavController(requireView())
                                     .navigate(R.id.action_homeFragment_to_productFragment, mBundle)
                             }
@@ -228,14 +227,13 @@ class HomeFragment : Fragment() {
 
                             binding.apply {
                                 if (data.isEmpty()) {
-                                    cvBadge.visibility = View.GONE
+                                    cvBadge.visibility = View.VISIBLE
+                                    tvWishlist.text = 0.toString()
                                 } else {
                                     cvBadge.visibility = View.VISIBLE
                                     tvWishlist.text = data.size.toString()
                                 }
                             }
-
-
                         }
                         ERROR -> {
 
@@ -304,16 +302,38 @@ class HomeFragment : Fragment() {
                     val list = mutableListOf<GetProductResponseItem>()
                     var j = 0
                     for (data in dataProduct) {
-                        if (j == 20) break
+                        if (j == 15) break
                         else list.add(data)
                         j++
                     }
 
                     val adapter = ProductAdapter { data ->
-                        val mBundle = bundleOf(DetailFragment.EXTRA_ID to data.id)
-                        Navigation.findNavController(requireView())
-                            .navigate(R.id.action_homeFragment_to_detailFragment, mBundle)
+                        if(data.id == -2){
+                            val mBundle =
+                                bundleOf(ProductFragment.EXTRA_ID_CATEGORY to 0)
+                            Navigation.findNavController(requireView())
+                                .navigate(R.id.action_homeFragment_to_productFragment, mBundle)
+                        }else{
+                            val mBundle = bundleOf(DetailFragment.EXTRA_ID to data.id)
+                            Navigation.findNavController(requireView())
+                                .navigate(R.id.action_homeFragment_to_detailFragment, mBundle)
+                        }
                     }
+
+                    list.add(
+                        GetProductResponseItem(
+                            0,
+                            listOf(Category(1, "tes")),
+                            "s",
+                            -2,
+                            "s",
+                            "s",
+                            "s",
+                            "s",
+                            "s",
+                            -2
+                        )
+                    )
                     adapter.submitData(list)
                     binding.apply {
                         val layoutManager = LinearLayoutManager(
@@ -337,11 +357,12 @@ class HomeFragment : Fragment() {
 
                     appExecutors.diskIO.execute {
                         for (dp in list) {
+                            if (dp.id == -2) break
 
                             var category = ""
                             var k = 1
                             for (cat in dp.categories) {
-                                category += if (j != dp.categories.size) {
+                                category += if (k != dp.categories.size) {
                                     "${cat.name}, "
                                 } else {
                                     cat.name

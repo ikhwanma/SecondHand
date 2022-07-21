@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="20dp"
@@ -11,11 +12,12 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/style_button_primary_variant" />
+        android:src="@drawable/style_button_primary_variant"
+        android:contentDescription="@string/image" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp">
+        android:layout_height="100dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_image"
@@ -43,7 +45,8 @@
             android:fontFamily="@font/poppins_bold"
             android:text="@string/product"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            tools:ignore="RelativeOverlap" />
 
         <TextView
             android:id="@+id/tv_price"
@@ -53,6 +56,29 @@
             android:layout_marginStart="5dp"
             android:layout_toEndOf="@+id/cv_image"
             android:text="@string/harga_produk" />
+
+        <ImageView
+            android:id="@+id/ic_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_price"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="5dp"
+            android:layout_toEndOf="@+id/cv_image"
+            android:contentDescription="@string/image"
+            android:src="@drawable/ic_blue_location_on_24" />
+
+        <TextView
+            android:id="@+id/tv_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_price"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/ic_location"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="center_vertical"
+            android:text="@string/kota"
+            android:textSize="14sp" />
 
         <ImageView
             android:id="@+id/btn_delete"

@@ -10,7 +10,6 @@ import binar.lima.satu.secondhand.model.seller.order.PatchOrderBody
 import binar.lima.satu.secondhand.model.seller.order.PutOrderBody
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.http.Query
 import javax.inject.Inject
 
 class ApiHelper @Inject constructor(private val apiService: ApiService) {

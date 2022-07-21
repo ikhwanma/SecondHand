@@ -114,7 +114,10 @@
             android:id="@+id/action_notificationFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
         <action
-            android:id="@+id/action_notificationFragment_to_infoPenawarFragment"
+            android:id="@+id/action_notificationFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_notificationFragment_to_infoPenawarFragment2"
             app:destination="@id/infoPenawarFragment" />
     </fragment>
     <fragment
@@ -169,6 +172,9 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/detailFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_detailFragment_to_wishlistFragment"
+            app:destination="@id/wishlistFragment" />
     </fragment>
     <fragment
         android:id="@+id/daftarJualSayaFragment"
@@ -202,8 +208,10 @@
         <action
             android:id="@+id/action_infoPenawarFragment_to_daftarJualSayaFragment"
             app:destination="@id/daftarJualSayaFragment"
-            app:popUpTo="@id/infoPenawarFragment"
-            app:popUpToInclusive="true" />
+            />
+        <action
+            android:id="@+id/action_infoPenawarFragment_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
     </fragment>
     <fragment
         android:id="@+id/productFragment"
@@ -221,7 +229,12 @@
         android:id="@+id/wishlistFragment"
         android:name="binar.lima.satu.secondhand.view.fragment.WishlistFragment"
         android:label="fragment_wishlist"
-        tools:layout="@layout/fragment_wishlist" />
+        tools:layout="@layout/fragment_wishlist" >
+        <action
+            android:id="@+id/action_wishlistFragment_to_detailFragment"
+            app:destination="@id/detailFragment"
+             />
+    </fragment>
     <fragment
         android:id="@+id/ubahPasswordFragment"
         android:name="binar.lima.satu.secondhand.view.fragment.UbahPasswordFragment"

@@ -16,7 +16,6 @@ import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentSearchBinding
 import binar.lima.satu.secondhand.view.adapter.ProductAdapter
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
-import binar.lima.satu.secondhand.viewmodel.UserViewModel
 
 
 class SearchFragment : Fragment() {

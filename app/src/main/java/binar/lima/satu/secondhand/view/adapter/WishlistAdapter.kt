@@ -1,7 +1,6 @@
 package binar.lima.satu.secondhand.view.adapter
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
@@ -21,25 +20,28 @@ class WishlistAdapter(
     val apiViewModel: ApiViewModel,
     val token: String,
     val viewLifecycleOwner: LifecycleOwner,
-    val dataWl: MutableList<GetWishlistResponseItem>?
+    val dataWl: MutableList<GetWishlistResponseItem>?,
+    val onItemClick: (GetWishlistResponseItem) -> Unit
 ) : RecyclerView.Adapter<WishlistAdapter.ViewHolder>() {
     inner class ViewHolder(private val binding: ItemWishlistBinding) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("NotifyDataSetChanged")
         fun bind(
-            data: GetWishlistResponseItem,
-            position: Int
+            data: GetWishlistResponseItem
         ){
             binding.apply {
                 Glide.with(itemView).load(data.product.imageUrl).into(binding.imgProduct)
                 tvProduct.text = data.product.name
                 val txtPrice = "Rp ${Converter.converterMoney(data.product.basePrice.toString())}"
                 tvPrice.text = txtPrice
+                tvCity.text = data.product.location
+                root.setOnClickListener {
+                    onItemClick(data)
+                }
 
                 btnDelete.setOnClickListener {
                     apiViewModel.deleteBuyerWishlist(token, data.id).observe(viewLifecycleOwner){
                         when(it.status){
                             SUCCESS -> {
-                                Log.d("sukses", "sukses")
                                 val wishlistFragment = WishlistFragment()
                                 notifyDataSetChanged()
                                 dataWl!!.remove(data)
@@ -89,7 +91,7 @@ class WishlistAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = differ.currentList[position]
         data.let {
-            holder.bind(data, position)
+            holder.bind(data)
         }
     }
 

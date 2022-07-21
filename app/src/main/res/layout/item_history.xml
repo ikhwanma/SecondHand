@@ -125,6 +125,14 @@
                     android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
-
+        <TextView
+            android:id="@+id/tv_bid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/ditawar_rp_200_0000"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:layout_marginTop="5dp"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
