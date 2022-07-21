@@ -5,28 +5,14 @@ import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import binar.lima.satu.secondhand.R
-import binar.lima.satu.secondhand.data.local.room.ProductEntity
-import binar.lima.satu.secondhand.data.utils.AppExecutors
 import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.ActivityMainBinding
-import binar.lima.satu.secondhand.model.product.Category
-import binar.lima.satu.secondhand.model.product.GetProductResponseItem
-import binar.lima.satu.secondhand.view.adapter.ProductAdapter
-import binar.lima.satu.secondhand.view.fragment.DetailFragment
-import binar.lima.satu.secondhand.view.fragment.ProductFragment
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint

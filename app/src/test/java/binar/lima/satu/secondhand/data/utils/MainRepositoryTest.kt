@@ -2,25 +2,26 @@ package binar.lima.satu.secondhand.data.utils
 
 import binar.lima.satu.secondhand.data.helper.ApiHelper
 import binar.lima.satu.secondhand.data.local.room.ProductDao
+import binar.lima.satu.secondhand.data.local.room.ProductEntity
 import binar.lima.satu.secondhand.data.remote.ApiService
 import binar.lima.satu.secondhand.model.auth.login.GetLoginResponse
 import binar.lima.satu.secondhand.model.auth.login.LoginBody
 import binar.lima.satu.secondhand.model.auth.login.PostLoginResponse
 import binar.lima.satu.secondhand.model.auth.register.PostRegisterResponse
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
+import binar.lima.satu.secondhand.model.auth.update.UpdatePasswordBody
 import binar.lima.satu.secondhand.model.buyer.order.PostOrderBody
 import binar.lima.satu.secondhand.model.buyer.order.PostOrderResponse
 import binar.lima.satu.secondhand.model.buyer.wishlist.GetWishlistResponseItem
 import binar.lima.satu.secondhand.model.buyer.wishlist.PostWishlistBody
 import binar.lima.satu.secondhand.model.buyer.wishlist.PostWishlistResponse
+import binar.lima.satu.secondhand.model.history.GetHistoryResponseItem
 import binar.lima.satu.secondhand.model.notification.GetNotificationResponseItem
 import binar.lima.satu.secondhand.model.product.GetDetailProductResponse
 import binar.lima.satu.secondhand.model.product.GetProductResponseItem
+import binar.lima.satu.secondhand.model.response.Response
 import binar.lima.satu.secondhand.model.seller.banner.GetSellerBannerResponseItem
-import binar.lima.satu.secondhand.model.seller.order.GetSellerOrderResponseItem
-import binar.lima.satu.secondhand.model.seller.order.PatchOrderBody
-import binar.lima.satu.secondhand.model.seller.order.PatchSellerOrderResponse
-import binar.lima.satu.secondhand.model.seller.order.PutOrderBody
+import binar.lima.satu.secondhand.model.seller.order.*
 import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponseItem
 import io.mockk.every
 import io.mockk.mockk
@@ -99,6 +100,27 @@ class MainRepositoryTest {
         verify {
             runBlocking {
                 service.registerUser(registerBody)
+            }
+        }
+    }
+
+    @Test
+    fun updatePassword(): Unit = runBlocking {
+        runBlocking {
+            val response = mockk<Response>()
+
+            every {
+                runBlocking {
+                    service.updatePassword(TOKEN, UpdatePasswordBody("aaa", "bbb", "bbb"))
+                }
+            } returns response
+
+            repository.updatePassword(TOKEN, UpdatePasswordBody("aaa", "bbb", "bbb"))
+
+            verify {
+                runBlocking {
+                    service.updatePassword(TOKEN, UpdatePasswordBody("aaa", "bbb", "bbb"))
+                }
             }
         }
     }
@@ -188,7 +210,24 @@ class MainRepositoryTest {
     }
 
     @Test
-    fun getDetailSellerOrder() {
+    fun getDetailSellerOrder() : Unit = runBlocking {
+        runBlocking {
+            val response = mockk<GetDetailSellerOrder>()
+
+            every {
+                runBlocking {
+                    service.getDetailSellerOrder(TOKEN, 5)
+                }
+            } returns response
+
+            repository.getDetailSellerOrder(TOKEN, 5)
+
+            verify {
+                runBlocking {
+                    service.getDetailSellerOrder(TOKEN, 5)
+                }
+            }
+        }
     }
 
     @Test
@@ -234,21 +273,42 @@ class MainRepositoryTest {
     }
 
     @Test
+    fun deleteSellerProduct() : Unit = runBlocking {
+        runBlocking {
+            val response = mockk<Response>()
+
+            every {
+                runBlocking {
+                    service.deleteSellerProduct(TOKEN, 2)
+                }
+            } returns response
+
+            repository.deleteSellerProduct(TOKEN, 2)
+
+            verify {
+                runBlocking {
+                    service.deleteSellerProduct(TOKEN, 2)
+                }
+            }
+        }
+    }
+
+    @Test
     fun getAllProduct() : Unit = runBlocking {
         runBlocking {
             val response = mockk<List<GetProductResponseItem>>()
 
             every {
                 runBlocking {
-                    service.getAllProduct("available", 0, "")
+                    service.getAllProduct("available", 0, "", null, null)
                 }
             } returns response
 
-            repository.getAllProduct("available", 0, "")
+            repository.getAllProduct("available", 0, "",null, null)
 
             verify {
                 runBlocking {
-                    service.getAllProduct("available", 0, "")
+                    service.getAllProduct("available", 0, "", null, null)
                 }
             }
         }
@@ -445,15 +505,39 @@ class MainRepositoryTest {
     }
 
     @Test
+    fun getHistory() : Unit = runBlocking {
+        runBlocking {
+            val response = mockk<List<GetHistoryResponseItem>>()
+
+            every {
+                runBlocking {
+                    service.getHistory(TOKEN)
+                }
+            } returns response
+
+            repository.getHistory(TOKEN)
+
+            verify {
+                runBlocking {
+                    service.getHistory(TOKEN)
+                }
+            }
+        }
+    }
+
+    @Test
     fun addProduct() {
+        appDao.addProduct(listOf(ProductEntity(1,"tes","tes","tes","2000","malang")))
     }
 
     @Test
     fun getProductDb() {
+        appDao.getProduct()
     }
 
     @Test
     fun deleteAllProduct() {
+        appDao.deleteAll()
     }
 
     companion object{

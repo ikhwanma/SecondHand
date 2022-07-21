@@ -18,7 +18,6 @@ import binar.lima.satu.secondhand.view.activity.MainActivity
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
 import com.bumptech.glide.Glide
-import com.google.android.material.snackbar.Snackbar
 
 class ProfileFragment : Fragment() {
 
