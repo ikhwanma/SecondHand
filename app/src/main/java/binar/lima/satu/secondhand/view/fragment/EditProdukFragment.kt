@@ -1,13 +1,20 @@
 package binar.lima.satu.secondhand.view.fragment
 
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
@@ -21,6 +28,7 @@ import binar.lima.satu.secondhand.model.product.GetDetailProductResponse
 import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponseItem
 import binar.lima.satu.secondhand.model.seller.product.ProductBody
 import binar.lima.satu.secondhand.view.dialogfragment.CategoryFragment
+import binar.lima.satu.secondhand.view.dialogfragment.Dialog
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
 import com.bumptech.glide.Glide
@@ -50,6 +58,9 @@ class EditProdukFragment : Fragment() , View.OnClickListener {
 
     private var detailProduct: GetDetailProductResponse? = null
 
+    private lateinit var dialog: Dialog
+
+
     private val galleryResult =
         registerForActivityResult(ActivityResultContracts.GetContent()) { result ->
             binding.imgProduct.setImageURI(result)
@@ -61,6 +72,7 @@ class EditProdukFragment : Fragment() , View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentEditProdukBinding.inflate(inflater, container, false)
+        dialog = Dialog(requireActivity())
         return binding.root
     }
 
@@ -100,7 +112,7 @@ class EditProdukFragment : Fragment() , View.OnClickListener {
         }
 
         binding.imgProduct.setOnClickListener {
-            openGallery()
+            checkingPermissions()
         }
 
         userViewModel.listCategorySelected.observe(viewLifecycleOwner) {
@@ -168,6 +180,58 @@ class EditProdukFragment : Fragment() , View.OnClickListener {
             it.findNavController().navigate(R.id.action_addProductFragment_to_homeFragment)
         }
     }
+
+    private fun checkingPermissions() {
+        if (isGranted(
+                requireActivity(),
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ),
+                EditProfileFragment.REQUEST_CODE_PERMISSION,
+            )
+        ) {
+            galleryResult.launch("image/*")
+        }
+    }
+
+    private fun isGranted(
+        activity: Activity,
+        permission: String,
+        permissions: Array<String>,
+        request: Int,
+    ): Boolean {
+        val permissionCheck = ActivityCompat.checkSelfPermission(activity, permission)
+        return if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
+                showPermissionDeniedDialog()
+            } else {
+                ActivityCompat.requestPermissions(activity, permissions, request)
+            }
+            false
+        } else {
+            true
+        }
+    }
+
+    private fun showPermissionDeniedDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Permission Denied")
+            .setMessage("Permission is denied, Please allow permissions from App Settings.")
+            .setPositiveButton(
+                "App Settings"
+            ) { _, _ ->
+                val intent = Intent()
+                intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                val uri = Uri.fromParts("package", "packageName", null)
+                intent.data = uri
+                startActivity(intent)
+            }
+            .setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
+            .show()
+    }
+
     private fun setUser(data: GetLoginResponse) {
         user = data
     }
@@ -180,9 +244,6 @@ class EditProdukFragment : Fragment() , View.OnClickListener {
         this.listCategory = listCategory
     }
 
-    private fun openGallery() {
-        galleryResult.launch("image/*")
-    }
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
@@ -264,16 +325,18 @@ class EditProdukFragment : Fragment() , View.OnClickListener {
         ).observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
+                    dialog.dismissDialog()
                     userViewModel.listCategorySelected.postValue(mutableListOf())
                     Navigation.findNavController(requireView())
-                        .navigate(R.id.action_addProductFragment_to_daftarJualSayaFragment)
+                        .navigate(R.id.action_editProdukFragment_to_daftarJualSayaFragment)
                     Snackbar.make(requireView(), "Data berhasil diupdate", Snackbar.LENGTH_SHORT).show()
                 }
                 Status.ERROR -> {
+                    dialog.dismissDialog()
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
                 Status.LOADING -> {
-                    Toast.makeText(requireContext(), "Load", Toast.LENGTH_SHORT).show()
+                    dialog.startDialog()
                 }
             }
         }

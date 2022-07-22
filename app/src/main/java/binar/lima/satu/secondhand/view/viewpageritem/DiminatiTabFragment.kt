@@ -65,6 +65,12 @@ class DiminatiTabFragment : Fragment() {
                             View.INVISIBLE
                         }
 
+                        binding.tvListKosong.visibility = if (list.isEmpty()) {
+                            View.VISIBLE
+                        } else {
+                            View.INVISIBLE
+                        }
+
                         adapter.submitData(list)
                         binding.apply {
                             rvDiminati.adapter = adapter

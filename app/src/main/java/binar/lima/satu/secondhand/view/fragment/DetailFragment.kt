@@ -26,6 +26,7 @@ import binar.lima.satu.secondhand.model.product.GetDetailProductResponse
 import binar.lima.satu.secondhand.model.product.GetProductResponseItem
 import binar.lima.satu.secondhand.model.seller.order.PutOrderBody
 import binar.lima.satu.secondhand.view.adapter.ProductAdapter
+import binar.lima.satu.secondhand.view.dialogfragment.Dialog
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
 import com.bumptech.glide.Glide
@@ -48,11 +49,14 @@ class DetailFragment : Fragment() , View.OnClickListener{
     private var token = ""
     private var detailProductResponse: GetDetailProductResponse? = null
 
+    private lateinit var dialog: Dialog
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
+        dialog = Dialog(requireActivity())
         return binding.root
     }
 
@@ -91,8 +95,14 @@ class DetailFragment : Fragment() , View.OnClickListener{
 
                     var txtCategory = ""
 
+                    var i = 1
                     for (cat in category){
-                        txtCategory += "${cat.name} "
+                        txtCategory += if (i != data.categories.size){
+                            "${cat.name}, "
+                        }else{
+                            cat.name
+                        }
+                        i++
                     }
                     binding.apply {
                         Glide.with(requireView()).load(data.imageUrl).into(imgProduct)
@@ -165,8 +175,8 @@ class DetailFragment : Fragment() , View.OnClickListener{
                                     }
 
                                     if (listData.size > 10){
-                                        for (i in 0..9){
-                                            listDataProduct.add(listData[i])
+                                        for (j in 0..9){
+                                            listDataProduct.add(listData[j])
                                         }
                                     }else{
                                         listDataProduct = listData
@@ -241,6 +251,9 @@ class DetailFragment : Fragment() , View.OnClickListener{
             btnBack.setOnClickListener(this@DetailFragment)
             btnEditProduk.setOnClickListener(this@DetailFragment)
             btnDeleteProduk.setOnClickListener(this@DetailFragment)
+            etSearch.setOnClickListener {
+                it.findNavController().navigate(R.id.action_detailFragment_to_searchFragment)
+            }
         }
 
     }
@@ -274,15 +287,17 @@ class DetailFragment : Fragment() , View.OnClickListener{
                                     apiViewModel.updateBuyerOrder(token, order.id, PutOrderBody(bid)).observe(viewLifecycleOwner){ order->
                                         when(order.status){
                                             SUCCESS -> {
+                                                dialog.dismissDialog()
                                                 Snackbar.make(requireView(), "Berhasil memberikan penawaran, Tunggu respon penjual", Snackbar.LENGTH_LONG).show()
                                                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                                                Navigation.findNavController(requireView()).navigate(R.id.action_detailFragment_to_homeFragment)
+                                                getOrder(token)
                                             }
                                             ERROR -> {
+                                                dialog.dismissDialog()
                                                 Toast.makeText(requireContext(), order.message, Toast.LENGTH_SHORT).show()
                                             }
                                             LOADING -> {
-                                                Toast.makeText(requireContext(), "Load", Toast.LENGTH_SHORT).show()
+                                                dialog.startDialog()
                                             }
                                         }
                                     }
@@ -385,16 +400,17 @@ class DetailFragment : Fragment() , View.OnClickListener{
                         apiViewModel.postOrder(it, order).observe(viewLifecycleOwner){ order ->
                             when(order.status){
                                 SUCCESS -> {
+                                    dialog.dismissDialog()
                                     Snackbar.make(requireView(), "Berhasil memberikan penawaran, Tunggu respon penjual", Snackbar.LENGTH_LONG).show()
                                     bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                                    Navigation.findNavController(requireView()).navigate(R.id.action_detailFragment_to_homeFragment)
                                     getOrder(token)
                                 }
                                 ERROR -> {
+                                    dialog.dismissDialog()
                                     Toast.makeText(requireContext(), order.message, Toast.LENGTH_SHORT).show()
                                 }
                                 LOADING -> {
-                                    Toast.makeText(requireContext(), "Load", Toast.LENGTH_SHORT).show()
+                                    dialog.startDialog()
                                 }
                             }
                         }
@@ -457,28 +473,32 @@ class DetailFragment : Fragment() , View.OnClickListener{
                 Navigation.findNavController(requireView()).navigate(R.id.action_detailFragment_to_editProdukFragment, mBundle)
             }
             R.id.btn_delete_produk -> {
-                apiViewModel.deleteSellerProduct(token, detailProductResponse!!.id).observe(viewLifecycleOwner){
-                    when(it.status){
-                        SUCCESS -> {
-                            AlertDialog.Builder(requireContext()).setTitle("Hapus Produk")
-                                .setMessage("Apakah Anda Yakin?")
-                                .setIcon(R.mipmap.ic_launcher_round)
-                                .setPositiveButton("Yes") { _, _ ->
-                                    Snackbar.make(requireView(), "Produk berhasil dihapus", Snackbar.LENGTH_LONG).show()
-                                    Navigation.findNavController(requireView()).navigate(R.id.action_detailFragment_to_homeFragment2)
-                                }.setNegativeButton("No") { _, _ ->
-
+                AlertDialog.Builder(requireContext()).setTitle("Hapus Produk")
+                    .setMessage("Apakah Anda Yakin?")
+                    .setIcon(R.drawable.ic_logo)
+                    .setPositiveButton("Iya") { _, _ ->
+                        apiViewModel.deleteSellerProduct(token, detailProductResponse!!.id).observe(viewLifecycleOwner){
+                            when(it.status){
+                                SUCCESS -> {
+                                    dialog.dismissDialog()
+                                    Toast.makeText(requireContext(), "Produk Berhasil Dihapus", Toast.LENGTH_SHORT).show()
+                                    Navigation.findNavController(requireView()).navigate(R.id.action_detailFragment_to_daftarJualSayaFragment)
                                 }
-                                .show()
+                                ERROR -> {
+                                    dialog.dismissDialog()
+                                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                                }
+                                LOADING -> {
+                                    dialog.startDialog()
+                                }
+                            }
                         }
-                        ERROR -> {
+                    }.setNegativeButton("Tidak") { _, _ ->
 
-                        }
-                        LOADING -> {
-
-                        }
                     }
-                }
+                    .show()
+
+
             }
         }
     }

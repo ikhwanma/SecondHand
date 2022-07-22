@@ -99,7 +99,7 @@
             android:textStyle="bold" />
 
 
-        <androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_titledua">
@@ -108,7 +108,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="16dp">
+                android:paddingVertical="16dp">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cv_img"
@@ -196,12 +196,13 @@
                     android:layout_below="@id/ll_item"
                     android:layout_marginTop="18dp"
                     android:layout_marginBottom="5dp"
-                    android:gravity="center_horizontal">
+                    android:gravity="center_horizontal"
+                    >
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btn_tolak"
                         style="@style/ButtonStyle"
-                        android:layout_width="160dp"
+                        android:layout_weight="1"
                         android:layout_marginEnd="10dp"
                         android:paddingBottom="2dp"
                         android:background="@drawable/style_white_button"
@@ -212,7 +213,7 @@
                     <Button
                         android:id="@+id/btn_terima"
                         style="@style/ButtonStyle"
-                        android:layout_width="160dp"
+                        android:layout_weight="1"
                         android:text="@string/terima" />
                 </LinearLayout>
 
@@ -222,15 +223,16 @@
                     android:layout_height="60dp"
                     android:layout_below="@id/ll_item"
                     android:layout_marginTop="18dp"
-                    android:padding="3dp"
+                    android:layout_marginBottom="5dp"
                     android:gravity="center_horizontal"
                     android:visibility="gone">
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btn_status"
                         style="@style/ButtonStyle"
-                        android:layout_width="160dp"
+                        android:layout_weight="1"
                         android:layout_marginEnd="10dp"
+                        android:paddingBottom="2dp"
                         android:background="@drawable/style_white_button"
                         android:fontFamily="@font/poppins_medium"
                         android:text="@string/status"
@@ -239,10 +241,8 @@
                     <Button
                         android:id="@+id/btn_hubungi"
                         style="@style/ButtonStyle"
-                        android:layout_width="160dp"
-                        android:text="@string/hubungi"
-
-                        />
+                        android:layout_weight="1"
+                        android:text="@string/hubungi" />
                 </LinearLayout>
 
             </RelativeLayout>
@@ -253,7 +253,7 @@
     </RelativeLayout>
 
 
-    <androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.cardview.widget.CardView
         android:id="@+id/bottom_sheet_hubungi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -317,13 +317,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
-                        <ImageView
-                            android:id="@+id/product_match_buyer_img"
+                        <androidx.cardview.widget.CardView
                             android:layout_width="48dp"
                             android:layout_height="48dp"
-                            android:layout_margin="16dp"
-                            android:contentDescription="@string/image"
-                            android:src="@drawable/ic_launcher_background" />
+                            app:cardCornerRadius="8dp"
+                            android:layout_margin="16dp">
+
+                            <ImageView
+                                android:id="@+id/product_match_buyer_img"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+
+                                android:contentDescription="@string/image"
+                                android:src="@drawable/ic_launcher_background" />
+                        </androidx.cardview.widget.CardView>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -357,13 +364,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
-                        <ImageView
-                            android:id="@+id/product_match_product_img"
+                        <androidx.cardview.widget.CardView
                             android:layout_width="48dp"
                             android:layout_height="48dp"
-                            android:layout_margin="16dp"
-                            android:contentDescription="@string/image"
-                            android:src="@drawable/ic_launcher_background" />
+                            app:cardCornerRadius="8dp"
+                            android:layout_margin="16dp">
+                            <ImageView
+                                android:id="@+id/product_match_product_img"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:contentDescription="@string/image"
+                                android:src="@drawable/ic_launcher_background" />
+                        </androidx.cardview.widget.CardView>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -409,7 +421,6 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/bottom_sheet_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
