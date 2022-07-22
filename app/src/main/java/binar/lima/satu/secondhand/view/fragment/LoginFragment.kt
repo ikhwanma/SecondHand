@@ -18,6 +18,7 @@ import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentLoginBinding
 import binar.lima.satu.secondhand.model.auth.login.LoginBody
+import binar.lima.satu.secondhand.view.dialogfragment.Dialog
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
 import java.util.concurrent.Executor
@@ -37,11 +38,17 @@ class LoginFragment : Fragment(), View.OnClickListener {
     private val apiViewModel: ApiViewModel by hiltNavGraphViewModels(R.id.nav_main)
     private val userViewModel: UserViewModel by hiltNavGraphViewModels(R.id.nav_main)
 
+    private lateinit var dialog: Dialog
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
+
+        dialog = Dialog(requireActivity())
+
         return binding.root
     }
 
@@ -135,7 +142,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
                     userViewModel.getBiometric().observe(viewLifecycleOwner){
                         userViewModel.setToken(it)
                         Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_homeFragment)
-                        Toast.makeText(requireContext(), "Login Berhasil", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Berhasil Login", Toast.LENGTH_SHORT).show()
                     }
                 }
             })
@@ -153,11 +160,12 @@ class LoginFragment : Fragment(), View.OnClickListener {
         apiViewModel.loginUser(loginBody).observe(viewLifecycleOwner){
             when(it.status){
                 SUCCESS -> {
+                    dialog.dismissDialog()
                     userViewModel.setToken(it.data!!.accessToken)
                     Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_homeFragment)
-                    Toast.makeText(requireContext(), "Login Berhasil", Toast.LENGTH_SHORT).show()
                 }
                 ERROR -> {
+                    dialog.dismissDialog()
                     if(it.message!!.contains("401")){
                         Toast.makeText(requireContext(), "Email atau password salah", Toast.LENGTH_SHORT).show()
                     }else{
@@ -165,7 +173,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
                     }
                 }
                 LOADING -> {
-                    Toast.makeText(requireContext(), "Load", Toast.LENGTH_SHORT).show()
+                    dialog.startDialog()
                 }
             }
         }

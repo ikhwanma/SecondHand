@@ -1,14 +1,11 @@
 package binar.lima.satu.secondhand.view.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.biometric.BiometricPrompt
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
@@ -16,7 +13,6 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.local.room.ProductEntity
 import binar.lima.satu.secondhand.data.utils.AppExecutors
@@ -35,10 +31,6 @@ import binar.lima.satu.secondhand.viewmodel.UserViewModel
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.util.concurrent.Executor
 
 class HomeFragment : Fragment() {
 
@@ -66,6 +58,13 @@ class HomeFragment : Fragment() {
         val connected = OnlineChecker.isOnline(requireContext())
 
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheetCategory)
+        binding.swipeContainer.setOnRefreshListener {
+            Navigation.findNavController(requireView()).navigate(R.id.homeFragment)
+        }
+
+        apiViewModel.getProductDb().observe(viewLifecycleOwner) {
+
+        }
 
         if (!connected) {
             Toast.makeText(requireContext(), "Anda tidak terhubung ke internet", Toast.LENGTH_LONG)
@@ -252,6 +251,13 @@ class HomeFragment : Fragment() {
             binding.btnWishlist.setOnClickListener {
                 it.findNavController().navigate(R.id.action_homeFragment_to_wishlistFragment)
             }
+
+            binding.btnLihatSemua.setOnClickListener{
+                val mBundle =
+                    bundleOf(ProductFragment.EXTRA_ID_CATEGORY to 0)
+                Navigation.findNavController(requireView())
+                    .navigate(R.id.action_homeFragment_to_productFragment, mBundle)
+            }
         }
 
     }
@@ -304,8 +310,6 @@ class HomeFragment : Fragment() {
                     )
                     adapter.submitData(list)
 
-                    Log.d("ini data", list.toString())
-
                     val listProduct = mutableListOf<ProductEntity>()
                     val appExecutors = AppExecutors()
 
@@ -333,12 +337,11 @@ class HomeFragment : Fragment() {
                             )
                             listProduct.add(productEntity)
                         }
-
-                        CoroutineScope(Dispatchers.Main).launch {
-                            apiViewModel.deleteAllProduct()
-                            apiViewModel.addProduct(listProduct)
-                        }
                     }
+
+                    apiViewModel.deleteAllProduct()
+                    apiViewModel.addProduct(listProduct)
+
 
                     binding.apply {
                         val layoutManager = LinearLayoutManager(

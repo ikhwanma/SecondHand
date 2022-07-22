@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
@@ -12,6 +13,7 @@ import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentProductPreviewBinding
 import binar.lima.satu.secondhand.model.auth.login.GetLoginResponse
 import binar.lima.satu.secondhand.model.seller.product.ProductBody
+import binar.lima.satu.secondhand.view.dialogfragment.Dialog
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
 import com.bumptech.glide.Glide
@@ -35,11 +37,14 @@ class ProductPreviewFragment : Fragment() {
     private lateinit var token : String
     private lateinit var user : GetLoginResponse
 
+    private lateinit var dialog: Dialog
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProductPreviewBinding.inflate(inflater, container, false)
+        dialog = Dialog(requireActivity())
         return binding.root
     }
 
@@ -106,6 +111,7 @@ class ProductPreviewFragment : Fragment() {
         apiViewModel.addSellerProduct(token, nameUpload, descriptionUpload, priceUpload, categoryUpload, addressUpload, imageUpload).observe(viewLifecycleOwner){
             when(it.status){
                 SUCCESS -> {
+                    dialog.dismissDialog()
                     Snackbar.make(
                         requireView(),
                         "Produk Berhasil Ditambahkan",
@@ -114,10 +120,11 @@ class ProductPreviewFragment : Fragment() {
                     Navigation.findNavController(requireView()).navigate(R.id.action_productPreviewFragment_to_daftarJualSayaFragment)
                 }
                 ERROR -> {
-
+                    dialog.dismissDialog()
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
                 LOADING -> {
-
+                    dialog.startDialog()
                 }
             }
         }

@@ -71,14 +71,18 @@ class ProfileFragment : Fragment() {
             Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_editProfileFragment)
         }
 
+        binding.imgUser.setOnClickListener {
+            Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_editProfileFragment)
+        }
+
         binding.btnLogout.setOnClickListener {
             AlertDialog.Builder(requireContext()).setTitle("Logout")
                 .setMessage("Apakah Anda Yakin?")
-                .setIcon(R.mipmap.ic_launcher_round)
+                .setIcon(R.drawable.ic_logo)
                 .setPositiveButton("Iya") { _, _ ->
                     AlertDialog.Builder(requireContext()).setTitle("Simpan data login")
                         .setMessage("Apakah Anda Ingin Menyimpan Data Login Anda?")
-                        .setIcon(R.mipmap.ic_launcher_round)
+                        .setIcon(R.drawable.ic_logo)
                         .setPositiveButton("Iya") { _, _ ->
                             userViewModel.getToken().observe(viewLifecycleOwner){
                                 userViewModel.setBiometric(it)

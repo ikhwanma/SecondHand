@@ -137,4 +137,6 @@
     <string name="icon">icon</string>
     <string name="_0">0</string>
     <string name="anda_belum_memiliki_notifikasi">Anda Belum Memiliki Notifikasi</string>
+    <string name="belum_ada_produkmu_yang_diminati_nih_sabar_ya_rejeki_nggak_kemana_kok">Belum ada produkmu yang diminati nih, sabar ya rejeki nggak kemana kok</string>
+    <string name="harap_tunggu_sebentar">Harap tunggu sebentar...</string>
 </resources>

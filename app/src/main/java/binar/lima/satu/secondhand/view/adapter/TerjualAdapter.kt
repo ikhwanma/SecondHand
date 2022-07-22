@@ -21,7 +21,7 @@ class TerjualAdapter (val onItemClick: (GetSellerOrderResponseItem) -> Unit) :
                     onItemClick(data)
                 }
                 val txtStatus = "Berhasil Terjual"
-                val txtBid = "Rp ${data.price}"
+                val txtBid = "Rp ${Converter.converterMoney(data.price.toString())}"
                 tvBid.text = txtBid
                 tvPrice.visibility = View.GONE
                 tvProduct.text = data.product.name

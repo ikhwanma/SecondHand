@@ -18,6 +18,7 @@ import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.Status
 import binar.lima.satu.secondhand.databinding.FragmentRegisterBinding
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
+import binar.lima.satu.secondhand.view.dialogfragment.Dialog
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import java.util.regex.Pattern
 
@@ -33,11 +34,15 @@ class RegisterFragment : Fragment(), View.OnClickListener {
     //Define viewModel
     private val apiViewModel: ApiViewModel by hiltNavGraphViewModels(R.id.nav_main)
 
+    private lateinit var dialog: Dialog
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
+        dialog = Dialog(requireActivity())
         return binding.root
     }
 
@@ -181,10 +186,12 @@ class RegisterFragment : Fragment(), View.OnClickListener {
         apiViewModel.registerUser(registerBody).observe(viewLifecycleOwner){
             when(it.status){
                 Status.SUCCESS -> {
+                    dialog.dismissDialog()
                     Navigation.findNavController(requireView()).navigate(R.id.action_registerFragment_to_loginFragment)
-                    Toast.makeText(requireContext(), "Register berhasil", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Berhasil mendaftarkan akun", Toast.LENGTH_SHORT).show()
                 }
                 Status.ERROR -> {
+                    dialog.dismissDialog()
                     if(it.message!!.contains("400")){
                         Toast.makeText(requireContext(), "Email sudah digunakan", Toast.LENGTH_SHORT).show()
                     }else{
@@ -192,7 +199,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
                     }
                 }
                 Status.LOADING -> {
-                    Toast.makeText(requireContext(), "Load", Toast.LENGTH_SHORT).show()
+                    dialog.startDialog()
                 }
             }
         }

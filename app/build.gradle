@@ -83,6 +83,8 @@ dependencies {
     implementation 'androidx.biometric:biometric:1.1.0'
 
     implementation 'com.adevinta.android:leku:9.1.4'
+
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 }
 
 kapt {

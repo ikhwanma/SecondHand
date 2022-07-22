@@ -14,8 +14,10 @@ import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentUbahPasswordBinding
 import binar.lima.satu.secondhand.model.auth.update.UpdatePasswordBody
+import binar.lima.satu.secondhand.view.dialogfragment.Dialog
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
+import com.google.android.material.snackbar.Snackbar
 
 
 class UbahPasswordFragment : Fragment() {
@@ -30,11 +32,14 @@ class UbahPasswordFragment : Fragment() {
     private var viewNewPass = false
     private var viewConfPass = false
 
+    private lateinit var dialog: Dialog
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentUbahPasswordBinding.inflate(inflater, container, false)
+        dialog = Dialog(requireActivity())
         return binding.root
     }
 
@@ -106,10 +111,12 @@ class UbahPasswordFragment : Fragment() {
                         apiViewModel.updatePassword(token, UpdatePasswordBody(pass, newPass, confPass)).observe(viewLifecycleOwner){
                             when(it.status){
                                 SUCCESS -> {
-                                    Toast.makeText(requireContext(), "Password Diubah", Toast.LENGTH_SHORT).show()
+                                    dialog.dismissDialog()
+                                    Snackbar.make(requireView(), "Password diubah", Snackbar.LENGTH_SHORT).show()
                                     Navigation.findNavController(requireView()).navigate(R.id.action_ubahPasswordFragment_to_profileFragment)
                                 }
                                 ERROR -> {
+                                    dialog.dismissDialog()
                                     if (it.message!!.contains("400")) Toast.makeText(
                                         requireContext(),
                                         "Password lama tidak sesuai",
@@ -117,7 +124,7 @@ class UbahPasswordFragment : Fragment() {
                                     ).show()
                                 }
                                 LOADING -> {
-
+                                    dialog.startDialog()
                                 }
                             }
                         }

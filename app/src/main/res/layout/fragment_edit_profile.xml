@@ -163,9 +163,9 @@
                     android:id="@+id/et_no_handphone_edit_profile"
                     style="@style/EditTextStyle"
                     android:layout_marginTop="4dp"
-                    android:autofillHints="alamat"
+                    android:autofillHints="phone"
                     android:hint="@string/_8123456789"
-                    android:inputType="textEmailAddress"
+                    android:inputType="phone"
                     android:paddingStart="46dp"
                     tools:ignore="RtlSymmetry" />
 

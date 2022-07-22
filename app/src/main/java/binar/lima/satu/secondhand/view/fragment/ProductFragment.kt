@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentProductBinding
+import binar.lima.satu.secondhand.model.product.GetProductResponseItem
 import binar.lima.satu.secondhand.view.adapter.ProductAdapter
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
@@ -28,6 +29,11 @@ class ProductFragment : Fragment() {
     private val apiViewModel: ApiViewModel by hiltNavGraphViewModels(R.id.nav_main)
     private val userViewModel: UserViewModel by hiltNavGraphViewModels(R.id.nav_main)
 
+    val list = ArrayList<GetProductResponseItem>()
+
+    private lateinit var adapter: ProductAdapter
+    private lateinit var layoutManager: GridLayoutManager
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,106 +48,16 @@ class ProductFragment : Fragment() {
         val idCategory = arguments?.getInt(EXTRA_ID_CATEGORY) as Int
 
         if (idCategory != 0){
-            apiViewModel.getDetailCategory(idCategory).observe(viewLifecycleOwner){
-                when(it.status){
-                    SUCCESS -> {
-                        val data = it.data!!
-                        binding.tvKategori.text = data.name
-                    }
-                    ERROR -> {
+            getData(idCategory)
 
-                    }
-                    LOADING -> {
-
-                    }
-                }
-            }
-            apiViewModel.getAllProduct(status = "available", category_id = idCategory).observe(viewLifecycleOwner){
-                when(it.status){
-                    SUCCESS -> {
-                        val data = it.data
-
-                        val adapter = ProductAdapter{ it1 ->
-                            val mBundle = bundleOf(DetailFragment.EXTRA_ID to it1.id)
-                            Navigation.findNavController(requireView())
-                                .navigate(R.id.action_productFragment_to_detailFragment, mBundle)
-                        }.apply {
-                            submitData(data)
-                        }
-
-                        val layoutManager = GridLayoutManager(requireContext(), 2)
-                        binding.apply {
-                            rvProduct.adapter = adapter
-                            rvProduct.layoutManager = layoutManager
-                        }
-
-                        binding.apply {
-                            rvProduct.visibility = View.VISIBLE
-                            tvKategori.visibility = View.VISIBLE
-                            progressCircular.visibility = View.GONE
-                        }
-                    }
-                    ERROR -> {
-                        binding.apply {
-                            rvProduct.visibility = View.VISIBLE
-                            tvKategori.visibility = View.VISIBLE
-                            progressCircular.visibility = View.GONE
-                        }
-                    }
-                    LOADING -> {
-                        binding.apply {
-                            rvProduct.visibility = View.GONE
-                            tvKategori.visibility = View.GONE
-                        }
-                    }
-                }
-            }
         }else{
             val txtCategory = "Semua Produk"
 
             binding.tvKategori.text = txtCategory
 
-            apiViewModel.getAllProduct(status = "available").observe(viewLifecycleOwner){
-                when(it.status){
-                    SUCCESS -> {
-                        val data = it.data
-
-                        val adapter = ProductAdapter{ it1 ->
-                            val mBundle = bundleOf(DetailFragment.EXTRA_ID to it1.id)
-                            Navigation.findNavController(requireView())
-                                .navigate(R.id.action_productFragment_to_detailFragment, mBundle)
-                        }.apply {
-                            submitData(data)
-                        }
-
-                        val layoutManager = GridLayoutManager(requireContext(), 2)
-                        binding.apply {
-                            rvProduct.adapter = adapter
-                            rvProduct.layoutManager = layoutManager
-                        }
-
-                        binding.apply {
-                            rvProduct.visibility = View.VISIBLE
-                            tvKategori.visibility = View.VISIBLE
-                            progressCircular.visibility = View.GONE
-                        }
-                    }
-                    ERROR -> {
-                        binding.apply {
-                            rvProduct.visibility = View.VISIBLE
-                            tvKategori.visibility = View.VISIBLE
-                            progressCircular.visibility = View.GONE
-                        }
-                    }
-                    LOADING -> {
-                        binding.apply {
-                            rvProduct.visibility = View.GONE
-                            tvKategori.visibility = View.GONE
-                        }
-                    }
-                }
-            }
+            getAllData()
         }
+
 
         userViewModel.getToken().observe(viewLifecycleOwner) { token ->
 
@@ -177,6 +93,98 @@ class ProductFragment : Fragment() {
             }
             btnWishlist.setOnClickListener {
                 it.findNavController().navigate(R.id.action_productFragment_to_wishlistFragment)
+            }
+        }
+    }
+
+    private fun getAllData() {
+        apiViewModel.getAllProduct(status = "available").observe(viewLifecycleOwner){
+            when(it.status){
+                SUCCESS -> {
+                    val data = it.data!!
+
+                    setAdapter(data)
+
+                    binding.apply {
+                        rvProduct.visibility = View.VISIBLE
+                        tvKategori.visibility = View.VISIBLE
+                        progressCircular.visibility = View.GONE
+                    }
+                }
+                ERROR -> {
+                    binding.apply {
+                        rvProduct.visibility = View.VISIBLE
+                        tvKategori.visibility = View.VISIBLE
+                        progressCircular.visibility = View.GONE
+                    }
+                }
+                LOADING -> {
+                    binding.apply {
+                        rvProduct.visibility = View.GONE
+                        tvKategori.visibility = View.GONE
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setAdapter(data: List<GetProductResponseItem>) {
+        layoutManager = GridLayoutManager(requireContext(), 2)
+        adapter = ProductAdapter{ it1 ->
+            val mBundle = bundleOf(DetailFragment.EXTRA_ID to it1.id)
+            Navigation.findNavController(requireView())
+                .navigate(R.id.action_productFragment_to_detailFragment, mBundle)
+        }
+
+        adapter.submitData(data)
+
+        binding.apply {
+            rvProduct.adapter = adapter
+            rvProduct.layoutManager = layoutManager
+        }
+    }
+
+    private fun getData(idCategory: Int) {
+        apiViewModel.getDetailCategory(idCategory).observe(viewLifecycleOwner){
+            when(it.status){
+                SUCCESS -> {
+                    val data = it.data!!
+                    binding.tvKategori.text = data.name
+                }
+                ERROR -> {
+
+                }
+                LOADING -> {
+
+                }
+            }
+        }
+        apiViewModel.getAllProduct(status = "available", category_id = idCategory).observe(viewLifecycleOwner){
+            when(it.status){
+                SUCCESS -> {
+                    val data = it.data!!
+
+                    setAdapter(data)
+
+                    binding.apply {
+                        rvProduct.visibility = View.VISIBLE
+                        tvKategori.visibility = View.VISIBLE
+                        progressCircular.visibility = View.GONE
+                    }
+                }
+                ERROR -> {
+                    binding.apply {
+                        rvProduct.visibility = View.VISIBLE
+                        tvKategori.visibility = View.VISIBLE
+                        progressCircular.visibility = View.GONE
+                    }
+                }
+                LOADING -> {
+                    binding.apply {
+                        rvProduct.visibility = View.GONE
+                        tvKategori.visibility = View.GONE
+                    }
+                }
             }
         }
     }

@@ -21,8 +21,8 @@ class SellerOrderAdapter(val onItemClick: (GetSellerOrderResponseItem) -> Unit) 
                 root.setOnClickListener {
                     onItemClick(data)
                 }
-                val txtBid = "Ditawar Rp ${data.price}"
-                val txtPrice = "Rp ${data.product.basePrice}"
+                val txtBid = "Ditawar Rp ${Converter.converterMoney(data.price.toString())}"
+                val txtPrice = "Rp ${Converter.converterMoney(data.product.basePrice.toString())}"
                 tvBid.text = txtBid
                 tvPrice.text = txtPrice
                 tvProduct.text = data.product.name
@@ -62,7 +62,7 @@ class SellerOrderAdapter(val onItemClick: (GetSellerOrderResponseItem) -> Unit) 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val data = differ.currentList[position]
+        val data = differ.currentList[itemCount - 1 - position]
         data.let {
             holder.bind(data, position)
         }
