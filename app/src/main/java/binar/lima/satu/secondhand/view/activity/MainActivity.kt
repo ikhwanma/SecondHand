@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import binar.lima.satu.secondhand.R
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -50,6 +52,9 @@ class MainActivity : AppCompatActivity() {
 
     fun getBadge() {
         userViewModel.getToken().observe(this) { token ->
+            if(token == ""){
+                binding.navView.removeBadge(R.id.notificationFragment)
+            }
 
             apiViewModel.getNotification(token).observe(this) {
                 when (it.status) {

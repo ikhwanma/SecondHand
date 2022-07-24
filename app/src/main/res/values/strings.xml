@@ -139,4 +139,11 @@
     <string name="anda_belum_memiliki_notifikasi">Anda Belum Memiliki Notifikasi</string>
     <string name="belum_ada_produkmu_yang_diminati_nih_sabar_ya_rejeki_nggak_kemana_kok">Belum ada produkmu yang diminati nih, sabar ya rejeki nggak kemana kok</string>
     <string name="harap_tunggu_sebentar">Harap tunggu sebentar...</string>
+    <string name="produk_disekitarmu">Produk disekitarmu</string>
+    <string name="order">Order</string>
+    <string name="history_belanjamu_masih_kosong_yuk_belanja_sekarang">History belanjamu masih kosong, yuk belanja sekarang!</string>
+    <string name="lihat_semua_produk_yang_dicari">Lihat Semua Produk Yang Dicari</string>
+    <string name="notifikasimu_masih_kosong">Notifikasimu masih kosong</string>
+    <string name="barang_yang_kamu_cari_tidak_tersedia_yuk_cari_barang_lain_yang_serupa">Barang yang kamu cari tidak tersedia :( Yuk cari barang lain yang serupa!</string>
+    <string name="berdasarkan_pencarianmu">Berdasarkan pencarianmu</string>
 </resources>

@@ -22,14 +22,15 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/ic_logo"
+        android:icon="@drawable/ic_logo_secondhand"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/ic_logo"
+        android:roundIcon="@drawable/ic_logo_secondhand"
         android:supportsRtl="true"
         android:theme="@style/Theme.SecondHand"
         tools:targetApi="31">
         <activity
             android:name=".view.activity.MainActivity"
+            android:theme="@style/Theme.App.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

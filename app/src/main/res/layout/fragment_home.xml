@@ -16,9 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/blue_primary_variant"
-            android:padding="16dp">
+            android:paddingHorizontal="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="5dp">
 
             <LinearLayout
+                android:id="@+id/ll_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -74,13 +77,16 @@
 
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
+
             </LinearLayout>
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_alignParentTop="true"
+                android:layout_above="@+id/ll_alamat"
+                android:gravity="center_vertical"
                 android:layout_marginStart="14dp"
                 android:fontFamily="@font/poppins_regular"
                 android:text="@string/cari_di_second_chance"
@@ -92,10 +98,36 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
+                android:layout_alignParentTop="true"
+                android:layout_above="@+id/ll_alamat"
                 android:layout_marginEnd="60dp"
                 android:contentDescription="@string/image_search"
                 android:src="@drawable/ic_gray_search_24" />
+
+            <LinearLayout
+                android:id="@+id/ll_alamat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_search"
+                android:layout_marginTop="3dp"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_blue_location_on_24"
+                    app:tint="@color/white"
+                    android:contentDescription="@string/icon" />
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/alamat"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="1dp"
+                    android:fontFamily="@font/poppins_regular"/>
+            </LinearLayout>
+
         </RelativeLayout>
 
 
@@ -148,6 +180,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -184,17 +217,66 @@
                             android:orientation="horizontal"
                             android:paddingEnd="10dp"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            tools:listitem="@layout/item_product"
-                            tools:ignore="RtlSymmetry" />
+                            tools:ignore="RtlSymmetry"
+                            tools:listitem="@layout/item_product" />
 
-                        <ProgressBar
+                        <pl.droidsonroids.gif.GifImageView
                             android:id="@+id/progress_circular"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="100dp"
+                            android:src="@drawable/ic_loading_secondhand"
                             android:visibility="gone" />
                     </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tv_disekitarmu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/produk_disekitarmu"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_disekitarmu"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:paddingEnd="10dp"
+                        android:visibility="gone"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:ignore="RtlSymmetry"
+                        tools:listitem="@layout/item_product" />
+
+                    <TextView
+                        android:id="@+id/tv_serupa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/berdasarkan_pencarianmu"
+                        android:textColor="@color/black"
+                        android:visibility="gone"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_serupa"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:paddingEnd="10dp"
+                        android:visibility="gone"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:ignore="RtlSymmetry"
+                        tools:listitem="@layout/item_product" />
 
 
                 </LinearLayout>
@@ -213,7 +295,13 @@
         app:behavior_peekHeight="0dp"
         app:cardCornerRadius="16dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-
+        <androidx.cardview.widget.CardView
+            android:layout_width="80dp"
+            android:layout_height="3dp"
+            app:cardCornerRadius="5dp"
+            android:backgroundTint="@color/light_grey"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -224,6 +312,7 @@
                 android:id="@+id/rv_kategory_full"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
                 tools:itemCount="12"/>
 
         </LinearLayout>

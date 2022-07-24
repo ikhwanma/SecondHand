@@ -144,8 +144,10 @@ class NotificationFragment : Fragment() {
                 }
             }
             adapter.submitData(data)
+
             rvNotification.adapter = adapter
             rvNotification.layoutManager = LinearLayoutManager(requireContext())
+            rvNotification.setItemViewCacheSize(data.size)
         }
     }
 

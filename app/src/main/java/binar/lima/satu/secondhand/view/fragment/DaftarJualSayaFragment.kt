@@ -99,15 +99,13 @@ class DaftarJualSayaFragment : Fragment() {
         private val TAB_TITLES = mutableListOf(
             "Produk",
             "Diminati",
-            "Terjual",
-            "History"
+            "Terjual"
         )
 
         private val IMAGE_LIST = mutableListOf(
             R.drawable.ic_box,
             R.drawable.ic_baseline_favorite_border_24,
-            R.drawable.ic_dollar,
-            R.drawable.ic_baseline_history_24
+            R.drawable.ic_dollar
         )
     }
 }

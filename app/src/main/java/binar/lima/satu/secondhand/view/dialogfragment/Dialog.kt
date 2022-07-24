@@ -3,6 +3,8 @@ package binar.lima.satu.secondhand.view.dialogfragment
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import binar.lima.satu.secondhand.R
 
 class Dialog(val activity: Activity) {
@@ -19,6 +21,7 @@ class Dialog(val activity: Activity) {
         builder.setCancelable(false)
 
         dialog = builder.create()
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
     }
 

@@ -38,8 +38,15 @@ class HistoryTabFragment : Fragment() {
             apiViewModel.getHistory(token).observe(viewLifecycleOwner){
                 when(it.status){
                     SUCCESS -> {
+                        binding.progressCircular.visibility = View.GONE
+                        val data = it.data!!
+
+                        if (data.isEmpty()){
+                            binding.llListKosong.visibility = View.VISIBLE
+                        }
+
                         val adapter = HistoryAdapter()
-                        adapter.submitData(it.data!!)
+                        adapter.submitData(data)
 
                         binding.apply {
                             rvHistory.adapter = adapter
@@ -47,10 +54,10 @@ class HistoryTabFragment : Fragment() {
                         }
                     }
                     ERROR -> {
-
+                        binding.progressCircular.visibility = View.GONE
                     }
                     LOADING -> {
-
+                        binding.progressCircular.visibility = View.VISIBLE
                     }
                 }
             }

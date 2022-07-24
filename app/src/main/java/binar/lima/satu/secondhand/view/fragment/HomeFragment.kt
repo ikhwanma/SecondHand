@@ -1,6 +1,7 @@
 package binar.lima.satu.secondhand.view.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +43,8 @@ class HomeFragment : Fragment() {
     private val userViewModel: UserViewModel by hiltNavGraphViewModels(R.id.nav_main)
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CardView>
+
+    private var city = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -216,6 +219,82 @@ class HomeFragment : Fragment() {
 
             userViewModel.getToken().observe(viewLifecycleOwner) { token ->
 
+                if (token == "") {
+                    val txtAddress = "Anda belum login"
+                    binding.tvAddress.text = txtAddress
+                } else {
+                    apiViewModel.getLoginUser(token).observe(viewLifecycleOwner) {
+                        when (it.status) {
+                            SUCCESS -> {
+                                val city = it.data!!.city
+
+                                if (city != ""){
+                                    apiViewModel.getAllProduct(status = "available")
+                                        .observe(viewLifecycleOwner){ product->
+                                            when(product.status){
+                                                SUCCESS ->{
+                                                    val dataProduct = product.data!!
+
+                                                    if (dataProduct.isNotEmpty()){
+                                                        binding.tvDisekitarmu.visibility = View.VISIBLE
+                                                        binding.rvDisekitarmu.visibility = View.VISIBLE
+                                                    }
+
+                                                    val listCity = city.split(" ")
+                                                    val listDisekitar = mutableListOf<GetProductResponseItem>()
+                                                    var ii = 0
+                                                    for (data in dataProduct) {
+                                                        if (ii == 15) break
+                                                        if (data.location.contains(listCity[2])) {
+                                                            listDisekitar.add(data)
+                                                            ii++
+                                                        }
+                                                    }
+
+                                                    val adapterDisekitar = ProductAdapter { data ->
+                                                        val mBundle = bundleOf(DetailFragment.EXTRA_ID to data.id)
+                                                        Navigation.findNavController(requireView())
+                                                            .navigate(R.id.action_homeFragment_to_detailFragment, mBundle)
+                                                    }
+
+                                                    adapterDisekitar.submitData(listDisekitar)
+                                                    binding.apply {
+                                                        rvDisekitarmu.layoutManager = LinearLayoutManager(
+                                                            requireContext(),
+                                                            LinearLayoutManager.HORIZONTAL,
+                                                            false
+                                                        )
+                                                        rvDisekitarmu.adapter = adapterDisekitar
+                                                        rvDisekitarmu.setItemViewCacheSize(listDisekitar.size)
+                                                    }
+                                                }
+                                                ERROR -> {
+
+                                                }
+                                                LOADING -> {
+
+                                                }
+                                            }
+                                        }
+                                }
+
+                                val txtAddress =
+                                    if (city == "") "Lengkapi Profile terlebih dahulu" else city
+
+                                binding.tvAddress.text = txtAddress
+
+
+                            }
+                            ERROR -> {
+
+                            }
+                            LOADING -> {
+
+                            }
+                        }
+                    }
+                }
+
                 apiViewModel.getBuyerWishlist(token).observe(viewLifecycleOwner) {
                     when (it.status) {
                         SUCCESS -> {
@@ -242,6 +321,7 @@ class HomeFragment : Fragment() {
 
             }
             getData()
+            getDataSerupa()
 
             binding.etSearch.setOnClickListener {
                 Navigation.findNavController(requireView())
@@ -252,7 +332,7 @@ class HomeFragment : Fragment() {
                 it.findNavController().navigate(R.id.action_homeFragment_to_wishlistFragment)
             }
 
-            binding.btnLihatSemua.setOnClickListener{
+            binding.btnLihatSemua.setOnClickListener {
                 val mBundle =
                     bundleOf(ProductFragment.EXTRA_ID_CATEGORY to 0)
                 Navigation.findNavController(requireView())
@@ -262,109 +342,156 @@ class HomeFragment : Fragment() {
 
     }
 
+    private fun getDataSerupa() {
+        userViewModel.getCategory().observe(viewLifecycleOwner){ categoryId ->
+            if (categoryId != 0){
+                apiViewModel.getAllProduct(status = "available", category_id = categoryId, page = 1, perPage = 15).observe(viewLifecycleOwner){
+                    binding.apply {
+                        when(it.status){
+                            SUCCESS -> {
+                                val data = it.data!!
+                                rvSerupa.visibility = View.VISIBLE
+                                tvSerupa.visibility = View.VISIBLE
 
+                                val adapterSerupa = ProductAdapter { dataItem ->
+                                    val mBundle = bundleOf(DetailFragment.EXTRA_ID to dataItem.id)
+                                    Navigation.findNavController(requireView())
+                                        .navigate(R.id.action_homeFragment_to_detailFragment, mBundle)
+                                }
+
+                                adapterSerupa.submitData(data)
+                                binding.apply {
+                                    rvDisekitarmu.layoutManager = LinearLayoutManager(
+                                        requireContext(),
+                                        LinearLayoutManager.HORIZONTAL,
+                                        false
+                                    )
+                                    rvSerupa.adapter = adapterSerupa
+                                    rvSerupa.setItemViewCacheSize(data.size)
+                                }
+                            }
+                            ERROR -> {
+
+                            }
+                            LOADING -> {
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 
     private fun getData() {
-        apiViewModel.getAllProduct(status = "available").observe(viewLifecycleOwner) { product ->
-            when (product.status) {
-                SUCCESS -> {
-                    val dataProduct = product.data!!
-                    binding.rvProduct.visibility = View.VISIBLE
-                    binding.progressCircular.visibility = View.GONE
+        apiViewModel.getAllProduct(status = "available")
+            .observe(viewLifecycleOwner) { product ->
+                when (product.status) {
+                    SUCCESS -> {
+                        val dataProduct = product.data!!
+                        binding.rvProduct.visibility = View.VISIBLE
+                        binding.progressCircular.visibility = View.GONE
 
-                    val list = mutableListOf<GetProductResponseItem>()
-                    var j = 0
-                    for (data in dataProduct) {
-                        if (j == 15) break
-                        else list.add(data)
-                        j++
-                    }
+                        val list = mutableListOf<GetProductResponseItem>()
+                        var i = 0
+                        for (data in dataProduct) {
+                            if (i == 15) break
+                            list.add(data)
 
-                    val adapter = ProductAdapter { data ->
-                        if(data.id == -2){
-                            val mBundle =
-                                bundleOf(ProductFragment.EXTRA_ID_CATEGORY to 0)
-                            Navigation.findNavController(requireView())
-                                .navigate(R.id.action_homeFragment_to_productFragment, mBundle)
-                        }else{
-                            val mBundle = bundleOf(DetailFragment.EXTRA_ID to data.id)
-                            Navigation.findNavController(requireView())
-                                .navigate(R.id.action_homeFragment_to_detailFragment, mBundle)
+                            i++
                         }
-                    }
 
-                    list.add(
-                        GetProductResponseItem(
-                            0,
-                            listOf(Category(1, "tes")),
-                            "s",
-                            -2,
-                            "s",
-                            "s",
-                            "s",
-                            "s",
-                            "s",
-                            -2
-                        )
-                    )
-                    adapter.submitData(list)
-
-                    val listProduct = mutableListOf<ProductEntity>()
-                    val appExecutors = AppExecutors()
-
-                    appExecutors.diskIO.execute {
-                        for (dp in list) {
-                            if (dp.id == -2) break
-
-                            var category = ""
-                            var k = 1
-                            for (cat in dp.categories) {
-                                category += if (k != dp.categories.size) {
-                                    "${cat.name}, "
-                                } else {
-                                    cat.name
-                                }
-                                k++
-                            }
-                            val productEntity = ProductEntity(
-                                null,
-                                dp.imageUrl,
-                                dp.name,
-                                category,
-                                dp.basePrice.toString(),
-                                dp.location
-                            )
-                            listProduct.add(productEntity)
-                        }
-                    }
-
-                    apiViewModel.deleteAllProduct()
-                    apiViewModel.addProduct(listProduct)
-
-
-                    binding.apply {
                         val layoutManager = LinearLayoutManager(
                             requireContext(),
                             LinearLayoutManager.HORIZONTAL,
                             false
                         )
-                        rvProduct.layoutManager = layoutManager
-                        rvProduct.adapter = adapter
-                        rvProduct.setItemViewCacheSize(list.size)
+
+
+                        val adapter = ProductAdapter { data ->
+                            if (data.id == -2) {
+                                val mBundle =
+                                    bundleOf(ProductFragment.EXTRA_ID_CATEGORY to 0)
+                                Navigation.findNavController(requireView())
+                                    .navigate(R.id.action_homeFragment_to_productFragment, mBundle)
+                            } else {
+                                val mBundle = bundleOf(DetailFragment.EXTRA_ID to data.id)
+                                Navigation.findNavController(requireView())
+                                    .navigate(R.id.action_homeFragment_to_detailFragment, mBundle)
+                            }
+                        }
+
+
+                        list.add(
+                            GetProductResponseItem(
+                                0,
+                                listOf(Category(1, "tes")),
+                                "s",
+                                -2,
+                                "s",
+                                "s",
+                                "s",
+                                "s",
+                                "s",
+                                -2
+                            )
+                        )
+                        adapter.submitData(list)
+
+                        val listProduct = mutableListOf<ProductEntity>()
+                        val appExecutors = AppExecutors()
+
+                        var j = 0
+                        appExecutors.diskIO.execute {
+                            for (dp in list) {
+                                if (j == 15) break
+                                var category = ""
+                                var k = 1
+                                for (cat in dp.categories) {
+                                    category += if (k != dp.categories.size) {
+                                        "${cat.name}, "
+                                    } else {
+                                        cat.name
+                                    }
+                                    k++
+                                }
+                                val productEntity = ProductEntity(
+                                    null,
+                                    dp.imageUrl,
+                                    dp.name,
+                                    category,
+                                    dp.basePrice.toString(),
+                                    dp.location
+                                )
+                                listProduct.add(productEntity)
+                                j++
+                            }
+                        }
+                        apiViewModel.getProductDb().observe(viewLifecycleOwner){
+                            if (it.isEmpty()){
+                                apiViewModel.addProduct(listProduct)
+                            }
+                        }
+
+
+
+                        binding.apply {
+                            rvProduct.layoutManager = layoutManager
+                            rvProduct.adapter = adapter
+                            rvProduct.setItemViewCacheSize(list.size)
+                        }
+
                     }
+                    ERROR -> {
 
-
-                }
-                ERROR -> {
-
-                }
-                LOADING -> {
-                    binding.rvProduct.visibility = View.INVISIBLE
-                    binding.progressCircular.visibility = View.VISIBLE
+                    }
+                    LOADING -> {
+                        binding.rvProduct.visibility = View.INVISIBLE
+                        binding.progressCircular.visibility = View.VISIBLE
+                    }
                 }
             }
-        }
     }
 
 
