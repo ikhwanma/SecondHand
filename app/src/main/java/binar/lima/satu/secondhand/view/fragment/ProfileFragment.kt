@@ -71,6 +71,10 @@ class ProfileFragment : Fragment() {
             Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_editProfileFragment)
         }
 
+        binding.btnHistory.setOnClickListener {
+            it.findNavController().navigate(R.id.action_profileFragment_to_historyTabFragment)
+        }
+
         binding.imgUser.setOnClickListener {
             Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_editProfileFragment)
         }
@@ -88,10 +92,12 @@ class ProfileFragment : Fragment() {
                                 userViewModel.setBiometric(it)
                             }
                             userViewModel.setToken("")
+                            userViewModel.setCategory(0)
                             Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_loginFragment)
                         }.setNegativeButton("Tidak") { _, _ ->
                             userViewModel.setToken("")
                             userViewModel.setBiometric("")
+                            userViewModel.setCategory(0)
                             Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_loginFragment)
                         }
                         .show()

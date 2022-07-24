@@ -5,15 +5,23 @@
     android:layout_height="match_parent"
     tools:context=".view.viewpageritem.TerjualTabFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_terjual"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_terjual"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <ProgressBar
+
+    <pl.droidsonroids.gif.GifImageView
         android:id="@+id/progress_circular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/ic_loading_secondhand"
         android:layout_centerInParent="true"
         android:visibility="gone" />
 

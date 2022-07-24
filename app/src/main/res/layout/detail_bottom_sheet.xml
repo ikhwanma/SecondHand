@@ -9,6 +9,13 @@
     app:behavior_peekHeight="0dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="80dp"
+        android:layout_height="3dp"
+        app:cardCornerRadius="5dp"
+        android:backgroundTint="@color/light_grey"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

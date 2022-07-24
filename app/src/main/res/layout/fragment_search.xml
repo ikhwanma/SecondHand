@@ -27,11 +27,92 @@
             android:contentDescription="@string/image_search" />
     </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_product"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/rl_search"
-        tools:listitem="@layout/item_product"/>
+        android:layout_below="@+id/rl_search">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/ll_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="10dp"
+                android:gravity="center_vertical"
+                android:visibility="gone"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_logo_secondhand"
+                    android:contentDescription="@string/icon" />
+                <TextView
+                    android:id="@+id/tv_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lihat_semua"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/poppins_medium"
+                    />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_product"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/item_product"
+                tools:itemCount="1"/>
+            <Button
+                android:id="@+id/btn_all"
+                style="@style/ButtonStyle"
+                android:text="@string/lihat_semua_produk_yang_dicari"
+                android:visibility="gone"
+                android:layout_margin="20dp"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/ll_list_kosong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:id="@+id/iv_list_kosong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_empty_diminati"
+            android:contentDescription="@string/image" />
+
+        <TextView
+            android:id="@+id/tv_list_kosong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/barang_yang_kamu_cari_tidak_tersedia_yuk_cari_barang_lain_yang_serupa"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/light_grey"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:layout_marginHorizontal="26dp"
+            />
+    </LinearLayout>
+
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/progress_circular"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/ic_loading_secondhand"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 
 </RelativeLayout>

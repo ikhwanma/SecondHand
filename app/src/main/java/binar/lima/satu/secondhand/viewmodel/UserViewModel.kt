@@ -31,4 +31,14 @@ class UserViewModel @Inject constructor(private val pref : DataStoreManager) : V
     fun getBiometric() : LiveData<String>{
         return pref.getBiometric().asLiveData()
     }
+
+    fun setCategory(category: Int){
+        viewModelScope.launch {
+            pref.setCategory(category)
+        }
+    }
+
+    fun getCategory() : LiveData<Int>{
+        return pref.getCategory().asLiveData()
+    }
 }

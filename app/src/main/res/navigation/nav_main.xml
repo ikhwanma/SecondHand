@@ -72,6 +72,9 @@
         <action
             android:id="@+id/action_profileFragment_to_ubahPasswordFragment"
             app:destination="@id/ubahPasswordFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_historyTabFragment"
+            app:destination="@id/historyTabFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -264,4 +267,9 @@
             app:popUpTo="@id/editProdukFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/historyTabFragment"
+        android:name="binar.lima.satu.secondhand.view.viewpageritem.HistoryTabFragment"
+        android:label="fragment_history_tab"
+        tools:layout="@layout/fragment_history_tab" />
 </navigation>

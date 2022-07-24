@@ -3,12 +3,74 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.viewpageritem.HistoryTabFragment">
+
+    <ImageView
+        android:id="@+id/ic_history"
+        android:layout_width="33dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginBottom="20dp"
+        android:contentDescription="@string/icon"
+        android:src="@drawable/ic_baseline_notifications_24"
+        app:tint="@color/blue_primary_variant" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/progress_circular"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/ic_loading_secondhand"
+        android:layout_centerInParent="true" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/TextViewStyle"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="15dp"
+        android:layout_toEndOf="@+id/ic_history"
+        android:text="@string/history"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/ll_list_kosong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:id="@+id/iv_list_kosong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_empty_diminati"
+            android:contentDescription="@string/image" />
+
+        <TextView
+            android:id="@+id/tv_list_kosong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/history_belanjamu_masih_kosong_yuk_belanja_sekarang"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/light_grey"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:layout_marginHorizontal="26dp"
+            />
+    </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_history"
-        android:padding="5dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ic_history"
+        android:padding="5dp" />
 
 </RelativeLayout>

@@ -1,8 +1,8 @@
 package binar.lima.satu.secondhand.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import binar.lima.satu.secondhand.data.local.room.ProductEntity
 import binar.lima.satu.secondhand.data.utils.MainRepository
 import binar.lima.satu.secondhand.data.utils.Resource
@@ -11,6 +11,7 @@ import binar.lima.satu.secondhand.model.auth.register.RegisterBody
 import binar.lima.satu.secondhand.model.auth.update.UpdatePasswordBody
 import binar.lima.satu.secondhand.model.buyer.order.PostOrderBody
 import binar.lima.satu.secondhand.model.buyer.wishlist.PostWishlistBody
+import binar.lima.satu.secondhand.model.product.GetProductResponseItem
 import binar.lima.satu.secondhand.model.seller.order.PatchOrderBody
 import binar.lima.satu.secondhand.model.seller.order.PutOrderBody
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,6 +24,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ApiViewModel @Inject constructor(private val mainRepository: MainRepository) : ViewModel() {
+
+    val errorMessage = MutableLiveData<String>()
 
     //==================================Auth
     fun loginUser(loginBody: LoginBody) = liveData(Dispatchers.IO){
@@ -190,6 +193,10 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
         }catch (e : Exception){
             emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
         }
+    }
+
+    fun getAllProductPaging(idCategory: Int): LiveData<PagingData<GetProductResponseItem>>{
+        return mainRepository.getAllProductPaging(idCategory).cachedIn(viewModelScope)
     }
 
     fun getProduct(id: Int) = liveData(Dispatchers.IO){

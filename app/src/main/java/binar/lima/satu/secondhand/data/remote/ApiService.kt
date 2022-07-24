@@ -141,6 +141,15 @@ interface ApiService {
         @Query("per_page") perPage : Int?,
     ) : List<GetProductResponseItem>
 
+    @GET("/buyer/product")
+    suspend fun getAllProductPaging(
+        @Query("status") status : String?,
+        @Query("category_id") category_id : Int?,
+        @Query("search") search : String?,
+        @Query("page") page : Int?,
+        @Query("per_page") perPage : Int?,
+    ) : retrofit2.Response<List<GetProductResponseItem>>
+
     @GET("/buyer/product/{id}")
     suspend fun getProduct(
         @Path("id") id : Int

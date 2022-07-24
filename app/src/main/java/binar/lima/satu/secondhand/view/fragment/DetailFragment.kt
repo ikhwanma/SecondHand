@@ -86,12 +86,13 @@ class DetailFragment : Fragment() , View.OnClickListener{
             when(it.status){
                 SUCCESS -> {
                     val data = it.data!!
-
                     setDetail(data)
 
                     val txtPrice = "Rp ${Converter.converterMoney(data.basePrice.toString())}"
 
                     val category = data.categories
+
+                    userViewModel.setCategory(category[0].id)
 
                     var txtCategory = ""
 

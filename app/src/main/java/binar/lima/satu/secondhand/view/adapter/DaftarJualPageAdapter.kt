@@ -10,7 +10,7 @@ import binar.lima.satu.secondhand.view.viewpageritem.TerjualTabFragment
 
 class DaftarJualPageAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int {
-        return 4
+        return 3
     }
 
     override fun createFragment(position: Int): Fragment {
@@ -23,9 +23,6 @@ class DaftarJualPageAdapter(fragment: Fragment) : FragmentStateAdapter(fragment)
             }
             2 -> {
                 TerjualTabFragment()
-            }
-            3 -> {
-                HistoryTabFragment()
             }
             else -> {
                 ProductTabFragment()

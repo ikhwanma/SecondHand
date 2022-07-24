@@ -1,23 +1,31 @@
 package binar.lima.satu.secondhand.data.utils
 
 import androidx.lifecycle.LiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import binar.lima.satu.secondhand.data.helper.ApiHelper
 import binar.lima.satu.secondhand.data.local.room.ProductDao
 import binar.lima.satu.secondhand.data.local.room.ProductEntity
+import binar.lima.satu.secondhand.data.remote.ApiService
 import binar.lima.satu.secondhand.model.auth.login.LoginBody
 import binar.lima.satu.secondhand.model.auth.register.RegisterBody
 import binar.lima.satu.secondhand.model.auth.update.UpdatePasswordBody
 import binar.lima.satu.secondhand.model.buyer.order.PostOrderBody
 import binar.lima.satu.secondhand.model.buyer.wishlist.PostWishlistBody
+import binar.lima.satu.secondhand.model.product.GetProductResponseItem
 import binar.lima.satu.secondhand.model.seller.order.PatchOrderBody
 import binar.lima.satu.secondhand.model.seller.order.PutOrderBody
+import binar.lima.satu.secondhand.paging.PagingSource
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import javax.inject.Inject
 
 class MainRepository @Inject constructor(
     private val apiHelper: ApiHelper,
-    private val productDao: ProductDao
+    private val productDao: ProductDao,
+    private val apiService: ApiService
 ) {
 
     //=================Auth=================
@@ -109,6 +117,17 @@ class MainRepository @Inject constructor(
         perPage : Int? = null,
     ) =
         apiHelper.getAllProduct(status = status, category_id = category_id, search = search, page = page, perPage = perPage)
+
+    fun getAllProductPaging(idCategory: Int): LiveData<PagingData<GetProductResponseItem>>{
+        return Pager(
+            config = PagingConfig(
+                pageSize = 1
+            ),
+            pagingSourceFactory = {
+                PagingSource(apiService, idCategory)
+            },
+            initialKey = 1).liveData
+    }
 
     suspend fun getProduct(id: Int) = apiHelper.getProduct(id)
     suspend fun postOrder(header: String, order: PostOrderBody) = apiHelper.postOrder(header, order)
