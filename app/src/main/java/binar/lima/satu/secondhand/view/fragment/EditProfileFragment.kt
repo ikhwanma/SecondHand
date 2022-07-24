@@ -329,7 +329,7 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
     private fun updateProfile(nama: String, kota: String, alamat: String, handphone: Long) {
         val contentResolver = requireActivity().applicationContext.contentResolver
 
-        var imageUpload: MultipartBody.Part? = if (image != null) {
+        val imageUpload: MultipartBody.Part? = if (image != null) {
             val type = contentResolver.getType(image!!)
             val tempFile = File.createTempFile("temp-", null, null)
             val inputStream = contentResolver.openInputStream(image!!)

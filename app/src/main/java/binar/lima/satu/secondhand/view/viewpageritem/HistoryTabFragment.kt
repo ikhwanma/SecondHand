@@ -52,7 +52,7 @@ class HistoryTabFragment : Fragment() {
                             binding.llListKosong.visibility = View.VISIBLE
                         }
 
-                        val adapter = HistoryAdapter(){ it1 ->
+                        val adapter = HistoryAdapter { it1 ->
                             val mBundle = bundleOf(DetailFragment.EXTRA_ID to it1.productId)
                             Navigation.findNavController(requireView())
                                 .navigate(R.id.action_historyTabFragment_to_detailFragment, mBundle)

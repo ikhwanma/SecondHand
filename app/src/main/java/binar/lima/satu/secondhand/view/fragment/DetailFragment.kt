@@ -65,15 +65,6 @@ class DetailFragment : Fragment() , View.OnClickListener{
 
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet)
 
-        /*val callback = object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                Navigation.findNavController(requireView()).navigate(R.id.action_detailFragment_to_homeFragment)
-            }
-
-        }
-
-        requireActivity().onBackPressedDispatcher.addCallback(callback)*/
-
         idProduct = arguments?.getInt(EXTRA_ID) as Int
 
         userViewModel.getToken().observe(viewLifecycleOwner){token ->
@@ -437,7 +428,9 @@ class DetailFragment : Fragment() , View.OnClickListener{
                                 }
                                 ERROR -> {
                                     dialog.dismissDialog()
-                                    Toast.makeText(requireContext(), order.message, Toast.LENGTH_SHORT).show()
+                                    if (order.message!!.contains("400")){
+                                        Toast.makeText(requireContext(), "Barang ini sudah memiliki jumlah maksimal order", Toast.LENGTH_SHORT).show()
+                                    }
                                 }
                                 LOADING -> {
                                     dialog.startDialog()
