@@ -85,7 +85,9 @@ class SearchFragment : Fragment() {
                                 }
 
                                 binding.btnAll.setOnClickListener {
-                                    Toast.makeText(requireContext(), dataSearch.size.toString(), Toast.LENGTH_SHORT).show()
+                                    val mBundle = bundleOf(ProductSearchFragment.EXTRA_SEARCH to binding.etSearch.text.toString())
+                                    Navigation.findNavController(requireView())
+                                        .navigate(R.id.action_searchFragment_to_productSearchFragment, mBundle)
                                 }
 
                                 val adapter = ProductAdapter{
@@ -108,6 +110,11 @@ class SearchFragment : Fragment() {
                         }
                     }
                 }
+                if (p0 == "") {
+                    binding.rvProduct.visibility = View.GONE
+                    binding.llSize.visibility = View.GONE
+                    binding.progressCircular.visibility = View.GONE
+                }
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -115,6 +122,7 @@ class SearchFragment : Fragment() {
             }
 
         })
+
     }
 
 }

@@ -11,9 +11,10 @@ import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.Converter
 import binar.lima.satu.secondhand.databinding.ItemHistoryBinding
 import binar.lima.satu.secondhand.model.history.GetHistoryResponseItem
+import binar.lima.satu.secondhand.model.seller.order.GetSellerOrderResponseItem
 import com.bumptech.glide.Glide
 
-class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
+class HistoryAdapter(val onItemClick: (GetHistoryResponseItem) -> Unit) : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
     inner class ViewHolder(private val binding: ItemHistoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: GetHistoryResponseItem) {
@@ -55,6 +56,9 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
                 tvPrice.text = Converter.converterMoney(data.product.basePrice.toString())
                 tvBid.text = txtPrice
                 tvProduct.text = data.productName
+                root.setOnClickListener {
+                    onItemClick(data)
+                }
                 Glide.with(itemView).load(data.imageUrl).into(imgProduct)
             }
         }

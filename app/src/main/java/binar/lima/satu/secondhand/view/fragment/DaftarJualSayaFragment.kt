@@ -71,11 +71,13 @@ class DaftarJualSayaFragment : Fragment() {
                             val data = user.data!!
 
                             binding.apply {
-                                if (data.city != "temp"){
+                                if (data.city != ""){
                                     tvSellerCity.text = data.city
                                 }
                                 tvSellerName.text = data.fullName
-                                Glide.with(requireView()).load(data.imageUrl).into(binding.imgSeller)
+                                if (data.imageUrl != null){
+                                    Glide.with(requireView()).load(data.imageUrl).into(binding.imgSeller)
+                                }
                             }
                         }
                         ERROR -> {

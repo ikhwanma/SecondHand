@@ -7,10 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".view.viewpageritem.DiminatiTabFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_diminati"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_diminati"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
 
     <ImageView
         android:id="@+id/iv_list_kosong"

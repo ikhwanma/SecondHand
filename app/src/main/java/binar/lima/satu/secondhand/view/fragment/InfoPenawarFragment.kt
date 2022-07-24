@@ -41,6 +41,10 @@ class InfoPenawarFragment : Fragment(), View.OnClickListener {
     private var token = ""
     private var phoneNumber = ""
     private var namaBarang = ""
+    private var hargaBarang = ""
+    private var hargaTawaran = ""
+    private var namaBuyer = ""
+    private var namaSeller = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,36 +60,35 @@ class InfoPenawarFragment : Fragment(), View.OnClickListener {
 
         idOrder = arguments?.getInt(EXTRA_ORDER_ID) as Int
 
-        /*val callback = object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                Navigation.findNavController(requireView()).navigate(R.id.action_infoPenawarFragment_to_daftarJualSayaFragment)
-            }
-        }
-
-        requireActivity().onBackPressedDispatcher.addCallback(callback)*/
 
         bottomSheetHubungiBehavior = BottomSheetBehavior.from(binding.bottomSheetHubungi)
         bottomSheetStatusBehavior = BottomSheetBehavior.from(binding.bottomSheetStatus)
 
-        userViewModel.getToken().observe(viewLifecycleOwner){ token ->
+        userViewModel.getToken().observe(viewLifecycleOwner) { token ->
             setToken(token)
-            apiViewModel.getDetailSellerOrder(token, idOrder).observe(viewLifecycleOwner){
-                when(it.status){
+            apiViewModel.getDetailSellerOrder(token, idOrder).observe(viewLifecycleOwner) {
+                when (it.status) {
                     SUCCESS -> {
                         val data = it.data!!
                         val user = data.user
                         val product = data.product
                         setNoHp(user.phoneNumber)
                         setNamaProduk(product.name)
+                        this.namaBuyer = product.user.fullName
+                        this.hargaBarang = product.basePrice.toString()
+                        this.hargaTawaran = data.price.toString()
+                        this.namaSeller = product.user.fullName
                         binding.apply {
 
-                            if (data.status == "success"){
+                            if (data.status == "success") {
                                 llButton.visibility = View.GONE
                                 llButtonSuccess.visibility = View.VISIBLE
                             }
 
-                            val txtPrice = "Rp ${Converter.converterMoney(product.basePrice.toString())}"
-                            val txtBid = "Ditawar Rp ${Converter.converterMoney(data.price.toString())}"
+                            val txtPrice =
+                                "Rp ${Converter.converterMoney(product.basePrice.toString())}"
+                            val txtBid =
+                                "Ditawar Rp ${Converter.converterMoney(data.price.toString())}"
                             val txtDate = Converter.convertDate(data.updatedAt)
 
                             tvBid.text = txtBid
@@ -101,10 +104,12 @@ class InfoPenawarFragment : Fragment(), View.OnClickListener {
                             tvProductMatchBuyerName.text = user.fullName
                             tvProductMatchName.text = product.name
                             tvProductMatchPrice.text = txtBid
-                            Glide.with(requireView()).load(product.imageUrl).into(productMatchProductImg)
+                            Glide.with(requireView()).load(product.imageUrl)
+                                .into(productMatchProductImg)
 
                             Glide.with(requireView()).load(data.user.imageUrl).into(imgBuyer)
-                            Glide.with(requireView()).load(data.user.imageUrl).into(productMatchBuyerImg)
+                            Glide.with(requireView()).load(data.user.imageUrl)
+                                .into(productMatchBuyerImg)
                         }
                     }
                     ERROR -> {
@@ -117,7 +122,8 @@ class InfoPenawarFragment : Fragment(), View.OnClickListener {
             }
         }
 
-        bottomSheetHubungiBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback(){
+        bottomSheetHubungiBehavior.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     binding.apply {
@@ -125,8 +131,7 @@ class InfoPenawarFragment : Fragment(), View.OnClickListener {
                         btnHubungi.isClickable = true
                         bg.visibility = View.GONE
                     }
-                }
-                else binding.root.setOnClickListener {
+                } else binding.root.setOnClickListener {
                     bottomSheetHubungiBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                 }
             }
@@ -142,7 +147,8 @@ class InfoPenawarFragment : Fragment(), View.OnClickListener {
 
         })
 
-        bottomSheetStatusBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback(){
+        bottomSheetStatusBehavior.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     binding.apply {
@@ -150,8 +156,7 @@ class InfoPenawarFragment : Fragment(), View.OnClickListener {
                         btnHubungi.isClickable = true
                         bg.visibility = View.GONE
                     }
-                }
-                else binding.root.setOnClickListener {
+                } else binding.root.setOnClickListener {
                     bottomSheetStatusBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                 }
             }
@@ -187,64 +192,84 @@ class InfoPenawarFragment : Fragment(), View.OnClickListener {
         this.namaBarang = name
     }
 
-
     private fun setNoHp(phoneNumber: String) {
         this.phoneNumber = "62$phoneNumber"
     }
 
-    private fun setToken(token: String){
+    private fun setToken(token: String) {
         this.token = token
     }
 
     override fun onClick(p0: View?) {
-        when(p0?.id){
-            R.id.btn_tolak ->{
-                apiViewModel.patchSellerOrder(token,idOrder, PatchOrderBody("tolak")).observe(viewLifecycleOwner){
-                    when(it.status){
-                        SUCCESS -> {
-                            dialog.dismissDialog()
-                            binding.llButton.visibility = View.GONE
-                            Snackbar.make(requireView(), "Penawaran ditolak", Snackbar.LENGTH_SHORT).show()
-                        }
-                        ERROR -> {
-                            dialog.dismissDialog()
-                            if (it.message!!.contains("400")){
+        when (p0?.id) {
+            R.id.btn_tolak -> {
+                apiViewModel.patchSellerOrder(token, idOrder, PatchOrderBody("tolak"))
+                    .observe(viewLifecycleOwner) {
+                        when (it.status) {
+                            SUCCESS -> {
+                                dialog.dismissDialog()
                                 binding.llButton.visibility = View.GONE
-                                Snackbar.make(requireView(), "Penawaran ditolak", Snackbar.LENGTH_SHORT).show()
-                            }else{
-                                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                                Snackbar.make(
+                                    requireView(),
+                                    "Penawaran ditolak",
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
+                            }
+                            ERROR -> {
+                                dialog.dismissDialog()
+                                if (it.message!!.contains("400")) {
+                                    binding.llButton.visibility = View.GONE
+                                    Snackbar.make(
+                                        requireView(),
+                                        "Penawaran ditolak",
+                                        Snackbar.LENGTH_SHORT
+                                    ).show()
+                                } else {
+                                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT)
+                                        .show()
+                                }
+                            }
+                            LOADING -> {
+                                dialog.startDialog()
                             }
                         }
-                        LOADING -> {
-                            dialog.startDialog()
-                        }
                     }
-                }
             }
             R.id.btn_terima -> {
-                apiViewModel.patchSellerOrder(token, idOrder, PatchOrderBody("success")).observe(viewLifecycleOwner){
-                    when(it.status){
-                        SUCCESS -> {
-                            dialog.dismissDialog()
-                            binding.llButton.visibility = View.GONE
-                            binding.llButtonSuccess.visibility = View.VISIBLE
-                            Snackbar.make(requireView(), "Penawaran diterima", Snackbar.LENGTH_SHORT).show()
-                        }
-                        ERROR -> {
-                            dialog.dismissDialog()
-                            if (it.message!!.contains("400")){
-                                Snackbar.make(requireView(), "Penawaran diterima", Snackbar.LENGTH_SHORT).show()
-                                val mBundle = bundleOf(EXTRA_ORDER_ID to id)
-                                Navigation.findNavController(requireView()).navigate(R.id.infoPenawarFragment, mBundle)
-                            }else{
-                                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                apiViewModel.patchSellerOrder(token, idOrder, PatchOrderBody("success"))
+                    .observe(viewLifecycleOwner) {
+                        when (it.status) {
+                            SUCCESS -> {
+                                dialog.dismissDialog()
+                                binding.llButton.visibility = View.GONE
+                                binding.llButtonSuccess.visibility = View.VISIBLE
+                                Snackbar.make(
+                                    requireView(),
+                                    "Penawaran diterima",
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
+                            }
+                            ERROR -> {
+                                dialog.dismissDialog()
+                                if (it.message!!.contains("400")) {
+                                    Snackbar.make(
+                                        requireView(),
+                                        "Penawaran diterima",
+                                        Snackbar.LENGTH_SHORT
+                                    ).show()
+                                    val mBundle = bundleOf(EXTRA_ORDER_ID to id)
+                                    Navigation.findNavController(requireView())
+                                        .navigate(R.id.infoPenawarFragment, mBundle)
+                                } else {
+                                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT)
+                                        .show()
+                                }
+                            }
+                            LOADING -> {
+                                dialog.startDialog()
                             }
                         }
-                        LOADING -> {
-                            dialog.startDialog()
-                        }
                     }
-                }
             }
             R.id.btn_hubungi -> {
                 bottomSheetHubungiBehavior.state = BottomSheetBehavior.STATE_EXPANDED
@@ -253,55 +278,78 @@ class InfoPenawarFragment : Fragment(), View.OnClickListener {
                 bottomSheetStatusBehavior.state = BottomSheetBehavior.STATE_EXPANDED
             }
             R.id.btn_to_whatsapp -> {
-                val url = "https://wa.me/$phoneNumber?text=Barang%20\"$namaBarang\"%20pada%20aplikasi%20SecondHand%20siap%20dibeli"
+                val url =
+                    "https://wa.me/$phoneNumber?text=Hallo,%20Saya%20$namaSeller%20yang%20menjual%20\"$namaBarang\"%20dengan%20harga%20Rp%20${Converter.converterMoney(hargaBarang)},%20Menerima%20tawaran%20anda%20dengan%20harga%20Rp%20${Converter.converterMoney(hargaTawaran)}.%20Apakah%20anda%20ingin%20melanjutkan%20transaksi%20ini?"
                 val intent = Intent(Intent.ACTION_VIEW)
                 intent.data = Uri.parse(url)
                 startActivity(intent)
             }
             R.id.btn_kirim_status_penjualan -> {
-                if (binding.radioBatal.isChecked){
-                    apiViewModel.patchSellerOrder(token, idOrder, PatchOrderBody("declined")).observe(viewLifecycleOwner){
-                        when(it.status){
-                            SUCCESS -> {
-                                dialog.dismissDialog()
-                                binding.llButtonSuccess.visibility = View.GONE
-                                bottomSheetStatusBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                                Snackbar.make(requireView(), "Penawaran dibatalkan", Snackbar.LENGTH_SHORT).show()
-                            }
-                            ERROR -> {
-                                dialog.dismissDialog()
-                                if (it.message!!.contains("400")){
+                if (binding.radioBatal.isChecked) {
+                    apiViewModel.patchSellerOrder(token, idOrder, PatchOrderBody("declined"))
+                        .observe(viewLifecycleOwner) {
+                            when (it.status) {
+                                SUCCESS -> {
+                                    dialog.dismissDialog()
                                     binding.llButtonSuccess.visibility = View.GONE
-                                    bottomSheetStatusBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                                    Snackbar.make(requireView(), "Penawaran dibatalkan", Snackbar.LENGTH_SHORT).show()
-                                }else{
-                                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                                    bottomSheetStatusBehavior.state =
+                                        BottomSheetBehavior.STATE_COLLAPSED
+                                    Snackbar.make(
+                                        requireView(),
+                                        "Penawaran dibatalkan",
+                                        Snackbar.LENGTH_SHORT
+                                    ).show()
+                                }
+                                ERROR -> {
+                                    dialog.dismissDialog()
+                                    if (it.message!!.contains("400")) {
+                                        binding.llButtonSuccess.visibility = View.GONE
+                                        bottomSheetStatusBehavior.state =
+                                            BottomSheetBehavior.STATE_COLLAPSED
+                                        Snackbar.make(
+                                            requireView(),
+                                            "Penawaran dibatalkan",
+                                            Snackbar.LENGTH_SHORT
+                                        ).show()
+                                    } else {
+                                        Toast.makeText(
+                                            requireContext(),
+                                            it.message,
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
+                                LOADING -> {
+                                    dialog.startDialog()
                                 }
                             }
-                            LOADING -> {
-                                dialog.startDialog()
+                        }
+                } else if (binding.radioBerhasil.isChecked) {
+                    apiViewModel.patchSellerOrder(token, idOrder, PatchOrderBody("accepted"))
+                        .observe(viewLifecycleOwner) {
+                            when (it.status) {
+                                SUCCESS -> {
+                                    dialog.dismissDialog()
+                                    binding.llButtonSuccess.visibility = View.GONE
+                                    bottomSheetStatusBehavior.state =
+                                        BottomSheetBehavior.STATE_COLLAPSED
+                                    Snackbar.make(
+                                        requireView(),
+                                        "Barang berhasil terjual",
+                                        Snackbar.LENGTH_SHORT
+                                    ).show()
+                                }
+                                ERROR -> {
+                                    dialog.dismissDialog()
+                                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT)
+                                        .show()
+                                }
+                                LOADING -> {
+                                    dialog.startDialog()
+                                }
                             }
                         }
-                    }
-                }else if(binding.radioBerhasil.isChecked){
-                    apiViewModel.patchSellerOrder(token, idOrder, PatchOrderBody("accepted")).observe(viewLifecycleOwner){
-                        when(it.status){
-                            SUCCESS -> {
-                                dialog.dismissDialog()
-                                binding.llButtonSuccess.visibility = View.GONE
-                                bottomSheetStatusBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                                Snackbar.make(requireView(), "Barang berhasil terjual", Snackbar.LENGTH_SHORT).show()
-                            }
-                            ERROR -> {
-                                dialog.dismissDialog()
-                                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                            }
-                            LOADING -> {
-                                dialog.startDialog()
-                            }
-                        }
-                    }
-                }else{
+                } else {
                     Toast.makeText(requireContext(), "Pilih salah satu", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -309,7 +357,7 @@ class InfoPenawarFragment : Fragment(), View.OnClickListener {
     }
 
 
-    companion object{
+    companion object {
         const val EXTRA_ORDER_ID = "extra_order_id"
     }
 }

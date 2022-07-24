@@ -55,15 +55,6 @@ class LoginFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val callback = object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_homeFragment)
-            }
-
-        }
-
-        requireActivity().onBackPressedDispatcher.addCallback(callback)
-
         userViewModel.getBiometric().observe(viewLifecycleOwner){
             if (it == ""){
                 binding.btnBiometric.isEnabled = false
@@ -79,6 +70,14 @@ class LoginFragment : Fragment(), View.OnClickListener {
         binding.tvRegister.setOnClickListener(this)
         binding.btnViewPass.setOnClickListener(this)
         binding.btnBiometric.setOnClickListener(this)
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_homeFragment)
+            }
+
+        })
+
     }
 
     override fun onClick(p0: View?) {
@@ -91,6 +90,10 @@ class LoginFragment : Fragment(), View.OnClickListener {
                     if (email != "" && password != ""){
                         val loginBody = LoginBody(email, password)
                         login(loginBody)
+                    }else if(email == ""){
+                        Toast.makeText(requireContext(), "Email tidak boleh kosong", Toast.LENGTH_SHORT).show()
+                    }else if(password == ""){
+                        Toast.makeText(requireContext(), "Password tidak boleh kosong", Toast.LENGTH_SHORT).show()
                     }
                 }
             }

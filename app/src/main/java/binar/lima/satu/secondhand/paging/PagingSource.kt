@@ -23,8 +23,14 @@ class PagingSource(private val apiService: ApiService, private val idCategory: I
             responseData.addAll(data)
 
             delay(2500)
-            LoadResult.Page(data = responseData, prevKey = null,
-                nextKey = if (currentPage != 11) currentPage.plus(1) else null )
+            if (idCategory != 0){
+                LoadResult.Page(data = responseData, prevKey = null,
+                    nextKey =  if (data.isEmpty())null else currentPage.plus(1))
+            }else{
+                LoadResult.Page(data = responseData, prevKey = null,
+                    nextKey = if (currentPage != 11) currentPage.plus(1) else null )
+            }
+
         }catch (e: Exception){
             LoadResult.Error(e)
         }

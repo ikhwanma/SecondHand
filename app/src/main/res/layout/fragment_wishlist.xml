@@ -34,11 +34,48 @@
         android:layout_centerInParent="true"
         android:visibility="gone" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_wishlist"
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tv_title"
-        tools:listitem="@layout/item_wishlist" />
+        android:layout_below="@+id/tv_title">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_wishlist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tv_title"
+            tools:listitem="@layout/item_wishlist" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_list_kosong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:id="@+id/iv_list_kosong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_empty_diminati"
+            android:contentDescription="@string/image" />
+
+        <TextView
+            android:id="@+id/tv_list_kosong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/kamu_belum_memiliki_wishlist_yuk_mulai_cari_barang_yang_kamu_inginkan"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/light_grey"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:layout_marginHorizontal="26dp"
+            />
+    </LinearLayout>
 
 </RelativeLayout>

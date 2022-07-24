@@ -30,6 +30,10 @@ class TerjualTabFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTerjualTabBinding.inflate(inflater, container, false)
+        binding.swipeContainer.setOnRefreshListener {
+            getDataTerjual()
+            binding.swipeContainer.visibility = View.INVISIBLE
+        }
         getDataTerjual()
         return binding.root
     }
@@ -41,6 +45,12 @@ class TerjualTabFragment : Fragment() {
                     SUCCESS -> {
                         val data = it.data!!
                         binding.progressCircular.visibility = View.GONE
+
+                        binding.llStatus.visibility = if (data.isEmpty()){
+                            View.VISIBLE
+                        }else{
+                            View.GONE
+                        }
 
                         val adapter = TerjualAdapter { it1 ->
                             val mBundle = bundleOf(DetailFragment.EXTRA_ID to it1.productId)

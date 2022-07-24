@@ -55,8 +55,8 @@
                     android:layout_width="125dp"
                     android:layout_height="125dp"
                     android:layout_gravity="center_horizontal"
-                    android:scaleType="fitXY"
                     android:contentDescription="@string/image"
+                    android:scaleType="fitXY"
                     android:src="@drawable/ic_photo_profile" />
 
             </androidx.cardview.widget.CardView>
@@ -72,9 +72,9 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/image"
                     android:src="@drawable/ic_baseline_person_24"
-                    app:tint="@color/blue_primary_variant"
-                    android:contentDescription="@string/image" />
+                    app:tint="@color/blue_primary_variant" />
 
                 <TextView
                     style="@style/TextViewStyle"
@@ -93,27 +93,38 @@
                 android:hint="@string/nama"
                 android:inputType="textEmailAddress" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center_vertical"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_blue_location_on_24"
-                app:tint="@color/blue_primary_variant"
-                android:contentDescription="@string/image" />
             <TextView
-                style="@style/TextViewStyle"
+                android:id="@+id/tv_err_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/alamat"
-                android:textSize="15sp" />
-        </LinearLayout>
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/nama_minimal_3_karakter"
+                android:textColor="@color/red"
+                android:textSize="12sp"
+                android:visibility="gone" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/image"
+                    android:src="@drawable/ic_blue_location_on_24"
+                    app:tint="@color/blue_primary_variant" />
+
+                <TextView
+                    style="@style/TextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/alamat"
+                    android:textSize="15sp" />
+            </LinearLayout>
 
 
             <TextView
@@ -131,28 +142,38 @@
                 android:textSize="14sp"
                 tools:ignore="RtlSymmetry" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center_vertical"
-            tools:ignore="UseCompoundDrawables">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_category_2"
-                app:tint="@color/blue_primary_variant"
-                android:contentDescription="@string/image" />
             <TextView
-                style="@style/TextViewStyle"
+                android:id="@+id/tv_err_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/no_handphone"
-                android:textSize="15sp" />
-        </LinearLayout>
+                android:layout_marginStart="10dp"
+                android:text="@string/alamat_tidak_boleh_kosong"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/red"
+                android:textSize="12sp"
+                android:visibility="gone" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical"
+                tools:ignore="UseCompoundDrawables">
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/image"
+                    android:src="@drawable/ic_category_2"
+                    app:tint="@color/blue_primary_variant" />
 
+                <TextView
+                    style="@style/TextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_handphone"
+                    android:textSize="15sp" />
+            </LinearLayout>
 
 
             <RelativeLayout
@@ -179,6 +200,16 @@
                     tools:ignore="RtlSymmetry" />
             </RelativeLayout>
 
+            <TextView
+                android:id="@+id/tv_err_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/no_handphone_minimal_10_karakter"
+                android:textColor="@color/red"
+                android:textSize="12sp"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btn_simpan"

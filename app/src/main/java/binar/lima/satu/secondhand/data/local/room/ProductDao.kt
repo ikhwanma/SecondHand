@@ -8,6 +8,8 @@ import androidx.room.Query
 
 @Dao
 interface ProductDao {
+
+    //==product
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun addProduct(productEntity: List<ProductEntity>)
 
@@ -16,4 +18,5 @@ interface ProductDao {
 
     @Query("DELETE FROM product")
     fun deleteAll()
+
 }
