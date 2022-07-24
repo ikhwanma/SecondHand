@@ -1,22 +1,19 @@
 package binar.lima.satu.secondhand.view.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import binar.lima.satu.secondhand.R
-import binar.lima.satu.secondhand.data.utils.Status
 import binar.lima.satu.secondhand.data.utils.Status.*
-import binar.lima.satu.secondhand.databinding.FragmentHomeBinding
 import binar.lima.satu.secondhand.databinding.FragmentProductSearchBinding
 import binar.lima.satu.secondhand.model.product.GetProductResponseItem
-import binar.lima.satu.secondhand.view.activity.MainActivity
 import binar.lima.satu.secondhand.view.adapter.ProductAdapter
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
@@ -67,7 +64,7 @@ class ProductSearchFragment : Fragment() {
                     binding.progressCircular.visibility = View.GONE
 
                     binding.apply {
-                        val adapter = ProductAdapter(){ it1 ->
+                        val adapter = ProductAdapter { it1 ->
                             val mBundle = bundleOf(DetailFragment.EXTRA_ID to it1.id)
                             Navigation.findNavController(requireView())
                                 .navigate(R.id.action_productSearchFragment_to_detailFragment, mBundle)

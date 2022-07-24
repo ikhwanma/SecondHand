@@ -11,7 +11,6 @@ import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.Converter
 import binar.lima.satu.secondhand.databinding.ItemHistoryBinding
 import binar.lima.satu.secondhand.model.history.GetHistoryResponseItem
-import binar.lima.satu.secondhand.model.seller.order.GetSellerOrderResponseItem
 import com.bumptech.glide.Glide
 
 class HistoryAdapter(val onItemClick: (GetHistoryResponseItem) -> Unit) : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {

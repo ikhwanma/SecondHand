@@ -467,6 +467,7 @@ class HomeFragment : Fragment() {
                         }
                         apiViewModel.getProductDb().observe(viewLifecycleOwner){
                             if (it.isEmpty()){
+                                apiViewModel.deleteAllProduct()
                                 apiViewModel.addProduct(listProduct)
                             }
                         }

@@ -135,7 +135,7 @@ class MainRepository @Inject constructor(
     suspend fun getBuyerOrder(token: String) = apiHelper.getBuyerOrder(token)
     suspend fun updateBuyerOrder(token: String, id: Int, order: PutOrderBody) =
         apiHelper.updateBuyerOrder(token, id, order)
-    suspend fun deleteBuyerOrder(token : String, id : Int) = apiService.deleteBuyerOrder(token, id)
+    suspend fun deleteBuyerOrder(token : String, id : Int) = apiHelper.deleteBuyerOrder(token, id)
 
     suspend fun postBuyerWishList(token: String, postWishlistBody: PostWishlistBody) =
         apiHelper.postBuyerWishList(token, postWishlistBody)
