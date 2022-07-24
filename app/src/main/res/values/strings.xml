@@ -146,4 +146,10 @@
     <string name="notifikasimu_masih_kosong">Notifikasimu masih kosong</string>
     <string name="barang_yang_kamu_cari_tidak_tersedia_yuk_cari_barang_lain_yang_serupa">Barang yang kamu cari tidak tersedia :( Yuk cari barang lain yang serupa!</string>
     <string name="berdasarkan_pencarianmu">Berdasarkan pencarianmu</string>
+    <string name="no_handphone_minimal_10_karakter">No Handphone minimal 10 karakter</string>
+    <string name="alamat_tidak_boleh_kosong">Alamat tidak boleh kosong</string>
+    <string name="belum_ada_produkmu_yang_terjual_nih_sabar_ya_rejeki_nggak_kemana_kok">Belum ada produkmu yang terjual nih, sabar ya rejeki nggak kemana kok</string>
+    <string name="belum_menemukan_barang_yang_anda_inginkan_cari_di_second_chance">Belum menemukan barang yang anda inginkan?<b> Cari di Second Chance</b></string>
+    <string name="kamu_belum_melakukan_order_produk">Kamu belum melakukan order produk</string>
+    <string name="kamu_belum_memiliki_wishlist_yuk_mulai_cari_barang_yang_kamu_inginkan">Kamu belum memiliki wishlist, yuk mulai cari barang yang kamu inginkan</string>
 </resources>

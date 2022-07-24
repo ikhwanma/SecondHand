@@ -37,6 +37,10 @@ class WishlistFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.swipeContainer.setOnRefreshListener {
+            Navigation.findNavController(requireView()).navigate(R.id.action_wishlistFragment_self)
+        }
+
         userViewModel.getToken().observe(viewLifecycleOwner){ token ->
             apiViewModel.getBuyerWishlist(token).observe(viewLifecycleOwner){
                 when(it.status){
@@ -59,6 +63,14 @@ class WishlistFragment : Fragment() {
     }
 
     fun getData(data: List<GetWishlistResponseItem>?, token: String) {
+
+        if (data!!.isEmpty()){
+            binding.llListKosong.visibility = View.VISIBLE
+        }else{
+            binding.llListKosong.visibility = View.GONE
+        }
+
+
         val adapter = WishlistAdapter(apiViewModel, token, viewLifecycleOwner,
             data as MutableList<GetWishlistResponseItem>?
         ){

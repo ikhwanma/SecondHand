@@ -155,6 +155,8 @@ interface ApiService {
         @Path("id") id : Int
     ) : GetDetailProductResponse
 
+
+    //--Order--
     @POST("/buyer/order")
     suspend fun postOrder(
         @Header("access_token") token : String,
@@ -172,6 +174,12 @@ interface ApiService {
         @Path("id") id : Int,
         @Body order : PutOrderBody
     ) : PostOrderResponse
+
+    @DELETE("/buyer/order/{id}")
+    suspend fun deleteBuyerOrder(
+        @Header("access_token") token : String,
+        @Path("id") id : Int
+    ): Response
 
     //--Wishlist--
     @POST("/buyer/wishlist")

@@ -32,6 +32,10 @@ class DiminatiTabFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDiminatiTabBinding.inflate(inflater, container, false)
+        binding.swipeContainer.setOnRefreshListener {
+            getDataDiminati()
+            binding.swipeContainer.visibility = View.INVISIBLE
+        }
         getDataDiminati()
         return binding.root
     }

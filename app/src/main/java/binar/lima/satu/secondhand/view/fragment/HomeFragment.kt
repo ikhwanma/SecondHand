@@ -232,11 +232,6 @@ class HomeFragment : Fragment() {
                                                 SUCCESS ->{
                                                     val dataProduct = product.data!!
 
-                                                    if (dataProduct.isNotEmpty()){
-                                                        binding.tvDisekitarmu.visibility = View.VISIBLE
-                                                        binding.rvDisekitarmu.visibility = View.VISIBLE
-                                                    }
-
                                                     val listCity = city.split(" ")
                                                     val listDisekitar = mutableListOf<GetProductResponseItem>()
                                                     var ii = 0
@@ -246,6 +241,11 @@ class HomeFragment : Fragment() {
                                                             listDisekitar.add(data)
                                                             ii++
                                                         }
+                                                    }
+
+                                                    if (listDisekitar.isNotEmpty()){
+                                                        binding.tvDisekitarmu.visibility = View.VISIBLE
+                                                        binding.rvDisekitarmu.visibility = View.VISIBLE
                                                     }
 
                                                     val adapterDisekitar = ProductAdapter { data ->

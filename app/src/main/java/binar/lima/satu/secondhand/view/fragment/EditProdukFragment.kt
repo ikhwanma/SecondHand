@@ -118,18 +118,18 @@ class EditProdukFragment : Fragment() , View.OnClickListener {
         userViewModel.listCategorySelected.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 setCategory(it)
-                var txtCategory = ""
+                var txtCategories = ""
 
                 var i = 1
                 for (cat in it) {
-                    txtCategory += if (i != it.size) {
+                    txtCategories += if (i != it.size) {
                         "${cat.name}, "
                     } else {
                         cat.name
                     }
                     i++
                 }
-                binding.tvSelectCategory.text = txtCategory
+                binding.tvSelectCategory.text = txtCategories
                 binding.tvSelectCategory.setTextColor(Color.BLACK)
             }
         }
@@ -262,9 +262,8 @@ class EditProdukFragment : Fragment() , View.OnClickListener {
     private fun addProduct(name: String, price: String, description: String) {
         val contentResolver = requireActivity().applicationContext.contentResolver
 
-        var imageUpload: MultipartBody.Part? = null
-
-        imageUpload = if (image != null){
+        val imageUpload: MultipartBody.Part? =
+            if (image != null){
             val type = contentResolver.getType(image!!)
             val tempFile = File.createTempFile("temp-", null, null)
             val inputStream = contentResolver.openInputStream(image!!)

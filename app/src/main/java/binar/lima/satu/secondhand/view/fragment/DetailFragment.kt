@@ -81,6 +81,7 @@ class DetailFragment : Fragment() , View.OnClickListener{
             getOrder(token)
         }
         getWishList()
+        getAddress()
 
         apiViewModel.getProduct(idProduct).observe(viewLifecycleOwner){ it ->
             when(it.status){
@@ -257,6 +258,34 @@ class DetailFragment : Fragment() , View.OnClickListener{
             }
         }
 
+    }
+
+    private fun getAddress() {
+        userViewModel.getToken().observe(viewLifecycleOwner) { token ->
+            if (token == "") {
+                val txtAddress = "Anda belum login"
+                binding.tvAddress.text = txtAddress
+            } else {
+                apiViewModel.getLoginUser(token).observe(viewLifecycleOwner) {
+                    when (it.status) {
+                        SUCCESS -> {
+                            val city = it.data!!.city
+
+                            val txtAddress =
+                                if (city == "") "Lengkapi Profile terlebih dahulu" else city
+
+                            binding.tvAddress.text = txtAddress
+                        }
+                        ERROR -> {
+
+                        }
+                        LOADING -> {
+
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun setDetail(data: GetDetailProductResponse) {

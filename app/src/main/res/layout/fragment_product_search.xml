@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".view.fragment.ProductFragment">
+    tools:context=".view.fragment.ProductSearchFragment">
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/progress_circular"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:src="@drawable/ic_loading_secondhand"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_loading_secondhand" />
 
     <RelativeLayout
         android:id="@+id/rl_search"
@@ -87,11 +86,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_above="@+id/ll_alamat"
-            android:gravity="center_vertical"
+            android:layout_alignParentTop="true"
             android:layout_marginStart="14dp"
             android:fontFamily="@font/poppins_regular"
+            android:gravity="center_vertical"
             android:text="@string/cari_di_second_chance"
             android:textColor="#BABABA"
             android:textSize="16sp"
@@ -100,9 +99,9 @@
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
             android:layout_above="@+id/ll_alamat"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginEnd="60dp"
             android:contentDescription="@string/image_search"
             android:src="@drawable/ic_gray_search_24" />
@@ -118,17 +117,18 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/icon"
                 android:src="@drawable/ic_blue_location_on_24"
-                app:tint="@color/white"
-                android:contentDescription="@string/icon" />
+                app:tint="@color/white" />
+
             <TextView
                 android:id="@+id/tv_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/alamat"
-                android:textColor="@color/white"
                 android:layout_marginTop="1dp"
-                android:fontFamily="@font/poppins_regular"/>
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/alamat"
+                android:textColor="@color/white" />
         </LinearLayout>
 
     </RelativeLayout>
@@ -138,6 +138,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/rl_search">
+
         <LinearLayout
             android:id="@+id/ll_page"
             android:layout_width="match_parent"
@@ -155,8 +156,8 @@
                 android:clickable="false"
                 android:elevation="8dp"
                 android:enabled="false"
-                android:paddingBottom="3dp"
                 android:paddingHorizontal="4dp"
+                android:paddingBottom="3dp"
                 android:text="@string/kategori"
                 android:textAllCaps="false"
                 android:textColor="@color/blue_primary_variant"
@@ -174,38 +175,8 @@
                 app:spanCount="2"
                 tools:itemCount="5"
                 tools:listitem="@layout/item_product" />
-            <pl.droidsonroids.gif.GifImageView
-                android:id="@+id/progress_paging"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/ic_loading_secondhand"
-                android:layout_gravity="center_horizontal"
-                />
-            <LinearLayout
-                android:id="@+id/ll_not_found"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="10dp"
-                android:gravity="center_vertical"
-                android:visibility="gone"
-                tools:ignore="UseCompoundDrawables">
 
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:src="@drawable/ic_logo_secondhand"
-                    android:contentDescription="@string/icon" />
 
-                <TextView
-                    android:id="@+id/tv_size"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/belum_menemukan_barang_yang_anda_inginkan_cari_di_second_chance"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/poppins_medium"
-                    />
-
-            </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

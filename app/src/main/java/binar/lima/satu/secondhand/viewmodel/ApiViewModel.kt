@@ -235,6 +235,15 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
         }
     }
 
+    fun deleteBuyerOrder(token: String, id: Int) = liveData(Dispatchers.IO){
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(mainRepository.deleteBuyerOrder(token, id)))
+        }catch (e : Exception){
+            emit(Resource.error(data = null, message = e.message ?: "Error Occured"))
+        }
+    }
+
     fun postBuyerWishlist(token: String, postWishlistBody: PostWishlistBody) = liveData(Dispatchers.IO){
         emit(Resource.loading(null))
         try {

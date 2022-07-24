@@ -9,6 +9,8 @@ import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -79,6 +81,48 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.apply {
+            etNamaEditProfile.addTextChangedListener(object : TextWatcher{
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    if (p0!!.length < 3){
+                        binding.tvErrName.visibility = View.VISIBLE
+                    }else{
+                        binding.tvErrName.visibility = View.GONE
+                    }
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+
+                }
+
+            })
+        }
+
+        binding.apply {
+            etNoHandphoneEditProfile.addTextChangedListener(object :TextWatcher{
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    if (p0!!.length < 10){
+                        binding.tvErrPhone.visibility = View.VISIBLE
+                    }else{
+                        binding.tvErrPhone.visibility = View.GONE
+                    }
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+
+                }
+
+            })
+        }
+
         binding.btnSimpan.setOnClickListener(this)
 
         userViewModel.getToken().observe(viewLifecycleOwner) {
@@ -87,6 +131,7 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
                 when (user.status) {
                     SUCCESS -> {
                         binding.apply {
+                            dialog.dismissDialog()
                             val data = user.data!!
 
                             if (data.address == "") {
@@ -98,21 +143,23 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
                                     tvAddress.text = data.address
                                     tvAddress.setTextColor(Color.BLACK)
                                     this@EditProfileFragment.address = data.address
-                                    this@EditProfileFragment.city = splitCity(data.address.split(",").toTypedArray())
+                                    this@EditProfileFragment.city = data.city
                                 }else{
                                     tvAddress.text = address
                                 }
-                                Glide.with(requireView()).load(data.imageUrl).into(imgUser)
+                                if (data.imageUrl != null){
+                                    Glide.with(requireView()).load(data.imageUrl).into(imgUser)
+                                }
                             }
 
                             setUser(data)
                         }
                     }
                     ERROR -> {
-
+                        dialog.dismissDialog()
                     }
                     LOADING -> {
-
+                        dialog.startDialog()
                     }
                 }
             }
@@ -211,6 +258,7 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
                 this.address = address
 
                 binding.tvAddress.text = address
+                binding.tvErrAddress.visibility = View.GONE
                 binding.tvAddress.setTextColor(Color.BLACK)
                 Log.d("Address", city)
             }
@@ -259,10 +307,19 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
                     val nama = etNamaEditProfile.text.toString()
                     val kota = this@EditProfileFragment.city
                     val alamat = this@EditProfileFragment.address
-                    val handphone = etNoHandphoneEditProfile.text.toString().toLong()
+                    val handphone = etNoHandphoneEditProfile.text.toString()
 
-                    if (nama != "" && kota != "" && alamat != "" && etNoHandphoneEditProfile.text.toString() != "" && handphone.toString().length >= 10) {
-                        updateProfile(nama, kota, alamat, handphone)
+                    if (nama != "" && nama.length >= 3 && kota != "" && alamat != "" && etNoHandphoneEditProfile.text.toString() != "" && handphone.length >= 10) {
+                        updateProfile(nama, kota, alamat, handphone.toLong())
+                    }
+                    if (nama.length < 3){
+                        binding.tvErrName.visibility = View.VISIBLE
+                    }
+                    if(handphone.length < 10){
+                        binding.tvErrPhone.visibility = View.VISIBLE
+                    }
+                    if (city == ""){
+                        binding.tvErrAddress.visibility = View.VISIBLE
                     }
                 }
             }
@@ -272,8 +329,7 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
     private fun updateProfile(nama: String, kota: String, alamat: String, handphone: Long) {
         val contentResolver = requireActivity().applicationContext.contentResolver
 
-        var imageUpload: MultipartBody.Part? = null
-        imageUpload = if (image != null) {
+        var imageUpload: MultipartBody.Part? = if (image != null) {
             val type = contentResolver.getType(image!!)
             val tempFile = File.createTempFile("temp-", null, null)
             val inputStream = contentResolver.openInputStream(image!!)
@@ -307,7 +363,11 @@ class EditProfileFragment : Fragment(), View.OnClickListener {
             when (it.status) {
                 SUCCESS -> {
                     dialog.dismissDialog()
-                    Snackbar.make(requireView(), "Profile diupdate", Snackbar.LENGTH_SHORT).show()
+                    val snackBar = Snackbar.make(requireView(), "Profile diupdate", Snackbar.LENGTH_LONG)
+                    snackBar.setAction("X"){
+                        snackBar.dismiss()
+                    }
+                    snackBar.show()
                 }
                 ERROR -> {
                     dialog.dismissDialog()

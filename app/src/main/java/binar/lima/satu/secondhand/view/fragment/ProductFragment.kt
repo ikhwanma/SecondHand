@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,7 +21,6 @@ import binar.lima.satu.secondhand.model.product.GetProductResponseItem
 import binar.lima.satu.secondhand.view.adapter.ProductPagerAdapter
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
 import binar.lima.satu.secondhand.viewmodel.UserViewModel
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
 
@@ -34,6 +35,7 @@ class ProductFragment : Fragment() {
     private val userViewModel: UserViewModel by hiltNavGraphViewModels(R.id.nav_main)
 
     val list = ArrayList<GetProductResponseItem>()
+    var i = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,7 +73,9 @@ class ProductFragment : Fragment() {
 
 
         val adapter = ProductPagerAdapter {
-
+            val mBundle = bundleOf(DetailFragment.EXTRA_ID to it.id)
+            Navigation.findNavController(requireView())
+                .navigate(R.id.action_productFragment_to_detailFragment, mBundle)
         }
 
         if (adapter.itemCount == 100){
@@ -97,11 +101,14 @@ class ProductFragment : Fragment() {
             }
         }
 
+
         adapter.addLoadStateListener { loadState ->
             // show empty list
             if (loadState.refresh is LoadState.Loading ||
-                loadState.append is LoadState.Loading)
+                loadState.append is LoadState.Loading){
                 binding.progressPaging.isVisible = true
+                finishLoading(idCategory)
+            }
             else {
                 binding.progressPaging.isVisible = false
                 // If we have an error, show a toast
@@ -116,10 +123,6 @@ class ProductFragment : Fragment() {
                 }
 
             }
-        }
-
-        if (!binding.progressPaging.isVisible){
-            Snackbar.make(requireView(), "tes", Snackbar.LENGTH_INDEFINITE).show()
         }
 
 
@@ -157,6 +160,50 @@ class ProductFragment : Fragment() {
             }
             btnWishlist.setOnClickListener {
                 it.findNavController().navigate(R.id.action_productFragment_to_wishlistFragment)
+            }
+            tvSize.setOnClickListener {
+                it.findNavController().navigate(R.id.action_productFragment_to_searchFragment)
+            }
+        }
+
+        getAddress()
+    }
+
+    private fun finishLoading(idCategory: Int) {
+        if (idCategory == 0){
+            if (binding.progressPaging.isVisible){
+                this.i++
+            }
+            if (i==11){
+                binding.llNotFound.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun getAddress() {
+        userViewModel.getToken().observe(viewLifecycleOwner) { token ->
+            if (token == "") {
+                val txtAddress = "Anda belum login"
+                binding.tvAddress.text = txtAddress
+            } else {
+                apiViewModel.getLoginUser(token).observe(viewLifecycleOwner) {
+                    when (it.status) {
+                        SUCCESS -> {
+                            val city = it.data!!.city
+
+                            val txtAddress =
+                                if (city == "") "Lengkapi Profile terlebih dahulu" else city
+
+                            binding.tvAddress.text = txtAddress
+                        }
+                        ERROR -> {
+
+                        }
+                        LOADING -> {
+
+                        }
+                    }
+                }
             }
         }
     }

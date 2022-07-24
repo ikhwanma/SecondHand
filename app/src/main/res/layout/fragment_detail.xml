@@ -13,13 +13,16 @@
         android:layout_height="match_parent">
 
         <RelativeLayout
-            android:padding="16dp"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="5dp"
             android:background="@color/blue_primary_variant"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
 
             <LinearLayout
+                android:id="@+id/ll_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -102,13 +105,13 @@
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
 
-
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="60dp"
+                android:layout_alignParentTop="true"
+                android:layout_above="@+id/ll_alamat"
+                android:gravity="center_vertical"
+                android:layout_marginStart="53dp"
                 android:fontFamily="@font/poppins_regular"
                 android:text="@string/cari_di_second_chance"
                 android:textColor="#BABABA"
@@ -119,10 +122,35 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
+                android:layout_alignParentTop="true"
+                android:layout_above="@+id/ll_alamat"
                 android:layout_marginEnd="60dp"
                 android:contentDescription="@string/image_search"
                 android:src="@drawable/ic_gray_search_24" />
+
+            <LinearLayout
+                android:id="@+id/ll_alamat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_search"
+                android:layout_marginTop="3dp"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_blue_location_on_24"
+                    app:tint="@color/white"
+                    android:contentDescription="@string/icon" />
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/alamat"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="1dp"
+                    android:fontFamily="@font/poppins_regular"/>
+            </LinearLayout>
         </RelativeLayout>
 
         <androidx.core.widget.NestedScrollView
@@ -537,9 +565,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <ProgressBar
+    <pl.droidsonroids.gif.GifImageView
         android:id="@+id/progress_circular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_loading_secondhand"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -52,7 +52,7 @@ class ProfileFragment : Fragment() {
                     when (it1.status) {
                         Status.SUCCESS -> {
                             val data = it1.data!!
-                            if (data.imageUrl.isNotEmpty()){
+                            if (data.imageUrl!!.isNotEmpty()){
                                 Glide.with(requireView()).load(data.imageUrl).into(binding.imgUser)
                             }
                         }
@@ -79,14 +79,18 @@ class ProfileFragment : Fragment() {
             Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_editProfileFragment)
         }
 
+        binding.btnOrder.setOnClickListener {
+            it.findNavController().navigate(R.id.action_profileFragment_to_orderFragment)
+        }
+
         binding.btnLogout.setOnClickListener {
             AlertDialog.Builder(requireContext()).setTitle("Logout")
                 .setMessage("Apakah Anda Yakin?")
-                .setIcon(R.drawable.ic_logo)
+                .setIcon(R.drawable.ic_logo_secondhand)
                 .setPositiveButton("Iya") { _, _ ->
                     AlertDialog.Builder(requireContext()).setTitle("Simpan data login")
                         .setMessage("Apakah Anda Ingin Menyimpan Data Login Anda?")
-                        .setIcon(R.drawable.ic_logo)
+                        .setIcon(R.drawable.ic_logo_secondhand)
                         .setPositiveButton("Iya") { _, _ ->
                             userViewModel.getToken().observe(viewLifecycleOwner){
                                 userViewModel.setBiometric(it)
