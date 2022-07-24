@@ -42,7 +42,7 @@ class MainRepositoryTest {
         service = mockk()
         appDao = Mockito.mock(ProductDao::class.java)
         apiHelper = ApiHelper(service)
-        repository = MainRepository(apiHelper, appDao)
+        repository = MainRepository(apiHelper, appDao, service)
     }
 
     @Test

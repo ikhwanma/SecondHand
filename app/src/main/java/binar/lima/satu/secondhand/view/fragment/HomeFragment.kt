@@ -1,7 +1,6 @@
 package binar.lima.satu.secondhand.view.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,8 +42,6 @@ class HomeFragment : Fragment() {
     private val userViewModel: UserViewModel by hiltNavGraphViewModels(R.id.nav_main)
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CardView>
-
-    private var city = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
