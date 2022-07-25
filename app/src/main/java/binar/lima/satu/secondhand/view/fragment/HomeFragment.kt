@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.cardview.widget.CardView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -61,8 +62,19 @@ class HomeFragment : Fragment() {
 
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheetCategory)
         binding.swipeContainer.setOnRefreshListener {
-            Navigation.findNavController(requireView()).navigate(R.id.homeFragment)
+            Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_self)
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                }else{
+                    requireActivity().finish()
+                }
+            }
+
+        })
 
         apiViewModel.getProductDb().observe(viewLifecycleOwner) {
 

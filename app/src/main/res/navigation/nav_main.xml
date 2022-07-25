@@ -97,6 +97,11 @@
         <action
             android:id="@+id/action_homeFragment_to_wishlistFragment"
             app:destination="@id/wishlistFragment" />
+        <action
+            android:id="@+id/action_homeFragment_self"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"

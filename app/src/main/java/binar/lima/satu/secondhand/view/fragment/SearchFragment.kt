@@ -42,10 +42,19 @@ class SearchFragment : Fragment() {
 
         binding.etSearch.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
+                if (p0 == "") {
+                    binding.rvProduct.visibility = View.GONE
+                    binding.llSize.visibility = View.GONE
+                    binding.progressCircular.visibility = View.GONE
+                }
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (p0 == "") {
+                    binding.rvProduct.visibility = View.GONE
+                    binding.llSize.visibility = View.GONE
+                    binding.progressCircular.visibility = View.GONE
+                }
                 if (p0 != ""){
                     apiViewModel.getAllProduct(status = "available", search = p0.toString()).observe(viewLifecycleOwner){ data->
                         when(data.status){
@@ -109,11 +118,6 @@ class SearchFragment : Fragment() {
                             }
                         }
                     }
-                }
-                if (p0 == "") {
-                    binding.rvProduct.visibility = View.GONE
-                    binding.llSize.visibility = View.GONE
-                    binding.progressCircular.visibility = View.GONE
                 }
             }
 

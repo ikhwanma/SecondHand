@@ -164,16 +164,50 @@
                 app:cardCornerRadius="20dp" />
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_product"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="5dp"
-                android:paddingVertical="10dp"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="2"
-                tools:itemCount="5"
-                tools:listitem="@layout/item_product" />
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:id="@+id/ll_list_kosong"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:layout_centerInParent="true"
+                    android:gravity="center_horizontal"
+                    tools:ignore="UseCompoundDrawables">
+
+                    <ImageView
+                        android:id="@+id/iv_list_kosong"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_empty_diminati"
+                        android:contentDescription="@string/image" />
+
+                    <TextView
+                        android:id="@+id/tv_list_kosong"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/history_belanjamu_masih_kosong_yuk_belanja_sekarang"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textColor="@color/light_grey"
+                        android:textSize="16sp"
+                        android:textAlignment="center"
+                        android:layout_marginHorizontal="26dp"
+                        />
+                </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="5dp"
+                    android:paddingVertical="10dp"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="2"
+                    tools:itemCount="5"
+                    tools:listitem="@layout/item_product" />
+            </RelativeLayout>
+
             <pl.droidsonroids.gif.GifImageView
                 android:id="@+id/progress_paging"
                 android:layout_width="100dp"
