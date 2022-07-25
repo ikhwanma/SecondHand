@@ -46,7 +46,7 @@ class AddProductFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentAddProductBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var image: Uri
+    private var image: Uri? = null
     private lateinit var listCategory: List<GetSellerCategoryResponseItem>
 
     private val apiViewModel: ApiViewModel by hiltNavGraphViewModels(R.id.nav_main)
@@ -143,7 +143,17 @@ class AddProductFragment : Fragment(), View.OnClickListener {
 
         binding.btnTerbitkan.setOnClickListener(this)
         binding.btnPreview.setOnClickListener {
-            toProductPreview()
+            binding.apply {
+                val name = etProduct.text.toString()
+                val price = etPrice.text.toString()
+                val description = etDescription.text.toString()
+
+                if (name != "" && price != "" && description != "" && image != null){
+                    toProductPreview()
+                }else{
+                    Toast.makeText(requireContext(), "Isi semua field yang tersedia", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
         binding.btnCategory.setOnClickListener {
             CategoryFragment().show(requireActivity().supportFragmentManager, null)
@@ -224,7 +234,11 @@ class AddProductFragment : Fragment(), View.OnClickListener {
                     val price = etPrice.text.toString()
                     val description = etDescription.text.toString()
 
-                    addProduct(name, price, description)
+                    if (name != "" && price != "" && description != "" && image != null){
+                        addProduct(name, price, description)
+                    }else{
+                        Toast.makeText(requireContext(), "Isi semua field yang tersedia", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
@@ -233,9 +247,9 @@ class AddProductFragment : Fragment(), View.OnClickListener {
     private fun addProduct(name: String, price: String, description: String) {
         val contentResolver = requireActivity().applicationContext.contentResolver
 
-        val type = contentResolver.getType(image)
+        val type = contentResolver.getType(image!!)
         val tempFile = File.createTempFile("temp-", null, null)
-        val inputStream = contentResolver.openInputStream(image)
+        val inputStream = contentResolver.openInputStream(image!!)
 
         tempFile.outputStream().use {
             inputStream?.copyTo(it)
@@ -318,7 +332,7 @@ class AddProductFragment : Fragment(), View.OnClickListener {
             }
 
             val product =
-                ProductBody(name, description, price, listCat, user.city, image)
+                ProductBody(name, description, price, listCat, user.city, image!!)
             val mBundle = bundleOf(
                 ProductPreviewFragment.EXTRA_PRODUCT to product
             )

@@ -171,7 +171,17 @@ class EditProdukFragment : Fragment() , View.OnClickListener {
 
         binding.btnTerbitkan.setOnClickListener(this)
         binding.btnPreview.setOnClickListener {
-            toProductPreview()
+            binding.apply {
+                val name = etProduct.text.toString()
+                val price = etPrice.text.toString()
+                val description = etDescription.text.toString()
+
+                if (name != "" && price != "" && description != ""){
+                    toProductPreview()
+                }else{
+                    Toast.makeText(requireContext(), "Isi semua field yang tersedia", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
         binding.btnCategory.setOnClickListener {
             CategoryFragment().show(requireActivity().supportFragmentManager, null)
@@ -253,7 +263,11 @@ class EditProdukFragment : Fragment() , View.OnClickListener {
                     val price = etPrice.text.toString()
                     val description = etDescription.text.toString()
 
-                    addProduct(name, price, description)
+                    if (name != "" && price != "" && description != ""){
+                        addProduct(name, price, description)
+                    }else{
+                        Toast.makeText(requireContext(), "Isi semua field yang tersedia", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }

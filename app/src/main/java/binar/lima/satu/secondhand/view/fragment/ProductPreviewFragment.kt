@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentProductPreviewBinding
@@ -79,6 +80,10 @@ class ProductPreviewFragment : Fragment() {
 
         binding.btnTerbitkan.setOnClickListener {
             addProduct(product)
+        }
+
+        binding.icBack.setOnClickListener {
+            it.findNavController().navigate(R.id.action_productPreviewFragment_to_addProductFragment)
         }
     }
 

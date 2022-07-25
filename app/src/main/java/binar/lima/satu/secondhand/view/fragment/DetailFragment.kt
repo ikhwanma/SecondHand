@@ -504,7 +504,7 @@ class DetailFragment : Fragment() , View.OnClickListener{
             R.id.btn_delete_produk -> {
                 AlertDialog.Builder(requireContext()).setTitle("Hapus Produk")
                     .setMessage("Apakah Anda Yakin?")
-                    .setIcon(R.drawable.ic_logo)
+                    .setIcon(R.drawable.ic_logo_secondhand)
                     .setPositiveButton("Iya") { _, _ ->
                         apiViewModel.deleteSellerProduct(token, detailProductResponse!!.id).observe(viewLifecycleOwner){
                             when(it.status){
