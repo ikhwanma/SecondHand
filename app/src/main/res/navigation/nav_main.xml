@@ -151,6 +151,11 @@
             app:destination="@id/daftarJualSayaFragment"
             app:popUpTo="@id/productPreviewFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_productPreviewFragment_to_addProductFragment"
+            app:destination="@id/addProductFragment"
+            app:popUpTo="@id/productPreviewFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"

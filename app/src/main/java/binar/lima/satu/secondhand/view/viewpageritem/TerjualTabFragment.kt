@@ -30,10 +30,6 @@ class TerjualTabFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTerjualTabBinding.inflate(inflater, container, false)
-        binding.swipeContainer.setOnRefreshListener {
-            getDataTerjual()
-            binding.swipeContainer.visibility = View.INVISIBLE
-        }
         getDataTerjual()
         return binding.root
     }

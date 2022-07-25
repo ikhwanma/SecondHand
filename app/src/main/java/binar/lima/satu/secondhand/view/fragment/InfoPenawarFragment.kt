@@ -286,7 +286,7 @@ class InfoPenawarFragment : Fragment(), View.OnClickListener {
             }
             R.id.btn_to_whatsapp -> {
                 val url =
-                    "https://wa.me/$phoneNumber?text=Hallo,%20Saya%20$namaSeller%20yang%20menjual%20\"$namaBarang\"%20dengan%20harga%20Rp%20${Converter.converterMoney(hargaBarang)},%20Menerima%20tawaran%20anda%20dengan%20harga%20Rp%20${Converter.converterMoney(hargaTawaran)}.%20Apakah%20anda%20ingin%20melanjutkan%20transaksi%20ini?"
+                    "https://wa.me/$phoneNumber?text=Hallo,%20Saya%20$namaSeller%20dari%20aplikasi%20SecondHand%20yang%20menjual%20\"$namaBarang\"%20dengan%20harga%20Rp%20${Converter.converterMoney(hargaBarang)},%20Menerima%20tawaran%20anda%20dengan%20harga%20Rp%20${Converter.converterMoney(hargaTawaran)}.%20Apakah%20anda%20ingin%20melanjutkan%20transaksi%20ini?"
                 val intent = Intent(Intent.ACTION_VIEW)
                 intent.data = Uri.parse(url)
                 startActivity(intent)
