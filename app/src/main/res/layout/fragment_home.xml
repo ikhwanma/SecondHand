@@ -196,11 +196,11 @@
                             android:id="@+id/btn_lihat_semua"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/blue_primary"
-                            android:text="@string/lihat_semua"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="10dp"
+                            android:text="@string/lihat_semua"
+                            android:textColor="@color/blue_primary"
                             tools:ignore="RelativeOverlap" />
                     </RelativeLayout>
 
@@ -278,6 +278,29 @@
                         tools:ignore="RtlSymmetry"
                         tools:listitem="@layout/item_product" />
 
+                    <TextView
+                        android:id="@+id/tv_terakhir"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/terakhir_dilihat"
+                        android:textColor="@color/black"
+                        android:visibility="gone"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_terakhir"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:paddingEnd="10dp"
+                        android:visibility="gone"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:ignore="RtlSymmetry"
+                        tools:listitem="@layout/item_product" />
 
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>

@@ -10,12 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp">
+
         <EditText
             android:id="@+id/et_search"
             style="@style/EditTextStyle"
-            android:inputType="none"
+            android:autofillHints="search"
             android:hint="@string/cari_di_second_chance"
-            android:autofillHints="search" />
+            android:inputType="text"
+            />
 
         <ImageView
             android:layout_width="30dp"

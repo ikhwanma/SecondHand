@@ -3,6 +3,7 @@ package binar.lima.satu.secondhand.viewmodel
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import binar.lima.satu.secondhand.data.local.room.HistoryEntity
 import binar.lima.satu.secondhand.data.local.room.ProductEntity
 import binar.lima.satu.secondhand.data.utils.MainRepository
 import binar.lima.satu.secondhand.data.utils.Resource
@@ -19,7 +20,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -311,4 +311,13 @@ class ApiViewModel @Inject constructor(private val mainRepository: MainRepositor
 
     fun getProductDb() = mainRepository.getProductDb()
 
+    fun addHistory(historyEntity: HistoryEntity) = viewModelScope.launch(Dispatchers.IO){
+        mainRepository.addHistory(historyEntity)
+    }
+
+    fun getHistory() : LiveData<List<HistoryEntity>> = mainRepository.getHistory()
+
+    fun deleteAllHistory() = viewModelScope.launch(Dispatchers.IO){
+        mainRepository.deleteAllHistory()
+    }
 }

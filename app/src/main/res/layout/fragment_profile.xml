@@ -143,18 +143,45 @@
             android:orientation="horizontal"
             tools:ignore="UseCompoundDrawables">
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:contentDescription="@string/image"
-                android:src="@drawable/ic_baseline_list_24"
-                app:tint="@color/blue_primary" />
+            <RelativeLayout
+                android:layout_width="50dp"
+                android:layout_height="50dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_badge"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="3dp"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="@color/red"
+                    app:cardCornerRadius="10dp">
+
+                    <TextView
+                        android:id="@+id/tv_wishlist"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/_13"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+                </androidx.cardview.widget.CardView>
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:contentDescription="@string/image"
+                    android:src="@drawable/ic_baseline_list_24"
+                    app:tint="@color/blue_primary" />
+            </RelativeLayout>
+
 
             <TextView
                 style="@style/TextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="6dp"
                 android:text="@string/order"
                 android:textSize="22sp" />
@@ -164,7 +191,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:background="@color/grey" />
 
         <LinearLayout

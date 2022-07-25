@@ -82,6 +82,7 @@ class AddProductFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         binding.imgProduct.setOnClickListener {
             checkingPermissions()
         }

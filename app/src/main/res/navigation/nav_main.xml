@@ -216,7 +216,9 @@
             />
         <action
             android:id="@+id/action_infoPenawarFragment_to_notificationFragment"
-            app:destination="@id/notificationFragment" />
+            app:destination="@id/notificationFragment"
+            app:popUpTo="@id/infoPenawarFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/productFragment"

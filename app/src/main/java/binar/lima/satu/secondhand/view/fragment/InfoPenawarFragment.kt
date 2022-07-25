@@ -69,6 +69,7 @@ class InfoPenawarFragment : Fragment(), View.OnClickListener {
             apiViewModel.getDetailSellerOrder(token, idOrder).observe(viewLifecycleOwner) {
                 when (it.status) {
                     SUCCESS -> {
+                        dialog.dismissDialog()
                         val data = it.data!!
                         val user = data.user
                         val product = data.product
@@ -84,6 +85,8 @@ class InfoPenawarFragment : Fragment(), View.OnClickListener {
                                 llButton.visibility = View.GONE
                                 llButtonSuccess.visibility = View.VISIBLE
                             }
+
+
 
                             val txtPrice =
                                 "Rp ${Converter.converterMoney(product.basePrice.toString())}"
@@ -113,10 +116,14 @@ class InfoPenawarFragment : Fragment(), View.OnClickListener {
                         }
                     }
                     ERROR -> {
-
+                        dialog.dismissDialog()
+                        if (it.message!!.contains("404")){
+                            Navigation.findNavController(requireView()).navigate(R.id.action_infoPenawarFragment_to_notificationFragment)
+                            Toast.makeText(requireContext(), "Pembeli membatalkan tawaran ini", Toast.LENGTH_SHORT).show()
+                        }
                     }
                     LOADING -> {
-
+                        dialog.startDialog()
                     }
                 }
             }

@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import binar.lima.satu.secondhand.R
 import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentUbahPasswordBinding
@@ -134,8 +135,10 @@ class UbahPasswordFragment : Fragment() {
                 }else{
                     Toast.makeText(requireContext(), "Password tidak sama", Toast.LENGTH_SHORT).show()
                 }
+            }
 
-
+            btnBack.setOnClickListener {
+                it.findNavController().navigate(R.id.action_ubahPasswordFragment_to_profileFragment)
             }
         }
 

@@ -152,4 +152,5 @@
     <string name="belum_menemukan_barang_yang_anda_inginkan_cari_di_second_chance">Belum menemukan barang yang anda inginkan?<b> Cari di Second Chance</b></string>
     <string name="kamu_belum_melakukan_order_produk">Kamu belum melakukan order produk</string>
     <string name="kamu_belum_memiliki_wishlist_yuk_mulai_cari_barang_yang_kamu_inginkan">Kamu belum memiliki wishlist, yuk mulai cari barang yang kamu inginkan</string>
+    <string name="terakhir_dilihat">Terakhir dilihat</string>
 </resources>

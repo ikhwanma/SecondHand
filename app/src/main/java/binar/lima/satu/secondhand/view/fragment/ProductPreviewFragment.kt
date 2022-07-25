@@ -117,6 +117,7 @@ class ProductPreviewFragment : Fragment() {
                         "Produk Berhasil Ditambahkan",
                         Snackbar.LENGTH_SHORT
                     ).show()
+                    userViewModel.listCategorySelected.postValue(emptyList())
                     Navigation.findNavController(requireView()).navigate(R.id.action_productPreviewFragment_to_daftarJualSayaFragment)
                 }
                 ERROR -> {
