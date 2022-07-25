@@ -66,6 +66,7 @@ class DetailFragment : Fragment() , View.OnClickListener{
 
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet)
 
+        binding.cvBadge.visibility = View.GONE
         idProduct = arguments?.getInt(EXTRA_ID) as Int
 
         userViewModel.getToken().observe(viewLifecycleOwner){token ->
@@ -79,6 +80,7 @@ class DetailFragment : Fragment() , View.OnClickListener{
             when(it.status){
                 SUCCESS -> {
                     dialog.dismissDialog()
+                    binding.cvBadge.visibility = View.VISIBLE
                     val data = it.data!!
                     setDetail(data)
 
@@ -205,6 +207,7 @@ class DetailFragment : Fragment() , View.OnClickListener{
                     }
                 }
                 ERROR -> {
+                    binding.cvBadge.visibility = View.VISIBLE
                     dialog.dismissDialog()
                 }
                 LOADING -> {
@@ -351,6 +354,7 @@ class DetailFragment : Fragment() , View.OnClickListener{
                 when(it.status){
                     SUCCESS -> {
                         val data = it.data!!
+                        binding.cvBadge.visibility = View.VISIBLE
 
                         binding.apply {
                             if (data.isEmpty()) {
@@ -393,10 +397,10 @@ class DetailFragment : Fragment() , View.OnClickListener{
                         }
                     }
                     ERROR -> {
-
+                        binding.cvBadge.visibility = View.VISIBLE
                     }
                     LOADING -> {
-
+                        binding.cvBadge.visibility = View.GONE
                     }
                 }
             }
