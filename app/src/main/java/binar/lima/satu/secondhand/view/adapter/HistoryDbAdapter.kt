@@ -5,15 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import binar.lima.satu.secondhand.data.local.room.ProductEntity
+import binar.lima.satu.secondhand.data.local.room.HistoryEntity
 import binar.lima.satu.secondhand.data.utils.Converter
 import binar.lima.satu.secondhand.databinding.ItemProductBinding
 import com.bumptech.glide.Glide
 
-class ProductDbAdapter : RecyclerView.Adapter<ProductDbAdapter.ViewHolder>(){
+class HistoryDbAdapter(val onItemClick: (HistoryEntity) -> Unit) : RecyclerView.Adapter<HistoryDbAdapter.ViewHolder>(){
     inner class ViewHolder(private val binding: ItemProductBinding):
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: ProductEntity) {
+        fun bind(data: HistoryEntity){
             binding.apply {
                 val dataName = data.name!!
                 val txtCategory = data.category!!
@@ -38,6 +38,9 @@ class ProductDbAdapter : RecyclerView.Adapter<ProductDbAdapter.ViewHolder>(){
                     txtCategoryFix = txtCategory
                 }
 
+                root.setOnClickListener {
+                    onItemClick(data)
+                }
                 val txtPrice = "Rp ${Converter.converterMoney(data.price.toString())}"
                 tvCategory.text = txtCategoryFix
                 tvPrice.text = txtPrice
@@ -47,18 +50,20 @@ class ProductDbAdapter : RecyclerView.Adapter<ProductDbAdapter.ViewHolder>(){
             }
         }
     }
-    private val diffCallback = object : DiffUtil.ItemCallback<ProductEntity>(){
-        override fun areItemsTheSame(oldItem: ProductEntity, newItem: ProductEntity): Boolean {
+
+    private val diffCallback = object : DiffUtil.ItemCallback<HistoryEntity>(){
+        override fun areItemsTheSame(oldItem: HistoryEntity, newItem: HistoryEntity): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: ProductEntity, newItem: ProductEntity): Boolean {
+        override fun areContentsTheSame(oldItem: HistoryEntity, newItem: HistoryEntity): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
     }
-    private val differ = AsyncListDiffer(this, diffCallback)
-    fun submitData(value: List<ProductEntity>?) = differ.submitList(value)
 
+    private val differ = AsyncListDiffer(this, diffCallback)
+
+    fun submitData(value: List<HistoryEntity>?) = differ.submitList(value)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return ViewHolder(ItemProductBinding.inflate(inflater, parent, false))

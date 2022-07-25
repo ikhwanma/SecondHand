@@ -59,7 +59,8 @@ class OrderAdapter(val apiViewModel: ApiViewModel,
                 }
                 tvDate.text = Converter.convertDate(data.transactionDate)
                 tvStatus.text = txtStatus
-                tvPrice.text = Converter.converterMoney(data.product.basePrice.toString())
+                val txtHarga = "Rp ${Converter.converterMoney(data.product.basePrice.toString())}"
+                tvPrice.text = txtHarga
                 tvBid.text = txtPrice
                 tvProduct.text = data.productName
                 tvBatalkanTransaksi.setOnClickListener {

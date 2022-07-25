@@ -17,6 +17,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import binar.lima.satu.secondhand.R
+import binar.lima.satu.secondhand.data.local.room.HistoryEntity
 import binar.lima.satu.secondhand.data.utils.Converter
 import binar.lima.satu.secondhand.data.utils.Status.*
 import binar.lima.satu.secondhand.databinding.FragmentDetailBinding
@@ -77,14 +78,13 @@ class DetailFragment : Fragment() , View.OnClickListener{
         apiViewModel.getProduct(idProduct).observe(viewLifecycleOwner){ it ->
             when(it.status){
                 SUCCESS -> {
+                    dialog.dismissDialog()
                     val data = it.data!!
                     setDetail(data)
 
                     val txtPrice = "Rp ${Converter.converterMoney(data.basePrice.toString())}"
 
                     val category = data.categories
-
-                    userViewModel.setCategory(category[0].id)
 
                     var txtCategory = ""
 
@@ -97,6 +97,7 @@ class DetailFragment : Fragment() , View.OnClickListener{
                         }
                         i++
                     }
+
                     binding.apply {
                         Glide.with(requireView()).load(data.imageUrl).into(imgProduct)
                         tvProduct.text = data.name
@@ -120,6 +121,9 @@ class DetailFragment : Fragment() , View.OnClickListener{
 
                         userViewModel.getToken().observe(viewLifecycleOwner){token ->
                             if (token != ""){
+                                val historyEntity = HistoryEntity(null, data.imageUrl, data.name, txtCategory, data.basePrice.toString(), data.location, idProduct)
+                                apiViewModel.addHistory(historyEntity)
+                                userViewModel.setCategory(category[0].id)
                                 apiViewModel.getLoginUser(token).observe(viewLifecycleOwner){ user ->
                                     when(user.status){
                                         SUCCESS -> {
@@ -201,10 +205,12 @@ class DetailFragment : Fragment() , View.OnClickListener{
                     }
                 }
                 ERROR -> {
-
+                    dialog.dismissDialog()
                 }
                 LOADING -> {
+                    dialog.startDialog()
                     binding.apply {
+                        progressCircular.visibility = View.GONE
                         detailItem.visibility = View.GONE
                     }
                 }

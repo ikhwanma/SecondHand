@@ -1,10 +1,7 @@
 package binar.lima.satu.secondhand.data.local.room
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface ProductDao {
@@ -19,4 +16,12 @@ interface ProductDao {
     @Query("DELETE FROM product")
     fun deleteAll()
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun addHistory(historyEntity: HistoryEntity)
+
+    @Query("SELECT * FROM history")
+    fun getHistory() : LiveData<List<HistoryEntity>>
+
+    @Query("DELETE FROM history")
+    fun deleteAllHistory()
 }

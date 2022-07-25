@@ -6,6 +6,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.liveData
 import binar.lima.satu.secondhand.data.helper.ApiHelper
+import binar.lima.satu.secondhand.data.local.room.HistoryEntity
 import binar.lima.satu.secondhand.data.local.room.ProductDao
 import binar.lima.satu.secondhand.data.local.room.ProductEntity
 import binar.lima.satu.secondhand.data.remote.ApiService
@@ -154,4 +155,7 @@ class MainRepository @Inject constructor(
     fun getProductDb(): LiveData<List<ProductEntity>> = productDao.getProduct()
     fun deleteAllProduct() = productDao.deleteAll()
 
+    fun addHistory(historyEntity: HistoryEntity) = productDao.addHistory(historyEntity)
+    fun getHistory() : LiveData<List<HistoryEntity>> = productDao.getHistory()
+    fun deleteAllHistory() = productDao.deleteAllHistory()
 }

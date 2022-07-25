@@ -39,7 +39,9 @@ class NotificationFragment : Fragment() {
         _binding = FragmentNotificationBinding.inflate(inflater, container, false)
         val connected = OnlineChecker.isOnline(requireContext())
         if (!connected){
-            Toast.makeText(requireContext(), "Anda tidak terhubung ke internet", Toast.LENGTH_SHORT).show()
+            binding.llStatus.visibility = View.VISIBLE
+            val txtNoConnection = "Anda tidak terhubung ke internet :("
+            binding.tvListKosong.text = txtNoConnection
         }
         (activity as MainActivity).getBadge()
         return binding.root

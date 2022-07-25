@@ -14,6 +14,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import binar.lima.satu.secondhand.R
+import binar.lima.satu.secondhand.data.local.room.HistoryEntity
 import binar.lima.satu.secondhand.data.local.room.ProductEntity
 import binar.lima.satu.secondhand.data.utils.AppExecutors
 import binar.lima.satu.secondhand.data.utils.OnlineChecker
@@ -24,6 +25,7 @@ import binar.lima.satu.secondhand.model.product.GetProductResponseItem
 import binar.lima.satu.secondhand.model.seller.product.GetSellerCategoryResponseItem
 import binar.lima.satu.secondhand.view.activity.MainActivity
 import binar.lima.satu.secondhand.view.adapter.CategoryAdapter
+import binar.lima.satu.secondhand.view.adapter.HistoryDbAdapter
 import binar.lima.satu.secondhand.view.adapter.ProductAdapter
 import binar.lima.satu.secondhand.view.adapter.ProductDbAdapter
 import binar.lima.satu.secondhand.viewmodel.ApiViewModel
@@ -66,7 +68,64 @@ class HomeFragment : Fragment() {
 
         }
 
+        apiViewModel.getHistory().observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                binding.apply {
+                    val data = mutableListOf<HistoryEntity>()
+                    val listData = mutableListOf<HistoryEntity>()
+
+                    for (j in it.size-1 downTo 0){
+                        listData.add(it[j])
+                    }
+                    var i = 0
+
+                    for (d in listData) {
+                        if (i == 15) break
+                        if (data.isNotEmpty()){
+                            var x = false
+                            for(ld in data){
+                                if (d.productId == ld.productId) {
+                                    x = true
+                                    break
+                                }
+                            }
+                            if (!x){
+                                data.add(d)
+                                i++
+                            }
+                        }else{
+                            data.add(d)
+                            i++
+                        }
+                    }
+
+                    val adapter = HistoryDbAdapter{ historyEntity ->
+                        val mBundle = bundleOf(DetailFragment.EXTRA_ID to historyEntity.productId)
+                        Navigation.findNavController(requireView())
+                            .navigate(
+                                R.id.action_homeFragment_to_detailFragment,
+                                mBundle
+                            )
+                    }
+                    adapter.submitData(data)
+
+                    rvTerakhir.adapter = adapter
+                    rvTerakhir.layoutManager =
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+                    tvTerakhir.visibility = View.VISIBLE
+                    rvTerakhir.visibility = View.VISIBLE
+                }
+            } else {
+                binding.apply {
+                    tvTerakhir.visibility = View.GONE
+                    rvTerakhir.visibility = View.GONE
+                }
+            }
+        }
+
         if (!connected) {
+            binding.btnLihatSemua.visibility = View.GONE
             Toast.makeText(requireContext(), "Anda tidak terhubung ke internet", Toast.LENGTH_LONG)
                 .show()
             binding.apply {
@@ -225,15 +284,16 @@ class HomeFragment : Fragment() {
                             SUCCESS -> {
                                 val city = it.data!!.city
 
-                                if (city != ""){
+                                if (city != "") {
                                     apiViewModel.getAllProduct(status = "available")
-                                        .observe(viewLifecycleOwner){ product->
-                                            when(product.status){
-                                                SUCCESS ->{
+                                        .observe(viewLifecycleOwner) { product ->
+                                            when (product.status) {
+                                                SUCCESS -> {
                                                     val dataProduct = product.data!!
 
                                                     val listCity = city.split(" ")
-                                                    val listDisekitar = mutableListOf<GetProductResponseItem>()
+                                                    val listDisekitar =
+                                                        mutableListOf<GetProductResponseItem>()
                                                     var ii = 0
                                                     for (data in dataProduct) {
                                                         if (ii == 15) break
@@ -243,26 +303,35 @@ class HomeFragment : Fragment() {
                                                         }
                                                     }
 
-                                                    if (listDisekitar.isNotEmpty()){
-                                                        binding.tvDisekitarmu.visibility = View.VISIBLE
-                                                        binding.rvDisekitarmu.visibility = View.VISIBLE
+                                                    if (listDisekitar.isNotEmpty()) {
+                                                        binding.tvDisekitarmu.visibility =
+                                                            View.VISIBLE
+                                                        binding.rvDisekitarmu.visibility =
+                                                            View.VISIBLE
                                                     }
 
                                                     val adapterDisekitar = ProductAdapter { data ->
-                                                        val mBundle = bundleOf(DetailFragment.EXTRA_ID to data.id)
+                                                        val mBundle =
+                                                            bundleOf(DetailFragment.EXTRA_ID to data.id)
                                                         Navigation.findNavController(requireView())
-                                                            .navigate(R.id.action_homeFragment_to_detailFragment, mBundle)
+                                                            .navigate(
+                                                                R.id.action_homeFragment_to_detailFragment,
+                                                                mBundle
+                                                            )
                                                     }
 
                                                     adapterDisekitar.submitData(listDisekitar)
                                                     binding.apply {
-                                                        rvDisekitarmu.layoutManager = LinearLayoutManager(
-                                                            requireContext(),
-                                                            LinearLayoutManager.HORIZONTAL,
-                                                            false
-                                                        )
+                                                        rvDisekitarmu.layoutManager =
+                                                            LinearLayoutManager(
+                                                                requireContext(),
+                                                                LinearLayoutManager.HORIZONTAL,
+                                                                false
+                                                            )
                                                         rvDisekitarmu.adapter = adapterDisekitar
-                                                        rvDisekitarmu.setItemViewCacheSize(listDisekitar.size)
+                                                        rvDisekitarmu.setItemViewCacheSize(
+                                                            listDisekitar.size
+                                                        )
                                                     }
                                                 }
                                                 ERROR -> {
@@ -340,11 +409,16 @@ class HomeFragment : Fragment() {
     }
 
     private fun getDataSerupa() {
-        userViewModel.getCategory().observe(viewLifecycleOwner){ categoryId ->
-            if (categoryId != 0){
-                apiViewModel.getAllProduct(status = "available", category_id = categoryId, page = 1, perPage = 15).observe(viewLifecycleOwner){
+        userViewModel.getCategory().observe(viewLifecycleOwner) { categoryId ->
+            if (categoryId != 0) {
+                apiViewModel.getAllProduct(
+                    status = "available",
+                    category_id = categoryId,
+                    page = 1,
+                    perPage = 15
+                ).observe(viewLifecycleOwner) {
                     binding.apply {
-                        when(it.status){
+                        when (it.status) {
                             SUCCESS -> {
                                 val data = it.data!!
                                 rvSerupa.visibility = View.VISIBLE
@@ -353,7 +427,10 @@ class HomeFragment : Fragment() {
                                 val adapterSerupa = ProductAdapter { dataItem ->
                                     val mBundle = bundleOf(DetailFragment.EXTRA_ID to dataItem.id)
                                     Navigation.findNavController(requireView())
-                                        .navigate(R.id.action_homeFragment_to_detailFragment, mBundle)
+                                        .navigate(
+                                            R.id.action_homeFragment_to_detailFragment,
+                                            mBundle
+                                        )
                                 }
 
                                 adapterSerupa.submitData(data)
@@ -382,7 +459,7 @@ class HomeFragment : Fragment() {
 
 
     private fun getData() {
-        apiViewModel.getAllProduct(status = "available")
+        apiViewModel.getAllProduct(status = "available", page = 1, perPage = 25)
             .observe(viewLifecycleOwner) { product ->
                 when (product.status) {
                     SUCCESS -> {
@@ -465,8 +542,8 @@ class HomeFragment : Fragment() {
                                 j++
                             }
                         }
-                        apiViewModel.getProductDb().observe(viewLifecycleOwner){
-                            if (it.isEmpty()){
+                        apiViewModel.getProductDb().observe(viewLifecycleOwner) {
+                            if (it.isEmpty()) {
                                 apiViewModel.deleteAllProduct()
                                 apiViewModel.addProduct(listProduct)
                             }
