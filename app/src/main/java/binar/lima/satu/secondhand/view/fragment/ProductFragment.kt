@@ -91,7 +91,6 @@ class ProductFragment : Fragment() {
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
 
-
         lifecycleScope.launch {
             apiViewModel.getAllProductPaging(idCategory).observe(viewLifecycleOwner){
                 it.let {
